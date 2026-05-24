@@ -6,6 +6,16 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint --cache"
   },
+  "exports": {
+    "./base": {
+      "import": "./src/base.js",
+      "types": "./src/base.d.ts"
+    },
+    "./user-app": {
+      "import": "./src/user-app.js",
+      "types": "./src/user-app.d.ts"
+    }
+  },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@tanstack/eslint-plugin-router": "1.162.0",
