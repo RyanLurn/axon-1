@@ -2,8 +2,8 @@ import { globalIgnores, defineConfig } from "eslint/config";
 import perfectionist from "eslint-plugin-perfectionist";
 import prettier from "eslint-config-prettier/flat";
 import ts from "typescript-eslint";
-import js from "@eslint/js";
 import globals from "globals";
+import js from "@eslint/js";
 
 export const baseConfig = defineConfig([
   globalIgnores([
