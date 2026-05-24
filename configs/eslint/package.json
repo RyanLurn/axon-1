@@ -1,0 +1,21 @@
+{
+  "name": "@repo/eslint-config",
+  "type": "module",
+  "private": "true",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "eslint --cache"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
+    "@repo/typescript-config": "workspace:*",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-perfectionist": "5.9.0",
+    "globals": "17.6.0",
+    "typescript": "catalog:",
+    "typescript-eslint": "8.59.4"
+  }
+}
