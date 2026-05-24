@@ -68,6 +68,7 @@ Internal packages consumed by the apps above. Not deployed independently.
 | Naming conventions (files, variables, tables, components)  | `conventions/naming.md`     |
 | Cross-cutting patterns (error handling, env vars, logging) | `conventions/patterns.md`   |
 | Database conventions (table naming, migrations)            | `conventions/database.md`   |
+| How to create a commit                                     | `workflow/commits.md`       |
 | How to open and merge a PR                                 | `workflow/pr.md`            |
 | Branching strategy                                         | `workflow/branching.md`     |
 
