@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "types": ["bun", "node", "react", "vite/client"],
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "eslint.config.js", "vite.config.ts"]
+}
