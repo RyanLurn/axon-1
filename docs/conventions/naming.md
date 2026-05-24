@@ -7,7 +7,7 @@ The goal of this document is to eliminate the "what should I call this?" moment.
 Use `kebab-case` for all file and directory names, without exception.
 
 ```
-user-web-app/
+src/
   components/
     message-bubble.tsx     ✅
     MessageBubble.tsx      ❌
