@@ -9,6 +9,9 @@
         "turbo": "2.9.14",
       },
     },
+    "configs/typescript": {
+      "name": "@repo/typescript-config",
+    },
   },
   "catalog": {
     "@t3-oss/env-core": "0.13.11",
@@ -20,6 +23,8 @@
     "zod": "4.4.3",
   },
   "packages": {
+    "@repo/typescript-config": ["@repo/typescript-config@workspace:configs/typescript"],
+
     "@turbo/darwin-64": ["@turbo/darwin-64@2.9.14", "", { "os": "darwin", "cpu": "x64" }, "sha512-t7QiPflaEyBE4oayeZtSmu4mEfjgIrcNlNNl1z1dmIVPqEdtA7+CfTf8d7KXsOGPh6aNgWjKxyvQg9uGfDQF+A=="],
 
     "@turbo/darwin-arm64": ["@turbo/darwin-arm64@2.9.14", "", { "os": "darwin", "cpu": "arm64" }, "sha512-d23147mC9BsCPA9mJ0h/ubcpbRgcJBXbcG3+Vq7YLhjz3IXuvQsJ1UXH8f4MD76ZjJ4m/E4aRdJV+MW88CDfbw=="],
