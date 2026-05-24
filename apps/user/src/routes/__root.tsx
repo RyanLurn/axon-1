@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import { ThemeProvider } from "@/components/providers/theme";
+import { ModeToggle } from "@/components/mode-toggle";
 import styles from "@/globals.css?url";
 
 export const Route = createRootRoute({
@@ -36,6 +37,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       <body>
         <ThemeProvider defaultTheme="system" storageKey="theme">
           <div className="h-screen">{children}</div>
+          <ModeToggle className="fixed top-3 right-3 z-50" />
         </ThemeProvider>
         <Scripts />
       </body>
