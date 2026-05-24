@@ -1,0 +1,7 @@
+# Enforce LF line endings for all text files to ensure consistency
+* text=auto eol=lf
+
+# Force GitHub to treat the these folders as source code
+configs/** linguist-vendored=false
+configs/** linguist-documentation=false
+configs/** linguist-generated=false
