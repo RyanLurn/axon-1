@@ -36,17 +36,17 @@ All three parts are required. Keep the message short and specific — describe w
 
 Location identifies which workspace was changed.
 
-| Location        | Workspace          |
-| --------------- | ------------------ |
-| `root`          | Monorepo root      |
-| `user`          | `@repo/user`       |
-| `agent`         | `@repo/agent`      |
-| `agent-api`     | `@repo/agent-api`  |
-| `db`            | `@repo/db`         |
-| `types`         | `@repo/types`      |
-| `ts-config`     | `@repo/typescript` |
-| `eslint-config` | `@repo/eslint`     |
-| `tsdown-config` | `@repo/tsdown`     |
+| Location            | Workspace                 |
+| ------------------- | ------------------------- |
+| `root`              | Monorepo root             |
+| `user`              | `@repo/user`              |
+| `agent`             | `@repo/agent`             |
+| `agent-api`         | `@repo/agent-api`         |
+| `db`                | `@repo/db`                |
+| `types`             | `@repo/types`             |
+| `typescript-config` | `@repo/typescript-config` |
+| `eslint-config`     | `@repo/eslint-config`     |
+| `tsdown-config`     | `@repo/tsdown-config`     |
 
 If a change touches multiple workspaces, prefer splitting into separate commits. If that is not practical, use the location of the primary change.
 
