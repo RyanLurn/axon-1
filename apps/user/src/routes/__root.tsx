@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
+import { ThemeProvider } from "@/components/providers/theme";
 import styles from "@/globals.css?url";
 
 export const Route = createRootRoute({
@@ -33,7 +34,9 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-        <div className="h-screen">{children}</div>
+        <ThemeProvider defaultTheme="system" storageKey="theme">
+          <div className="h-screen">{children}</div>
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>
