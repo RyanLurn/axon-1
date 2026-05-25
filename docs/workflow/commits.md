@@ -68,7 +68,6 @@ feat(user/ui): add Button component from shadcn/ui
 feat(user/auth): add sign-in page and Better Auth integration
 feat(agent-api/notifications): add subscription endpoints
 fix(agent/loop): handle empty stdout from sandbox gracefully
-db(db/schema): add messages table
 chore(root/deps): add zod to workspace catalog
 chore(root/format): configure Prettier
 style(root/format): run Prettier across all files
