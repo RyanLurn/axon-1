@@ -25,7 +25,6 @@ All three parts are required. Keep the message short and specific — describe w
 | `docs`     | Documentation only                                     |
 | `style`    | Formatting, no logic change                            |
 | `test`     | Adding or fixing tests                                 |
-| `db`       | Schema changes or migrations                           |
 | `perf`     | Performance improvement                                |
 | `security` | Security-related change                                |
 | `wip`      | Work in progress — committing to save state, not ready |
