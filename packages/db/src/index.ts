@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { userTable } from "@/schema/tables/user";
 
-const dbEnvVars = createEnv({
+export const dbEnvVars = createEnv({
   server: {
     SQLITE_FILE_PATH: z.string().min(1),
   },
