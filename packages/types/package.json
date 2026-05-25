@@ -1,0 +1,25 @@
+{
+  "name": "@repo/types",
+  "type": "module",
+  "private": "true",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "eslint --cache"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts"
+    },
+    "./*": {
+      "types": "./src/*.d.ts"
+    }
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:"
+  }
+}

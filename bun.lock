@@ -95,6 +95,17 @@
         "typescript": "catalog:",
       },
     },
+    "packages/types": {
+      "name": "@repo/types",
+      "devDependencies": {
+        "@repo/eslint-config": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "@types/bun": "catalog:",
+        "@types/node": "catalog:",
+        "eslint": "catalog:",
+        "typescript": "catalog:",
+      },
+    },
   },
   "catalog": {
     "@t3-oss/env-core": "0.13.11",
@@ -333,6 +344,8 @@
     "@repo/eslint-config": ["@repo/eslint-config@workspace:configs/eslint"],
 
     "@repo/tsdown-config": ["@repo/tsdown-config@workspace:configs/tsdown"],
+
+    "@repo/types": ["@repo/types@workspace:packages/types"],
 
     "@repo/typescript-config": ["@repo/typescript-config@workspace:configs/typescript"],
 
