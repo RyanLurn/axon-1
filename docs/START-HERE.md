@@ -48,11 +48,11 @@ Internal packages consumed by the apps above. Not deployed independently.
 
 ### `configs/` — Shared Tooling Config
 
-| Package            | Description                                                                                                                                  |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@repo/typescript` | Base `tsconfig.json` files extended by each app and package.                                                                                 |
-| `@repo/eslint`     | Shared ESLint configuration.                                                                                                                 |
-| `@repo/tsdown`     | Shared `tsdown` config for building internal packages. `tsdown` is the `tsup` equivalent for Rolldown, maintained by the Vite/Rolldown team. |
+| Package                   | Description                                                                                                                                  |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@repo/typescript-config` | Base `tsconfig.json` files extended by each app and package.                                                                                 |
+| `@repo/eslint-config`     | Shared ESLint configuration.                                                                                                                 |
+| `@repo/tsdown-config`     | Shared `tsdown` config for building internal packages. `tsdown` is the `tsup` equivalent for Rolldown, maintained by the Vite/Rolldown team. |
 
 ---
 
