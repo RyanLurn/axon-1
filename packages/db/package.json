@@ -30,6 +30,7 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/tsdown-config": "workspace:*",
+    "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/bun": "catalog:",
     "@types/node": "catalog:",
