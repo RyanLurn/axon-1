@@ -17,3 +17,26 @@ export const sessionTable = sqliteTable(
   },
   (table) => [index("user_id_index").on(table.userId)]
 );
+
+export const accountTable = sqliteTable(
+  "accounts",
+  {
+    id,
+    userId,
+    accountId: text("account_id").notNull(),
+    providerId: text("provider_id").notNull(),
+    accessToken: text("access_token"),
+    refreshToken: text("refresh_token"),
+    accessTokenExpiresAt: integer("access_token_expires_at", {
+      mode: "timestamp_ms",
+    }),
+    refreshTokenExpiresAt: integer("refresh_token_expires_at", {
+      mode: "timestamp_ms",
+    }),
+    scope: text("scope"),
+    idToken: text("id_token"),
+    password: text("password"),
+    ...timestamps,
+  },
+  (table) => [index("user_id_index").on(table.userId)]
+);
