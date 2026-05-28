@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as IndexRouteImport } from "./routes/index";
+import { Route as AuthenticatedChatRouteImport } from "./routes/_authenticated/chat";
 import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 
 const IndexRoute = IndexRouteImport.update({
   id: "/",
   path: "/",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const AuthenticatedChatRoute = AuthenticatedChatRouteImport.update({
+  id: "/_authenticated/chat",
+  path: "/chat",
   getParentRoute: () => rootRouteImport,
 } as any);
 const authSignInRoute = authSignInRouteImport.update({
@@ -32,30 +38,39 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
   "/sign-in": typeof authSignInRoute;
+  "/chat": typeof AuthenticatedChatRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
 }
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
   "/sign-in": typeof authSignInRoute;
+  "/chat": typeof AuthenticatedChatRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/": typeof IndexRoute;
   "/(auth)/sign-in": typeof authSignInRoute;
+  "/_authenticated/chat": typeof AuthenticatedChatRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/sign-in" | "/api/auth/$";
+  fullPaths: "/" | "/sign-in" | "/chat" | "/api/auth/$";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/sign-in" | "/api/auth/$";
-  id: "__root__" | "/" | "/(auth)/sign-in" | "/api/auth/$";
+  to: "/" | "/sign-in" | "/chat" | "/api/auth/$";
+  id:
+    | "__root__"
+    | "/"
+    | "/(auth)/sign-in"
+    | "/_authenticated/chat"
+    | "/api/auth/$";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   authSignInRoute: typeof authSignInRoute;
+  AuthenticatedChatRoute: typeof AuthenticatedChatRoute;
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
 }
 
@@ -66,6 +81,13 @@ declare module "@tanstack/react-router" {
       path: "/";
       fullPath: "/";
       preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_authenticated/chat": {
+      id: "/_authenticated/chat";
+      path: "/chat";
+      fullPath: "/chat";
+      preLoaderRoute: typeof AuthenticatedChatRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/(auth)/sign-in": {
@@ -88,6 +110,7 @@ declare module "@tanstack/react-router" {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authSignInRoute: authSignInRoute,
+  AuthenticatedChatRoute: AuthenticatedChatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 };
 export const routeTree = rootRouteImport
