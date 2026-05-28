@@ -10,11 +10,11 @@ import { betterAuth } from "better-auth";
 import { db } from "@repo/db";
 
 import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from "@/constants";
-import { authServerEnvVars } from "@/env-vars/server";
+import { authEnvVars } from "@/env-vars";
 
 export const auth = betterAuth({
-  secret: authServerEnvVars.BETTER_AUTH_SECRET,
-  baseURL: authServerEnvVars.BETTER_AUTH_URL,
+  secret: authEnvVars.BETTER_AUTH_SECRET,
+  baseURL: authEnvVars.BETTER_AUTH_URL,
   database: drizzleAdapter(db, {
     provider: "sqlite",
     schema: {
