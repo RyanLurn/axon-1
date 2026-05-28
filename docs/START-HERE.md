@@ -44,7 +44,7 @@ Internal packages consumed by the apps above. Not deployed independently.
 | `@repo/db`    | Database client, schema definitions, and migrations. Built on Drizzle ORM with SQLite. The single source of truth for all persistent data shapes. |
 | `@repo/types` | Shared TypeScript utility types used across the monorepo. Examples: `Result`, `Branded`, `StrictOmit`. No runtime code — types only.              |
 
-> There is no shared UI package (only one app has a frontend) and no shared auth package (auth logic is scoped entirely to `@repo/user`).
+> There is no shared UI package (only one app has a frontend).
 
 ### `configs/` — Shared Tooling Config
 
