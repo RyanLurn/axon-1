@@ -9,7 +9,6 @@
     "src/**/*",
     "eslint.config.js",
     "drizzle.config.ts",
-    "tsdown.config.ts",
-    "seed.ts"
+    "tsdown.config.ts"
   ]
 }

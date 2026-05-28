@@ -9,8 +9,7 @@
     "lint": "eslint --cache",
     "generate": "bun run --bun drizzle-kit generate",
     "migrate": "bun run --bun drizzle-kit migrate",
-    "studio": "bun run --bun drizzle-kit studio",
-    "seed": "bun run --bun seed.ts"
+    "studio": "bun run --bun drizzle-kit studio"
   },
   "exports": {
     ".": {

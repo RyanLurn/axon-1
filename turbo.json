@@ -9,7 +9,6 @@
         "!migrations/**",
         "!eslint.config.js",
         "!drizzle.config.ts",
-        "!seed.ts",
         "!.env.example",
         "!README.md",
         "!components.json"
