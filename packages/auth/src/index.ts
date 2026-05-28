@@ -24,4 +24,8 @@ export const auth = betterAuth({
       generateId: false,
     },
   },
+  emailAndPassword: {
+    enabled: true,
+    disableSignUp: true, // Single user created at deployment -> no need for sign up
+  },
 });
