@@ -9,6 +9,7 @@ import { userTable } from "@repo/db/schema/tables/user";
 import { betterAuth } from "better-auth";
 import { db } from "@repo/db";
 
+import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from "@/constants";
 import { authServerEnvVars } from "@/env-vars/server";
 
 export const auth = betterAuth({
@@ -31,7 +32,12 @@ export const auth = betterAuth({
   },
   emailAndPassword: {
     enabled: true,
-    disableSignUp: true, // Single user created at deployment -> no need for sign up
+    // Single user created at deployment -> no need for sign up
+    disableSignUp: true,
+    // For context, these lengths are the same as Better Auth's default.
+    // We extracted them into variables so that we can later use them in Zod schemas.
+    minPasswordLength: MIN_PASSWORD_LENGTH,
+    maxPasswordLength: MAX_PASSWORD_LENGTH,
   },
   // Better Auth docs specifies that the tanstackStartCookies plugin must come last in the array.
   plugins: [tanstackStartCookies()],
