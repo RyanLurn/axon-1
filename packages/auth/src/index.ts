@@ -9,7 +9,11 @@ import { userTable } from "@repo/db/schema/tables/user";
 import { betterAuth } from "better-auth";
 import { db } from "@repo/db";
 
+import { authServerEnvVars } from "@/env-vars/server";
+
 export const auth = betterAuth({
+  secret: authServerEnvVars.BETTER_AUTH_SECRET,
+  baseURL: authServerEnvVars.BETTER_AUTH_URL,
   database: drizzleAdapter(db, {
     provider: "sqlite",
     schema: {
