@@ -1,9 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+
+import { getSession } from "@/lib/auth/server-functions/get-session";
 
 export const Route = createFileRoute("/_authenticated")({
-  component: AuthenticatedPathlessLayout,
-});
+  beforeLoad: async ({ location }) => {
+    const session = await getSession();
 
-function AuthenticatedPathlessLayout() {
-  return <div>Hello "/_authenticated"!</div>;
-}
+    if (!session) {
+      throw redirect({
+        to: "/sign-in",
+        search: { redirect: location.href },
+      });
+    }
+
+    return { user: session.user };
+  },
+});
