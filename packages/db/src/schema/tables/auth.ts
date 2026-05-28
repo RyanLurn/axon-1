@@ -40,3 +40,15 @@ export const accountTable = sqliteTable(
   },
   (table) => [index("user_id_index").on(table.userId)]
 );
+
+export const verificationTable = sqliteTable(
+  "verifications",
+  {
+    id,
+    identifier: text("identifier").notNull(),
+    value: text("value").notNull(),
+    expiresAt: integer("expires_at", { mode: "timestamp_ms" }).notNull(),
+    ...timestamps,
+  },
+  (table) => [index("identifier_index").on(table.identifier)]
+);
