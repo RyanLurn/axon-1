@@ -3,6 +3,7 @@ import {
   accountTable,
   sessionTable,
 } from "@repo/db/schema/tables/auth";
+import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { userTable } from "@repo/db/schema/tables/user";
 import { betterAuth } from "better-auth";
@@ -28,4 +29,6 @@ export const auth = betterAuth({
     enabled: true,
     disableSignUp: true, // Single user created at deployment -> no need for sign up
   },
+  // Better Auth docs specifies that the tanstackStartCookies plugin must come last in the array.
+  plugins: [tanstackStartCookies()],
 });
