@@ -11,7 +11,8 @@
     "check": "turbo run check-types lint && bun run format:check",
     "db:generate": "bun --elide-lines 0 --filter @repo/db generate",
     "db:migrate": "bun --elide-lines 0 --filter @repo/db migrate",
-    "db:studio": "bun --elide-lines 0 --filter @repo/db studio"
+    "db:studio": "bun --elide-lines 0 --filter @repo/db studio",
+    "db:seed": "bun --elide-lines 0 --filter @repo/db seed"
   },
   "workspaces": {
     "packages": [
