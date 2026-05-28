@@ -4,11 +4,12 @@ export const Route = createFileRoute("/_authenticated/chat")({
   component: ChatPage,
 });
 
+/**
+ * Placeholder page for future user-agent chat feature.
+ * Currently used for testing route protection logic.
+ */
 function ChatPage() {
-  return (
-    <div>
-      Placeholder page for future user-agent chat feature. Currently used for
-      testing route protection logic.
-    </div>
-  );
+  const { user } = Route.useRouteContext();
+
+  return <div>Welcome back, {user.name}</div>;
 }
