@@ -9,20 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root";
+import { Route as AuthenticatedRouteRouteImport } from "./routes/_authenticated/route";
 import { Route as IndexRouteImport } from "./routes/index";
 import { Route as AuthenticatedChatRouteImport } from "./routes/_authenticated/chat";
 import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: "/_authenticated",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const IndexRoute = IndexRouteImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => rootRouteImport,
 } as any);
 const AuthenticatedChatRoute = AuthenticatedChatRouteImport.update({
-  id: "/_authenticated/chat",
+  id: "/chat",
   path: "/chat",
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any);
 const authSignInRoute = authSignInRouteImport.update({
   id: "/(auth)/sign-in",
@@ -50,6 +55,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/": typeof IndexRoute;
+  "/_authenticated": typeof AuthenticatedRouteRouteWithChildren;
   "/(auth)/sign-in": typeof authSignInRoute;
   "/_authenticated/chat": typeof AuthenticatedChatRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
@@ -62,6 +68,7 @@ export interface FileRouteTypes {
   id:
     | "__root__"
     | "/"
+    | "/_authenticated"
     | "/(auth)/sign-in"
     | "/_authenticated/chat"
     | "/api/auth/$";
@@ -69,13 +76,20 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren;
   authSignInRoute: typeof authSignInRoute;
-  AuthenticatedChatRoute: typeof AuthenticatedChatRoute;
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
 }
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/_authenticated": {
+      id: "/_authenticated";
+      path: "";
+      fullPath: "/";
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/": {
       id: "/";
       path: "/";
@@ -88,7 +102,7 @@ declare module "@tanstack/react-router" {
       path: "/chat";
       fullPath: "/chat";
       preLoaderRoute: typeof AuthenticatedChatRouteImport;
-      parentRoute: typeof rootRouteImport;
+      parentRoute: typeof AuthenticatedRouteRoute;
     };
     "/(auth)/sign-in": {
       id: "/(auth)/sign-in";
@@ -107,10 +121,21 @@ declare module "@tanstack/react-router" {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedChatRoute: typeof AuthenticatedChatRoute;
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedChatRoute: AuthenticatedChatRoute,
+};
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren);
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   authSignInRoute: authSignInRoute,
-  AuthenticatedChatRoute: AuthenticatedChatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 };
 export const routeTree = rootRouteImport
