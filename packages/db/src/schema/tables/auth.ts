@@ -15,7 +15,7 @@ export const sessionTable = sqliteTable(
     userAgent: text("user_agent"),
     ...timestamps,
   },
-  (table) => [index("user_id_index").on(table.userId)]
+  (table) => [index("sessions_user_id_index").on(table.userId)]
 );
 
 export const accountTable = sqliteTable(
@@ -38,7 +38,7 @@ export const accountTable = sqliteTable(
     password: text("password"),
     ...timestamps,
   },
-  (table) => [index("user_id_index").on(table.userId)]
+  (table) => [index("accounts_user_id_index").on(table.userId)]
 );
 
 export const verificationTable = sqliteTable(
