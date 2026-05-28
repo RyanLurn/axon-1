@@ -50,5 +50,5 @@ export const verificationTable = sqliteTable(
     expiresAt: integer("expires_at", { mode: "timestamp_ms" }).notNull(),
     ...timestamps,
   },
-  (table) => [index("identifier_index").on(table.identifier)]
+  (table) => [index("verifications_identifier_index").on(table.identifier)]
 );
