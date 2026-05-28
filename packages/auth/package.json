@@ -1,6 +1,6 @@
 {
   "name": "@repo/auth",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "private": "true",
   "scripts": {
@@ -21,12 +21,12 @@
     }
   },
   "dependencies": {
+    "@repo/db": "workspace:*",
     "@t3-oss/env-core": "catalog:",
     "better-auth": "1.6.11",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@repo/db": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/tsdown-config": "workspace:*",
     "@repo/types": "workspace:*",

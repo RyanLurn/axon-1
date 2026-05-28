@@ -80,12 +80,12 @@
       "name": "@repo/auth",
       "version": "0.0.1",
       "dependencies": {
+        "@repo/db": "workspace:*",
         "@t3-oss/env-core": "catalog:",
         "better-auth": "1.6.11",
         "zod": "catalog:",
       },
       "devDependencies": {
-        "@repo/db": "workspace:*",
         "@repo/eslint-config": "workspace:*",
         "@repo/tsdown-config": "workspace:*",
         "@repo/types": "workspace:*",
@@ -99,6 +99,7 @@
     },
     "packages/db": {
       "name": "@repo/db",
+      "version": "1.0.0",
       "dependencies": {
         "@t3-oss/env-core": "catalog:",
         "drizzle-orm": "1.0.0-rc.3",
