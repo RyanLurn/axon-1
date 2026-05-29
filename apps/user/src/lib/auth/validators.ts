@@ -6,7 +6,7 @@ export const emailValidator = z
   .trim()
   .toLowerCase()
   .normalize("NFC")
-  .pipe(z.email());
+  .pipe(z.email().max(254));
 
 export const passwordValidator = z
   .string()
