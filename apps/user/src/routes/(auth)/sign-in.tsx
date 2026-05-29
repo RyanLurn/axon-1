@@ -9,9 +9,16 @@ import {
   CardTitle,
   Card,
 } from "@/components/ui/card";
+import {
+  FieldGroup,
+  FieldLabel,
+  FieldError,
+  Field,
+} from "@/components/ui/field";
+import { credentialsValidator, emailValidator } from "@/lib/auth/validators";
 import { Route as ChatRoute } from "@/routes/_authenticated/chat";
-import { credentialsValidator } from "@/lib/auth/validators";
 import { authClient } from "@/lib/auth/client";
+import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/(auth)/sign-in")({
   component: SignInPage,
@@ -55,7 +62,38 @@ function SignInPage() {
             void signInForm.handleSubmit();
           }}
           id={signInForm.formId}
-        ></form>
+        >
+          <FieldGroup>
+            <signInForm.Field
+              children={(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+                    <Input
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      placeholder="youremail@example.com"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      aria-invalid={isInvalid}
+                      name={field.name}
+                      id={field.name}
+                      type="email"
+                    />
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+              validators={{
+                onChange: emailValidator,
+              }}
+              name="email"
+            />
+          </FieldGroup>
+        </form>
       </CardContent>
     </Card>
   );
