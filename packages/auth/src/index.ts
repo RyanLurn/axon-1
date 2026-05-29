@@ -1,35 +1,11 @@
-import {
-  verificationTable,
-  accountTable,
-  sessionTable,
-} from "@repo/db/schema/tables/auth";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { userTable } from "@repo/db/schema/tables/user";
 import { betterAuth } from "better-auth";
-import { db } from "@repo/db";
 
 import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from "@/constants";
-import { authEnvVars } from "@/env-vars";
+import { baseAuthOptions } from "@/options/base";
 
 export const auth = betterAuth({
-  secret: authEnvVars.BETTER_AUTH_SECRET,
-  baseURL: authEnvVars.BETTER_AUTH_URL,
-  database: drizzleAdapter(db, {
-    provider: "sqlite",
-    schema: {
-      user: userTable,
-      session: sessionTable,
-      account: accountTable,
-      verification: verificationTable,
-    },
-  }),
-  advanced: {
-    database: {
-      // Let Drizzle ORM generate the id. See `packages/db/src/schema/helpers/id.ts`.
-      generateId: false,
-    },
-  },
+  ...baseAuthOptions,
   emailAndPassword: {
     enabled: true,
     // Single user created at deployment -> no need for sign up
