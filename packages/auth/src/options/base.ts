@@ -11,7 +11,7 @@ import { db } from "@repo/db";
 
 import { authEnvVars } from "@/env-vars";
 
-export const baseAuthOptions: BetterAuthOptions = {
+export const baseAuthOptions = {
   secret: authEnvVars.BETTER_AUTH_SECRET,
   baseURL: authEnvVars.BETTER_AUTH_URL,
   database: drizzleAdapter(db, {
@@ -29,4 +29,4 @@ export const baseAuthOptions: BetterAuthOptions = {
       generateId: false,
     },
   },
-};
+} satisfies BetterAuthOptions;
