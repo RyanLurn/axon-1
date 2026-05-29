@@ -5,6 +5,7 @@ import { z } from "zod";
 export const envVars = createEnv({
   server: {
     SQLITE_FILE_PATH: z.string().min(1),
+    SEED_NAME: z.string().min(1),
     SEED_EMAIL: z.email(),
     SEED_PASSWORD: z.string().min(MIN_PASSWORD_LENGTH).max(MAX_PASSWORD_LENGTH),
   },

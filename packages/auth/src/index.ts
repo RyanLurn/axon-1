@@ -33,7 +33,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     // Single user created at deployment -> no need for sign up
-    disableSignUp: true,
+    // disableSignUp: true,
     minPasswordLength: MIN_PASSWORD_LENGTH,
     maxPasswordLength: MAX_PASSWORD_LENGTH,
   },
