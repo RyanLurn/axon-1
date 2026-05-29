@@ -13,3 +13,8 @@ export const userAuth = betterAuth({
   // Better Auth docs specifies that the tanstackStartCookies plugin must come last in the array.
   plugins: [tanstackStartCookies()],
 });
+
+export const seedAuth = betterAuth({
+  ...baseAuthOptions,
+  emailAndPassword: emailPasswordOptions,
+});
