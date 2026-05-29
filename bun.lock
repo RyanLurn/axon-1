@@ -135,6 +135,24 @@
         "typescript": "catalog:",
       },
     },
+    "scripts/seed": {
+      "name": "@repo/seed",
+      "version": "1.0.0",
+      "dependencies": {
+        "@repo/auth": "workspace:*",
+        "@repo/db": "workspace:*",
+        "@t3-oss/env-core": "catalog:",
+        "zod": "catalog:",
+      },
+      "devDependencies": {
+        "@repo/eslint-config": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "@types/bun": "catalog:",
+        "@types/node": "catalog:",
+        "eslint": "catalog:",
+        "typescript": "catalog:",
+      },
+    },
   },
   "catalog": {
     "@t3-oss/env-core": "0.13.11",
@@ -394,6 +412,8 @@
     "@repo/db": ["@repo/db@workspace:packages/db"],
 
     "@repo/eslint-config": ["@repo/eslint-config@workspace:configs/eslint"],
+
+    "@repo/seed": ["@repo/seed@workspace:scripts/seed"],
 
     "@repo/tsdown-config": ["@repo/tsdown-config@workspace:configs/tsdown"],
 
