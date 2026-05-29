@@ -54,86 +54,88 @@ function SignInPage() {
   });
 
   return (
-    <Card className="w-full sm:max-w-md">
-      <CardHeader>
-        <CardTitle>Sign in</CardTitle>
-        <CardDescription>
-          Enter your credentials below to sign in.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            void signInForm.handleSubmit();
-          }}
-          id={signInForm.formId}
-        >
-          <FieldGroup>
-            <signInForm.Field
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-                    <Input
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="youremail@example.com"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      aria-invalid={isInvalid}
-                      name={field.name}
-                      id={field.name}
-                      type="email"
-                    />
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-              validators={{
-                onChange: emailValidator,
-              }}
-              name="email"
-            />
-            <signInForm.Field
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-                    <Input
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="************"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      aria-invalid={isInvalid}
-                      name={field.name}
-                      id={field.name}
-                      type="password"
-                    />
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-              validators={{
-                onChange: passwordValidator,
-              }}
-              name="password"
-            />
-          </FieldGroup>
-        </form>
-      </CardContent>
-      <CardFooter>
-        <Button form={signInForm.formId} type="submit">
-          Sign in
-        </Button>
-      </CardFooter>
-    </Card>
+    <div className="flex size-full flex-col items-center justify-center">
+      <Card className="w-full sm:max-w-sm">
+        <CardHeader>
+          <CardTitle>Sign in</CardTitle>
+          <CardDescription>
+            Enter your credentials below to sign in.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              void signInForm.handleSubmit();
+            }}
+            id={signInForm.formId}
+          >
+            <FieldGroup>
+              <signInForm.Field
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+                      <Input
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="youremail@example.com"
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        aria-invalid={isInvalid}
+                        name={field.name}
+                        id={field.name}
+                        type="email"
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+                validators={{
+                  onChange: emailValidator,
+                }}
+                name="email"
+              />
+              <signInForm.Field
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+                      <Input
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="************"
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        aria-invalid={isInvalid}
+                        name={field.name}
+                        id={field.name}
+                        type="password"
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+                validators={{
+                  onChange: passwordValidator,
+                }}
+                name="password"
+              />
+            </FieldGroup>
+          </form>
+        </CardContent>
+        <CardFooter>
+          <Button form={signInForm.formId} className="w-full" type="submit">
+            Sign in
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
