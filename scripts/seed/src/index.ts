@@ -1,12 +1,12 @@
 import { BASE_ERROR_CODES } from "better-auth";
 import { isAPIError } from "better-auth/api";
-import { auth } from "@repo/auth";
+import { seedAuth } from "@repo/auth";
 
 import { envVars } from "@/env-vars";
 
 // Code used to test sign in flow. NOT for production.
 async function main() {
-  await auth.api.signUpEmail({
+  await seedAuth.api.signUpEmail({
     body: {
       name: envVars.SEED_NAME,
       email: envVars.SEED_EMAIL,
