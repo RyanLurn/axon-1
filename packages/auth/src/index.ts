@@ -34,8 +34,6 @@ export const auth = betterAuth({
     enabled: true,
     // Single user created at deployment -> no need for sign up
     disableSignUp: true,
-    // For context, these lengths are the same as Better Auth's default.
-    // We extracted them into variables so that we can later use them in Zod schemas.
     minPasswordLength: MIN_PASSWORD_LENGTH,
     maxPasswordLength: MAX_PASSWORD_LENGTH,
   },
