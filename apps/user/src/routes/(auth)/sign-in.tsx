@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useForm } from "@tanstack/react-form";
 
 import { Route as ChatRoute } from "@/routes/_authenticated/chat";
+import { credentialsValidator } from "@/lib/auth/validators";
 import { authClient } from "@/lib/auth/client";
 
 export const Route = createFileRoute("/(auth)/sign-in")({
@@ -20,6 +21,9 @@ function SignInPage() {
     defaultValues: {
       email: "",
       password: "",
+    },
+    validators: {
+      onSubmit: credentialsValidator,
     },
   });
 
