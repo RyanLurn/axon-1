@@ -10,12 +10,16 @@ import {
   Card,
 } from "@/components/ui/card";
 import {
+  credentialsValidator,
+  passwordValidator,
+  emailValidator,
+} from "@/lib/auth/validators";
+import {
   FieldGroup,
   FieldLabel,
   FieldError,
   Field,
 } from "@/components/ui/field";
-import { credentialsValidator, emailValidator } from "@/lib/auth/validators";
 import { Route as ChatRoute } from "@/routes/_authenticated/chat";
 import { authClient } from "@/lib/auth/client";
 import { Input } from "@/components/ui/input";
@@ -91,6 +95,34 @@ function SignInPage() {
                 onChange: emailValidator,
               }}
               name="email"
+            />
+            <signInForm.Field
+              children={(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+                    <Input
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      placeholder="************"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      aria-invalid={isInvalid}
+                      name={field.name}
+                      id={field.name}
+                      type="password"
+                    />
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+              validators={{
+                onChange: passwordValidator,
+              }}
+              name="password"
             />
           </FieldGroup>
         </form>
