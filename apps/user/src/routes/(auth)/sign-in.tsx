@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useForm } from "@tanstack/react-form";
+import { BASE_ERROR_CODES } from "better-auth";
 import { toast } from "sonner";
 
 import {
@@ -32,7 +33,7 @@ export const Route = createFileRoute("/(auth)/sign-in")({
 
 function SignInPage() {
   const signInForm = useForm({
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       const { error } = await authClient.signIn.email({
         ...value,
         rememberMe: true,
@@ -40,7 +41,17 @@ function SignInPage() {
       });
 
       if (error) {
-        toast.error(error.message ?? "Failed to sign in.");
+        if (error.code === BASE_ERROR_CODES.INVALID_EMAIL.code) {
+          formApi.setErrorMap({
+            onChange: {
+              fields: {
+                email: error.message,
+              },
+            },
+          });
+        } else {
+          toast.error(error.message ?? "Failed to sign in.");
+        }
       }
     },
     defaultValues: {
