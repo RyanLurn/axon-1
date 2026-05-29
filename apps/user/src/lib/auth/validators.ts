@@ -12,3 +12,8 @@ export const passwordValidator = z
   .string()
   .min(MIN_PASSWORD_LENGTH)
   .max(MAX_PASSWORD_LENGTH);
+
+export const credentialsValidator = z.object({
+  email: emailValidator,
+  password: passwordValidator,
+});
