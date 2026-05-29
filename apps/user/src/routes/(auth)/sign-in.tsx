@@ -2,6 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 
+import {
+  CardDescription,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Card,
+} from "@/components/ui/card";
 import { Route as ChatRoute } from "@/routes/_authenticated/chat";
 import { credentialsValidator } from "@/lib/auth/validators";
 import { authClient } from "@/lib/auth/client";
@@ -30,7 +37,26 @@ function SignInPage() {
     validators: {
       onSubmit: credentialsValidator,
     },
+    formId: "sign-in-form",
   });
 
-  return <div>Hello "/(auth)/sign-in"!</div>;
+  return (
+    <Card className="w-full sm:max-w-md">
+      <CardHeader>
+        <CardTitle>Sign in</CardTitle>
+        <CardDescription>
+          Enter your credentials below to sign in.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            void signInForm.handleSubmit();
+          }}
+          id={signInForm.formId}
+        ></form>
+      </CardContent>
+    </Card>
+  );
 }
