@@ -131,9 +131,26 @@ function SignInPage() {
           </form>
         </CardContent>
         <CardFooter>
-          <Button form={signInForm.formId} className="w-full" type="submit">
-            Sign in
-          </Button>
+          <signInForm.Subscribe
+            selector={(state) => ({
+              isPristine: state.isPristine,
+              canSubmit: state.canSubmit,
+              isSubmitting: state.isSubmitting,
+            })}
+          >
+            {({ isPristine, canSubmit, isSubmitting }) => {
+              return (
+                <Button
+                  disabled={isPristine || !canSubmit || isSubmitting}
+                  form={signInForm.formId}
+                  className="w-full"
+                  type="submit"
+                >
+                  {isSubmitting ? "Signing in..." : "Sign in"}
+                </Button>
+              );
+            }}
+          </signInForm.Subscribe>
         </CardFooter>
       </Card>
     </div>
