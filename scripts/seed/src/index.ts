@@ -1,3 +1,5 @@
+import { BASE_ERROR_CODES } from "better-auth";
+import { isAPIError } from "better-auth/api";
 import { auth } from "@repo/auth";
 
 import { envVars } from "@/env-vars";
@@ -12,11 +14,19 @@ async function main() {
     },
   });
 
-  console.log("User seeded successfully");
+  console.log("User seeded successfully.");
 }
 
 try {
   await main();
 } catch (error) {
-  console.error(error);
+  if (
+    isAPIError(error) &&
+    error.body?.code ===
+      BASE_ERROR_CODES.USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL.code
+  ) {
+    console.warn("User already seeded.");
+  } else {
+    console.error(error);
+  }
 }

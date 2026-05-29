@@ -142,6 +142,7 @@
         "@repo/auth": "workspace:*",
         "@repo/db": "workspace:*",
         "@t3-oss/env-core": "catalog:",
+        "better-auth": "catalog:",
         "zod": "catalog:",
       },
       "devDependencies": {
