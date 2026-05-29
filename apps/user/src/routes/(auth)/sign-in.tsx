@@ -6,6 +6,7 @@ import {
   CardDescription,
   CardContent,
   CardHeader,
+  CardFooter,
   CardTitle,
   Card,
 } from "@/components/ui/card";
@@ -21,6 +22,7 @@ import {
   Field,
 } from "@/components/ui/field";
 import { Route as ChatRoute } from "@/routes/_authenticated/chat";
+import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth/client";
 import { Input } from "@/components/ui/input";
 
@@ -127,6 +129,11 @@ function SignInPage() {
           </FieldGroup>
         </form>
       </CardContent>
+      <CardFooter>
+        <Button form={signInForm.formId} type="submit">
+          Sign in
+        </Button>
+      </CardFooter>
     </Card>
   );
 }
