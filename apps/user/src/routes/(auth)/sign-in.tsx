@@ -72,7 +72,12 @@ function SignInPage() {
           >
             <FieldGroup>
               <signInForm.Field
-                children={(field) => {
+                validators={{
+                  onChange: emailValidator,
+                }}
+                name="email"
+              >
+                {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
                   return (
@@ -94,13 +99,14 @@ function SignInPage() {
                     </Field>
                   );
                 }}
-                validators={{
-                  onChange: emailValidator,
-                }}
-                name="email"
-              />
+              </signInForm.Field>
               <signInForm.Field
-                children={(field) => {
+                validators={{
+                  onChange: passwordValidator,
+                }}
+                name="password"
+              >
+                {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
                   return (
@@ -122,11 +128,7 @@ function SignInPage() {
                     </Field>
                   );
                 }}
-                validators={{
-                  onChange: passwordValidator,
-                }}
-                name="password"
-              />
+              </signInForm.Field>
             </FieldGroup>
           </form>
         </CardContent>
