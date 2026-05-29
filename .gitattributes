@@ -5,3 +5,6 @@
 configs/** linguist-vendored=false
 configs/** linguist-documentation=false
 configs/** linguist-generated=false
+scripts/** linguist-vendored=false
+scripts/** linguist-documentation=false
+scripts/** linguist-generated=false

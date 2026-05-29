@@ -17,7 +17,8 @@
     "packages": [
       "apps/*",
       "configs/*",
-      "packages/*"
+      "packages/*",
+      "scripts/*"
     ],
     "catalog": {
       "@t3-oss/env-core": "0.13.11",
