@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsdown",
     "check-types": "tsc --noEmit",
-    "lint": "eslint --cache"
+    "lint": "eslint --cache",
+    "try": "bun run --bun src/try.ts"
   },
   "exports": {
     ".": {
