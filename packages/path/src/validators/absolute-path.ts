@@ -1,10 +1,23 @@
+import type { Result } from "@repo/types/result";
+
 import { isAbsolute } from "node:path";
 
 import type { AbsolutePath } from "@/types";
 
-export function validateAbsolutePath(path: string) {
+import { NotAbsolutePathError } from "@/errors/not-absolute-path";
+
+export function validateAbsolutePath(
+  path: string
+): Result<AbsolutePath, NotAbsolutePathError> {
   if (isAbsolute(path)) {
-    return path as AbsolutePath;
+    return {
+      isOk: true,
+      data: path as AbsolutePath,
+    };
   }
-  return null;
+
+  return {
+    isOk: false,
+    error: new NotAbsolutePathError({ path }),
+  };
 }
