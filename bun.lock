@@ -124,6 +124,21 @@
         "typescript": "catalog:",
       },
     },
+    "packages/fs": {
+      "name": "@repo/fs",
+      "version": "1.0.0",
+      "devDependencies": {
+        "@repo/eslint-config": "workspace:*",
+        "@repo/tsdown-config": "workspace:*",
+        "@repo/types": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "@types/bun": "catalog:",
+        "@types/node": "catalog:",
+        "eslint": "catalog:",
+        "tsdown": "catalog:",
+        "typescript": "catalog:",
+      },
+    },
     "packages/git": {
       "name": "@repo/git",
       "version": "1.0.0",
@@ -433,6 +448,8 @@
     "@repo/db": ["@repo/db@workspace:packages/db"],
 
     "@repo/eslint-config": ["@repo/eslint-config@workspace:configs/eslint"],
+
+    "@repo/fs": ["@repo/fs@workspace:packages/fs"],
 
     "@repo/git": ["@repo/git@workspace:packages/git"],
 
