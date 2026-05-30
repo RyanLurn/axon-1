@@ -141,6 +141,10 @@
     "packages/fs": {
       "name": "@repo/fs",
       "version": "1.0.0",
+      "dependencies": {
+        "@repo/errors": "workspace:*",
+        "@repo/path": "workspace:*",
+      },
       "devDependencies": {
         "@repo/eslint-config": "workspace:*",
         "@repo/tsdown-config": "workspace:*",

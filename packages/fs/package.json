@@ -20,6 +20,10 @@
       "default": "./dist/*.mjs"
     }
   },
+  "dependencies": {
+    "@repo/errors": "workspace:*",
+    "@repo/path": "workspace:*"
+  },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/tsdown-config": "workspace:*",
