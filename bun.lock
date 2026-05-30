@@ -124,6 +124,26 @@
         "typescript": "catalog:",
       },
     },
+    "packages/git": {
+      "name": "@repo/git",
+      "version": "1.0.0",
+      "dependencies": {
+        "@repo/db": "workspace:*",
+        "@t3-oss/env-core": "catalog:",
+        "zod": "catalog:",
+      },
+      "devDependencies": {
+        "@repo/eslint-config": "workspace:*",
+        "@repo/tsdown-config": "workspace:*",
+        "@repo/types": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "@types/bun": "catalog:",
+        "@types/node": "catalog:",
+        "eslint": "catalog:",
+        "tsdown": "catalog:",
+        "typescript": "catalog:",
+      },
+    },
     "packages/types": {
       "name": "@repo/types",
       "devDependencies": {
@@ -413,6 +433,8 @@
     "@repo/db": ["@repo/db@workspace:packages/db"],
 
     "@repo/eslint-config": ["@repo/eslint-config@workspace:configs/eslint"],
+
+    "@repo/git": ["@repo/git@workspace:packages/git"],
 
     "@repo/seed": ["@repo/seed@workspace:scripts/seed"],
 
