@@ -1,6 +1,6 @@
 import type { Branded } from "@repo/types/branded";
 
-export type RealPath = Branded<string, "FilePath">;
+export type RealPath = Branded<string, "RealPath">;
 
 export type FilePath = Branded<string, "FilePath">;
 
