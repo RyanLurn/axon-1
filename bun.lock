@@ -124,6 +124,20 @@
         "typescript": "catalog:",
       },
     },
+    "packages/errors": {
+      "name": "@repo/errors",
+      "version": "1.0.0",
+      "devDependencies": {
+        "@repo/eslint-config": "workspace:*",
+        "@repo/tsdown-config": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "@types/bun": "catalog:",
+        "@types/node": "catalog:",
+        "eslint": "catalog:",
+        "tsdown": "catalog:",
+        "typescript": "catalog:",
+      },
+    },
     "packages/fs": {
       "name": "@repo/fs",
       "version": "1.0.0",
@@ -446,6 +460,8 @@
     "@repo/auth": ["@repo/auth@workspace:packages/auth"],
 
     "@repo/db": ["@repo/db@workspace:packages/db"],
+
+    "@repo/errors": ["@repo/errors@workspace:packages/errors"],
 
     "@repo/eslint-config": ["@repo/eslint-config@workspace:configs/eslint"],
 
