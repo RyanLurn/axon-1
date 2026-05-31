@@ -4,8 +4,7 @@ import { join } from "node:path";
 import { Hono } from "hono";
 
 import { gitServiceValidator, repoNameValidator } from "@/validators";
-import { spawnReceivePackAd } from "@/services/receive-pack";
-import { spawnUploadPackAd } from "@/services/upload-pack";
+import { spawnInfoRefsAd } from "@/services/info-refs";
 import { gitEnvVars } from "@/env-vars";
 
 export const gitServer = new Hono().get(
@@ -36,27 +35,7 @@ export const gitServer = new Hono().get(
 
     const repoPath = join(gitEnvVars.GIT_DIR_PATH, repo);
 
-    if (service === "git-upload-pack") {
-      const spawnResult = await spawnUploadPackAd(repoPath);
-
-      if (!spawnResult.isOk) {
-        const error = spawnResult.error;
-        console.error(error);
-
-        if (error.code === "NO_ENTRY_ERROR") {
-          return c.text("Repository not found", 404);
-        }
-
-        return c.text("Internal server error", 500);
-      }
-
-      c.header("Content-Type", `application/x-${service}-advertisement`);
-      c.header("Cache-Control", "no-cache");
-      console.log(spawnResult.data);
-      return c.text(spawnResult.data, 200);
-    }
-
-    const spawnResult = await spawnReceivePackAd(repoPath);
+    const spawnResult = await spawnInfoRefsAd({ repoPath, service });
 
     if (!spawnResult.isOk) {
       const error = spawnResult.error;
