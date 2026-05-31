@@ -14,15 +14,7 @@ export const gitServer = new Hono().get(
 
     if (!validationResult.success) {
       console.log(prettifyError(validationResult.error));
-      return c.json(
-        {
-          error: {
-            code: "VALIDATION_ERROR",
-            message: "Invalid repo name in path param.",
-          },
-        },
-        400
-      );
+      return c.text("Invalid request", 400);
     }
 
     return validationResult.data;
@@ -32,15 +24,7 @@ export const gitServer = new Hono().get(
 
     if (!validationResult.success) {
       console.log(prettifyError(validationResult.error));
-      return c.json(
-        {
-          error: {
-            code: "VALIDATION_ERROR",
-            message: "Invalid service query param.",
-          },
-        },
-        400
-      );
+      return c.text("Invalid request", 400);
     }
 
     return validationResult.data;
@@ -59,23 +43,10 @@ export const gitServer = new Hono().get(
         console.error(error);
 
         if (error.code === "NO_ENTRY_ERROR") {
-          return c.json(
-            {
-              error: {
-                code: "NOT_FOUND_ERROR",
-                message: `The repo "${repo}" doesn't exist.`,
-              },
-            },
-            404
-          );
+          return c.text("Repository not found", 404);
         }
 
-        return c.json(
-          {
-            error: { code: "INTERNAL_ERROR", message: "Something went wrong." },
-          },
-          500
-        );
+        return c.text("Internal server error", 500);
       }
 
       c.header("Content-Type", `application/x-${service}-advertisement`);
