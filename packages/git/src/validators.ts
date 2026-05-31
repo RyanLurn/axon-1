@@ -15,3 +15,4 @@ export const repoNameValidator = z
   });
 
 export const gitServiceValidator = z.enum(GIT_SERVICES);
+export type GitService = z.infer<typeof gitServiceValidator>;
