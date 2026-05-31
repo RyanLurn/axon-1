@@ -23,6 +23,7 @@
   "dependencies": {
     "@repo/db": "workspace:*",
     "@t3-oss/env-core": "catalog:",
+    "hono": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
