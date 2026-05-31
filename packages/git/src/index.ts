@@ -61,7 +61,7 @@ export const gitServer = new Hono().get(
             {
               error: {
                 code: "NOT_FOUND_ERROR",
-                message: `The repo named ${repoName} doesn't exist.`,
+                message: `The repo "${repoName}" doesn't exist.`,
               },
             },
             404
@@ -78,9 +78,11 @@ export const gitServer = new Hono().get(
 
       c.header("Content-Type", `application/x-${service}-advertisement`);
       c.header("Cache-Control", "no-cache");
+      console.log(spawnResult.data);
       return c.text(spawnResult.data, 200);
     }
 
+    console.error(`Client requested the ${service} service.`);
     return c.json(
       {
         error: {
