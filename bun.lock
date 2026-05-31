@@ -162,6 +162,8 @@
       "version": "1.0.0",
       "dependencies": {
         "@repo/db": "workspace:*",
+        "@repo/errors": "workspace:*",
+        "@repo/fs": "workspace:*",
         "@t3-oss/env-core": "catalog:",
         "hono": "catalog:",
         "zod": "catalog:",
