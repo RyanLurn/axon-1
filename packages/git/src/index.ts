@@ -3,8 +3,8 @@ import { prettifyError } from "zod";
 import { join } from "node:path";
 import { Hono } from "hono";
 
-import { spawnUploadPackAdvertisement } from "@/services/upload-pack/advertisement";
 import { gitServiceValidator, repoNameValidator } from "@/validators";
+import { spawnUploadPackAd } from "@/services/upload-pack";
 import { gitEnvVars } from "@/env-vars";
 
 export const gitServer = new Hono().get(
@@ -50,7 +50,7 @@ export const gitServer = new Hono().get(
     const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoName);
 
     if (service === "git-upload-pack") {
-      const spawnResult = await spawnUploadPackAdvertisement(repoPath);
+      const spawnResult = await spawnUploadPackAd(repoPath);
 
       if (!spawnResult.isOk) {
         const error = spawnResult.error;

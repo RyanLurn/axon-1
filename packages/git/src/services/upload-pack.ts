@@ -4,7 +4,7 @@ import type { Result } from "@repo/types/result";
 import { resolveRealPath } from "@repo/fs/resolve-real-path";
 import { UnexpectedError } from "@repo/errors/unexpected";
 
-export async function spawnUploadPackAdvertisement(
+export async function spawnUploadPackAd(
   repoPath: string
 ): Promise<Result<string, UnexpectedError | NoEntryError>> {
   try {
