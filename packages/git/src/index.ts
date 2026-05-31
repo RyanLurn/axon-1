@@ -8,46 +8,48 @@ import { spawnUploadPackAd } from "@/services/upload-pack";
 import { gitEnvVars } from "@/env-vars";
 
 export const gitServer = new Hono().get(
-  "/:repoName/info/refs",
+  "/:repo/info/refs",
   validator("param", (value, c) => {
-    const paramValidationResult = repoNameValidator.safeParse(
-      value["repoName"]
-    );
+    const validationResult = repoNameValidator.safeParse(value["repo"]);
 
-    if (!paramValidationResult.success) {
-      console.log(prettifyError(paramValidationResult.error));
+    if (!validationResult.success) {
+      console.log(prettifyError(validationResult.error));
       return c.json(
         {
-          error: { code: "VALIDATION_ERROR", message: "Invalid repo name." },
+          error: {
+            code: "VALIDATION_ERROR",
+            message: "Invalid repo name in path param.",
+          },
         },
         400
       );
     }
 
-    return paramValidationResult.data;
+    return validationResult.data;
   }),
   validator("query", (value, c) => {
-    const queryValidationResult = gitServiceValidator.safeParse(
-      value["service"]
-    );
+    const validationResult = gitServiceValidator.safeParse(value["service"]);
 
-    if (!queryValidationResult.success) {
-      console.log(prettifyError(queryValidationResult.error));
+    if (!validationResult.success) {
+      console.log(prettifyError(validationResult.error));
       return c.json(
         {
-          error: { code: "VALIDATION_ERROR", message: "Invalid query param." },
+          error: {
+            code: "VALIDATION_ERROR",
+            message: "Invalid service query param.",
+          },
         },
         400
       );
     }
 
-    return queryValidationResult.data;
+    return validationResult.data;
   }),
   async (c) => {
-    const repoName = c.req.valid("param");
+    const repo = c.req.valid("param");
     const service = c.req.valid("query");
 
-    const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoName);
+    const repoPath = join(gitEnvVars.GIT_DIR_PATH, repo);
 
     if (service === "git-upload-pack") {
       const spawnResult = await spawnUploadPackAd(repoPath);
@@ -61,7 +63,7 @@ export const gitServer = new Hono().get(
             {
               error: {
                 code: "NOT_FOUND_ERROR",
-                message: `The repo "${repoName}" doesn't exist.`,
+                message: `The repo "${repo}" doesn't exist.`,
               },
             },
             404
