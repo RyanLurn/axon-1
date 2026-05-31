@@ -9,7 +9,13 @@ export async function spawnUploadPackAdvertisement(
 ): Promise<Result<string, UnexpectedError | NoEntryError>> {
   try {
     const gitProcess = Bun.spawn(
-      ["git", "upload-pack", "--http-backend-info-refs", repoPath],
+      [
+        "git",
+        "upload-pack",
+        "--stateless-rpc",
+        "--http-backend-info-refs",
+        repoPath,
+      ],
       {
         stdout: "pipe",
         stderr: "pipe",
