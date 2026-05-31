@@ -5,14 +5,11 @@ import { realpath } from "node:fs/promises";
 
 import type { RealPath } from "@/types";
 
-import { PathTooLongError } from "@/errors/path-too-long";
 import { NoEntryError } from "@/errors/no-entry";
 
 export async function resolveRealPath(
   path: string
-): Promise<
-  Result<RealPath, PathTooLongError | UnexpectedError | NoEntryError>
-> {
+): Promise<Result<RealPath, UnexpectedError | NoEntryError>> {
   try {
     const resolvedPath = await realpath(path);
     return {
@@ -20,28 +17,11 @@ export async function resolveRealPath(
       data: resolvedPath as RealPath,
     };
   } catch (error) {
-    if (
-      error instanceof Error &&
-      "code" in error &&
-      typeof error.code === "string"
-    ) {
-      switch (error.code) {
-        case "ENAMETOOLONG": {
-          return {
-            isOk: false,
-            error: new PathTooLongError({
-              path,
-              cause: error as ErrnoException,
-            }),
-          };
-        }
-        case "ENOENT": {
-          return {
-            isOk: false,
-            error: new NoEntryError({ path, cause: error as ErrnoException }),
-          };
-        }
-      }
+    if (error instanceof Error && "code" in error && error.code === "ENOENT") {
+      return {
+        isOk: false,
+        error: new NoEntryError({ path, cause: error as ErrnoException }),
+      };
     }
 
     return {
