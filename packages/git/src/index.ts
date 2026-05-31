@@ -7,10 +7,12 @@ import { gitServiceValidator, repoNameValidator } from "@/validators";
 export const gitServer = new Hono().get(
   "/:repoName/info/refs",
   validator("param", (value, c) => {
-    const validationResult = repoNameValidator.safeParse(value["repoName"]);
+    const paramValidationResult = repoNameValidator.safeParse(
+      value["repoName"]
+    );
 
-    if (!validationResult.success) {
-      console.log(prettifyError(validationResult.error));
+    if (!paramValidationResult.success) {
+      console.log(prettifyError(paramValidationResult.error));
       return c.json(
         {
           error: { code: "VALIDATION_ERROR", message: "Invalid repo name." },
@@ -19,7 +21,7 @@ export const gitServer = new Hono().get(
       );
     }
 
-    return validationResult.data;
+    return paramValidationResult.data;
   }),
   validator("query", (value, c) => {
     const queryValidationResult = gitServiceValidator.safeParse(
