@@ -10,7 +10,7 @@ export async function spawnReceivePack({
 }: {
   repoPath: string;
   requestBody: ReadableStream;
-}): Promise<Result<string, UnexpectedError | NoEntryError>> {
+}): Promise<Result<Uint8Array<ArrayBuffer>, UnexpectedError | NoEntryError>> {
   try {
     const gitProcess = Bun.spawn(["git-receive-pack", repoPath], {
       stdin: requestBody,
@@ -36,10 +36,10 @@ export async function spawnReceivePack({
       };
     }
 
-    const output = await gitProcess.stdout.text();
+    const rawOutput = await Bun.readableStreamToBytes(gitProcess.stdout);
     return {
       isOk: true,
-      data: output,
+      data: rawOutput,
     };
   } catch (error) {
     return {
