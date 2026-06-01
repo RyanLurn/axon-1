@@ -86,11 +86,5 @@ export const gitServer = new Hono()
       return c.text("Internal server error", 500);
     }
 
-    return new Response(spawnResult.data, {
-      status: 200,
-      headers: {
-        "Content-Type": "application/x-git-receive-pack-result",
-        "Cache-Control": "no-cache",
-      },
-    });
+    return spawnResult.data;
   });
