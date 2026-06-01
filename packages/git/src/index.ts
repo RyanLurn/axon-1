@@ -7,19 +7,21 @@ import { gitServiceValidator, repoNameValidator } from "@/validators";
 import { spawnInfoRefsAd } from "@/services/info-refs";
 import { gitEnvVars } from "@/env-vars";
 
+const repoPathParamValidator = validator("param", (value, c) => {
+  const validationResult = repoNameValidator.safeParse(value["repo"]);
+
+  if (!validationResult.success) {
+    console.log(prettifyError(validationResult.error));
+    return c.text("Invalid request", 400);
+  }
+
+  return validationResult.data;
+});
+
 export const gitServer = new Hono()
   .get(
     "/:repo/info/refs",
-    validator("param", (value, c) => {
-      const validationResult = repoNameValidator.safeParse(value["repo"]);
-
-      if (!validationResult.success) {
-        console.log(prettifyError(validationResult.error));
-        return c.text("Invalid request", 400);
-      }
-
-      return validationResult.data;
-    }),
+    repoPathParamValidator,
     validator("query", (value, c) => {
       const validationResult = gitServiceValidator.safeParse(value["service"]);
 
@@ -55,6 +57,6 @@ export const gitServer = new Hono()
       return c.text(spawnResult.data, 200);
     }
   )
-  .post("/:repo/receive-pack", (c) => {
+  .post("/:repo/receive-pack", repoPathParamValidator, (c) => {
     return c.text("OK", 200);
   });
