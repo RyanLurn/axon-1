@@ -6,6 +6,7 @@ import { Hono } from "hono";
 
 import { gitServiceValidator, repoNameValidator } from "@/validators";
 import { spawnReceivePack } from "@/services/receive-pack";
+import { spawnUploadPack } from "@/services/upload-pack";
 import { spawnInfoRefsAd } from "@/services/info-refs";
 import { gitEnvVars } from "@/env-vars";
 
@@ -88,4 +89,28 @@ export const gitServer = new Hono()
 
     return spawnResult.data;
   })
-  .post("/:repo/git-upload-pack", repoPathParamValidator);
+  .post("/:repo/git-upload-pack", repoPathParamValidator, async (c) => {
+    const repo = c.req.valid("param");
+    const repoPath = join(gitEnvVars.GIT_DIR_PATH, repo);
+
+    const requestBody = c.req.raw.body;
+
+    if (requestBody === null) {
+      return c.text("Invalid request", 400);
+    }
+
+    const spawnResult = await spawnUploadPack({ repoPath, requestBody });
+
+    if (!spawnResult.isOk) {
+      const error = spawnResult.error;
+      console.error(error);
+
+      if (error.code === "NO_ENTRY_ERROR") {
+        return c.text("Repository not found", 404);
+      }
+
+      return c.text("Internal server error", 500);
+    }
+
+    return spawnResult.data;
+  });
