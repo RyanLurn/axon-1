@@ -37,12 +37,10 @@ export const gitServer = new Hono()
       return validationResult.data;
     }),
     async (c) => {
-      const repo = c.req.valid("param");
+      const repoName = c.req.valid("param");
       const service = c.req.valid("query");
 
-      const repoPath = join(gitEnvVars.GIT_DIR_PATH, repo);
-
-      const spawnResult = await spawnInfoRefsAd({ repoPath, service });
+      const spawnResult = await spawnInfoRefsAd({ repoName, service });
 
       if (!spawnResult.isOk) {
         const error = spawnResult.error;

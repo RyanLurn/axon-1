@@ -3,16 +3,22 @@ import type { Result } from "@repo/types/result";
 
 import { resolveRealPath } from "@repo/fs/resolve-real-path";
 import { UnexpectedError } from "@repo/errors/unexpected";
+import { join } from "node:path";
 
 import type { GitService } from "@/validators";
+import type { ValidRepoName } from "@/types";
+
+import { gitEnvVars } from "@/env-vars";
 
 export async function spawnInfoRefsAd({
-  repoPath,
+  repoName,
   service,
 }: {
-  repoPath: string;
+  repoName: ValidRepoName;
   service: GitService;
 }): Promise<Result<Uint8Array<ArrayBuffer>, UnexpectedError | NoEntryError>> {
+  const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoName);
+
   try {
     const gitProcess = Bun.spawn([service, "--advertise-refs", repoPath], {
       stderr: "pipe",
