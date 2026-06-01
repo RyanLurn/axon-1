@@ -1,4 +1,5 @@
 import { validator } from "hono/validator";
+import { logger } from "hono/logger";
 import { prettifyError } from "zod";
 import { join } from "node:path";
 import { Hono } from "hono";
@@ -20,6 +21,7 @@ const repoPathParamValidator = validator("param", (value, c) => {
 });
 
 export const gitServer = new Hono()
+  .use(logger())
   .get(
     "/:repo/info/refs",
     repoPathParamValidator,
