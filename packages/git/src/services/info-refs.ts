@@ -12,12 +12,11 @@ export async function spawnInfoRefsAd({
 }: {
   repoPath: string;
   service: GitService;
-}): Promise<Result<string, UnexpectedError | NoEntryError>> {
+}): Promise<Result<Uint8Array<ArrayBuffer>, UnexpectedError | NoEntryError>> {
   try {
-    const gitProcess = Bun.spawn(
-      [service, "--http-backend-info-refs", repoPath],
-      { stderr: "pipe" }
-    );
+    const gitProcess = Bun.spawn([service, "--advertise-refs", repoPath], {
+      stderr: "pipe",
+    });
 
     const exitCode = await gitProcess.exited;
 
@@ -38,10 +37,19 @@ export async function spawnInfoRefsAd({
       };
     }
 
-    const output = await gitProcess.stdout.text();
+    const rawOutput = await Bun.readableStreamToBytes(gitProcess.stdout);
+
+    const prefix = new TextEncoder().encode(
+      `00${service === "git-receive-pack" ? "1f" : "1e"}# service=${service}\n0000`
+    );
+
+    const merged = new Uint8Array(prefix.length + rawOutput.length);
+    merged.set(prefix, 0);
+    merged.set(rawOutput, prefix.length);
+
     return {
       isOk: true,
-      data: output,
+      data: merged,
     };
   } catch (error) {
     return {
