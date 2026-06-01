@@ -1,14 +1,12 @@
 import { validator } from "hono/validator";
 import { logger } from "hono/logger";
 import { prettifyError } from "zod";
-import { join } from "node:path";
 import { Hono } from "hono";
 
 import { gitServiceValidator, repoNameValidator } from "@/validators";
 import { spawnReceivePack } from "@/services/receive-pack";
 import { spawnUploadPack } from "@/services/upload-pack";
 import { spawnInfoRefsAd } from "@/services/info-refs";
-import { gitEnvVars } from "@/env-vars";
 
 const repoPathParamValidator = validator("param", (value, c) => {
   const validationResult = repoNameValidator.safeParse(value["repo"]);
@@ -86,16 +84,14 @@ export const gitServer = new Hono()
     return spawnResult.data;
   })
   .post("/:repo/git-upload-pack", repoPathParamValidator, async (c) => {
-    const repo = c.req.valid("param");
-    const repoPath = join(gitEnvVars.GIT_DIR_PATH, repo);
-
+    const repoName = c.req.valid("param");
     const requestBody = c.req.raw.body;
 
     if (requestBody === null) {
       return c.text("Invalid request", 400);
     }
 
-    const spawnResult = await spawnUploadPack({ repoPath, requestBody });
+    const spawnResult = await spawnUploadPack({ repoName, requestBody });
 
     if (!spawnResult.isOk) {
       const error = spawnResult.error;
