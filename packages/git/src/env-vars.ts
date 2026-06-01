@@ -3,10 +3,7 @@ import { z } from "zod";
 
 export const gitEnvVars = createEnv({
   server: {
-    GIT_DIR_PATH: z
-      .string()
-      .min(1)
-      .catch(() => "~/axon-1/git-repos"),
+    GIT_DIR_PATH: z.string().min(1),
   },
   runtimeEnv: process.env,
 });
