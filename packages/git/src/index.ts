@@ -63,7 +63,7 @@ export const gitServer = new Hono()
       });
     }
   )
-  .post("/:repo/receive-pack", repoPathParamValidator, async (c) => {
+  .post("/:repo/git-receive-pack", repoPathParamValidator, async (c) => {
     const repo = c.req.valid("param");
     const repoPath = join(gitEnvVars.GIT_DIR_PATH, repo);
 
