@@ -3,14 +3,21 @@ import type { Result } from "@repo/types/result";
 
 import { resolveRealPath } from "@repo/fs/resolve-real-path";
 import { UnexpectedError } from "@repo/errors/unexpected";
+import { join } from "node:path";
+
+import type { ValidRepoName } from "@/types";
+
+import { gitEnvVars } from "@/env-vars";
 
 export async function spawnReceivePack({
-  repoPath,
+  repoName,
   requestBody,
 }: {
-  repoPath: string;
+  repoName: ValidRepoName;
   requestBody: ReadableStream;
 }): Promise<Result<Response, UnexpectedError | NoEntryError>> {
+  const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoName);
+
   try {
     const gitProcess = Bun.spawn(
       ["git-receive-pack", "--stateless-rpc", repoPath],

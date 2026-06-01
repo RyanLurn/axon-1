@@ -63,16 +63,14 @@ export const gitServer = new Hono()
     }
   )
   .post("/:repo/git-receive-pack", repoPathParamValidator, async (c) => {
-    const repo = c.req.valid("param");
-    const repoPath = join(gitEnvVars.GIT_DIR_PATH, repo);
-
+    const repoName = c.req.valid("param");
     const requestBody = c.req.raw.body;
 
     if (requestBody === null) {
       return c.text("Invalid request", 400);
     }
 
-    const spawnResult = await spawnReceivePack({ repoPath, requestBody });
+    const spawnResult = await spawnReceivePack({ repoName, requestBody });
 
     if (!spawnResult.isOk) {
       const error = spawnResult.error;
