@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import type { ValidRepoName } from "@/types";
+
 import {
   REPO_NAME_ALLOWED_CHARACTERS_REGEX,
   REPO_NAME_MAX_LENGTH,
@@ -43,7 +45,8 @@ export const repoNameValidator = z
         message: "Repo name cannot end with a hyphen",
       });
     }
-  });
+  })
+  .transform((value) => value as ValidRepoName);
 
 export const gitServiceValidator = z.enum(GIT_SERVICES);
 export type GitService = z.infer<typeof gitServiceValidator>;
