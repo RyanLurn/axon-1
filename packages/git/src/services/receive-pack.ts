@@ -11,33 +11,43 @@ export async function spawnReceivePack({
   repoPath: string;
   requestBody: ReadableStream;
 }): Promise<Result<string, UnexpectedError | NoEntryError>> {
-  const gitProcess = Bun.spawn(["git-receive-pack", repoPath], {
-    stdin: requestBody,
-    stderr: "pipe",
-  });
+  try {
+    const gitProcess = Bun.spawn(["git-receive-pack", repoPath], {
+      stdin: requestBody,
+      stderr: "pipe",
+    });
 
-  const exitCode = await gitProcess.exited;
+    const exitCode = await gitProcess.exited;
 
-  if (exitCode !== 0) {
-    const error = await gitProcess.stderr.text();
+    if (exitCode !== 0) {
+      const error = await gitProcess.stderr.text();
 
-    const resolveRealPathResult = await resolveRealPath(repoPath);
-    if (!resolveRealPathResult.isOk) {
-      return resolveRealPathResult;
+      const resolveRealPathResult = await resolveRealPath(repoPath);
+      if (!resolveRealPathResult.isOk) {
+        return resolveRealPathResult;
+      }
+
+      return {
+        isOk: false,
+        error: new UnexpectedError({
+          message: `Something went wrong while spawning git-receive-pack for repo at ${repoPath}.`,
+          cause: new Error(error),
+        }),
+      };
     }
 
+    const output = await gitProcess.stdout.text();
+    return {
+      isOk: true,
+      data: output,
+    };
+  } catch (error) {
     return {
       isOk: false,
       error: new UnexpectedError({
         message: `Something went wrong while spawning git-receive-pack for repo at ${repoPath}.`,
-        cause: new Error(error),
+        cause: error,
       }),
     };
   }
-
-  const output = await gitProcess.stdout.text();
-  return {
-    isOk: true,
-    data: output,
-  };
 }
