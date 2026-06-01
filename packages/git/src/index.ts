@@ -87,4 +87,5 @@ export const gitServer = new Hono()
     }
 
     return spawnResult.data;
-  });
+  })
+  .post("/:repo/git-upload-pack", repoPathParamValidator);
