@@ -36,11 +36,11 @@ export async function spawnReceivePack({
       };
     }
 
-    const output = await Bun.readableStreamToBytes(gitProcess.stdout);
+    const outputBytes = await Bun.readableStreamToBytes(gitProcess.stdout);
 
     return {
       isOk: true,
-      data: output,
+      data: outputBytes,
     };
   } catch (error) {
     return {

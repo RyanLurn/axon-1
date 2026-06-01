@@ -37,15 +37,15 @@ export async function spawnInfoRefsAd({
       };
     }
 
-    const rawOutput = await Bun.readableStreamToBytes(gitProcess.stdout);
+    const outputBytes = await Bun.readableStreamToBytes(gitProcess.stdout);
 
     const prefix = new TextEncoder().encode(
       `00${service === "git-receive-pack" ? "1f" : "1e"}# service=${service}\n0000`
     );
 
-    const merged = new Uint8Array(prefix.length + rawOutput.length);
+    const merged = new Uint8Array(prefix.length + outputBytes.length);
     merged.set(prefix, 0);
-    merged.set(rawOutput, prefix.length);
+    merged.set(outputBytes, prefix.length);
 
     return {
       isOk: true,
