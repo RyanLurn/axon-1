@@ -7,7 +7,9 @@ export const gitEnvVars = createEnv({
     GIT_DIR_PATH: z
       .string()
       .min(1)
-      .refine((value) => isAbsolute(value)),
+      .refine((value) => isAbsolute(value), {
+        error: "GIT_DIR_PATH must be an absolute path",
+      }),
   },
   runtimeEnv: process.env,
 });
