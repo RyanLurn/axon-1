@@ -3,7 +3,7 @@ import { logger } from "hono/logger";
 import { prettifyError } from "zod";
 import { Hono } from "hono";
 
-import { gitServiceValidator, repoNameValidator } from "@/validators";
+import { gitServiceValidator, repoNameValidator } from "@/utils/validators";
 import { spawnReceivePack } from "@/services/receive-pack";
 import { spawnUploadPack } from "@/services/upload-pack";
 import { spawnInfoRefsAd } from "@/services/info-refs";

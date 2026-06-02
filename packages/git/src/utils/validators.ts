@@ -7,7 +7,7 @@ import {
   REPO_NAME_MAX_LENGTH,
   REPO_NAME_FORMAT,
   GIT_SERVICES,
-} from "@/constants";
+} from "@/utils/constants";
 
 export const repoNameValidator = z
   .string()

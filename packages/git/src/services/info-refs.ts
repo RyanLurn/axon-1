@@ -5,9 +5,9 @@ import { resolveRealPath } from "@repo/fs/resolve-real-path";
 import { UnexpectedError } from "@repo/errors/unexpected";
 import { join } from "node:path";
 
-import type { GitService, RepoName } from "@/validators";
+import type { GitService, RepoName } from "@/utils/validators";
 
-import { gitEnvVars } from "@/env-vars";
+import { gitEnvVars } from "@/utils/env-vars";
 
 export async function spawnInfoRefsAd({
   repoName,
