@@ -8,10 +8,14 @@
   },
   "exports": {
     ".": {
-      "types": "./src/index.d.ts"
+      "import": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./*": {
-      "types": "./src/*.d.ts"
+      "import": "./src/*.ts",
+      "types": "./src/*.ts",
+      "default": "./src/*.ts"
     }
   },
   "devDependencies": {
