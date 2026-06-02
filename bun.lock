@@ -107,6 +107,7 @@
       "name": "@repo/db",
       "version": "1.0.0",
       "dependencies": {
+        "@repo/types": "workspace:*",
         "@t3-oss/env-core": "catalog:",
         "drizzle-orm": "1.0.0-rc.3",
         "zod": "catalog:",
@@ -114,7 +115,6 @@
       "devDependencies": {
         "@repo/eslint-config": "workspace:*",
         "@repo/tsdown-config": "workspace:*",
-        "@repo/types": "workspace:*",
         "@repo/typescript-config": "workspace:*",
         "@types/bun": "catalog:",
         "@types/node": "catalog:",
