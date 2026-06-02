@@ -11,19 +11,19 @@ export async function resolveRealPath(
   try {
     const resolvedPath = await realpath(path);
     return {
-      isOk: true,
+      success: true,
       data: resolvedPath,
     };
   } catch (error) {
     if (error instanceof Error && "code" in error && error.code === "ENOENT") {
       return {
-        isOk: false,
+        success: false,
         error: new NoEntryError({ path, cause: error as ErrnoException }),
       };
     }
 
     return {
-      isOk: false,
+      success: false,
       error: new UnexpectedError({
         message: `An unexpected error occurred while resolving ${path}.`,
         cause: error,
