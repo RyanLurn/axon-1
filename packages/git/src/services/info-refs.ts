@@ -16,7 +16,7 @@ export async function spawnInfoRefsAd({
 }: {
   repoName: ValidRepoName;
   service: GitService;
-}): Promise<Result<Uint8Array<ArrayBuffer>, UnexpectedError | NoEntryError>> {
+}): Promise<Result<Response, UnexpectedError | NoEntryError>> {
   const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoName);
 
   try {
@@ -55,7 +55,13 @@ export async function spawnInfoRefsAd({
 
     return {
       success: true,
-      data: merged,
+      data: new Response(merged, {
+        status: 200,
+        headers: {
+          "Content-Type": `application/x-${service}-advertisement`,
+          "Cache-Control": "no-cache",
+        },
+      }),
     };
   } catch (error) {
     return {

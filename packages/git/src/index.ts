@@ -51,13 +51,7 @@ export const gitServer = new Hono()
         return c.text("Internal server error", 500);
       }
 
-      return new Response(spawnResult.data, {
-        status: 200,
-        headers: {
-          "Content-Type": `application/x-${service}-advertisement`,
-          "Cache-Control": "no-cache",
-        },
-      });
+      return spawnResult.data;
     }
   )
   .post("/:repo/git-receive-pack", repoPathParamValidator, async (c) => {
