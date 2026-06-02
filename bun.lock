@@ -87,6 +87,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@repo/db": "workspace:*",
+        "@repo/types": "workspace:*",
         "@t3-oss/env-core": "catalog:",
         "better-auth": "catalog:",
         "zod": "catalog:",
@@ -94,7 +95,6 @@
       "devDependencies": {
         "@repo/eslint-config": "workspace:*",
         "@repo/tsdown-config": "workspace:*",
-        "@repo/types": "workspace:*",
         "@repo/typescript-config": "workspace:*",
         "@types/bun": "catalog:",
         "@types/node": "catalog:",
