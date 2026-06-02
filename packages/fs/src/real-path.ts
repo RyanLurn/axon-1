@@ -6,7 +6,7 @@ import { stat } from "node:fs/promises";
 
 import type { RealDirectoryPath, RealPath } from "@/types";
 
-import { NotDirectoryPathError } from "@/errors/not-directory-path";
+import { NotADirectoryPathError } from "@/errors/not-a-directory-path";
 import { NoEntryError } from "@/errors/no-entry";
 
 export async function resolveRealPath(
@@ -41,7 +41,7 @@ export async function resolveRealDirectoryPath(
 ): Promise<
   Result<
     RealDirectoryPath,
-    NotDirectoryPathError | UnexpectedError | NoEntryError
+    NotADirectoryPathError | UnexpectedError | NoEntryError
   >
 > {
   const resolveRealPathResult = await resolveRealPath(path);
@@ -60,13 +60,13 @@ export async function resolveRealDirectoryPath(
     }
     return {
       isOk: false,
-      error: new NotDirectoryPathError({ path: realPath }),
+      error: new NotADirectoryPathError({ path, realPath }),
     };
   } catch (error) {
     return {
       isOk: false,
       error: new UnexpectedError({
-        message: "An unexpected error occurred while executing realpath.",
+        message: `An unexpected error occurred while checking information about ${path}.`,
         cause: error,
       }),
     };
