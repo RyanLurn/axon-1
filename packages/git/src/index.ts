@@ -40,7 +40,7 @@ export const gitServer = new Hono()
 
       const spawnResult = await spawnInfoRefsAd({ repoName, service });
 
-      if (!spawnResult.isOk) {
+      if (spawnResult.success === false) {
         const error = spawnResult.error;
         console.error(error);
 
@@ -70,7 +70,7 @@ export const gitServer = new Hono()
 
     const spawnResult = await spawnReceivePack({ repoName, requestBody });
 
-    if (!spawnResult.isOk) {
+    if (spawnResult.success === false) {
       const error = spawnResult.error;
       console.error(error);
 
@@ -93,7 +93,7 @@ export const gitServer = new Hono()
 
     const spawnResult = await spawnUploadPack({ repoName, requestBody });
 
-    if (!spawnResult.isOk) {
+    if (spawnResult.success === false) {
       const error = spawnResult.error;
       console.error(error);
 

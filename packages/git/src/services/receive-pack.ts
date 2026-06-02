@@ -30,12 +30,12 @@ export async function spawnReceivePack({
       const error = await gitProcess.stderr.text();
 
       const resolveRealPathResult = await resolveRealPath(repoPath);
-      if (!resolveRealPathResult.isOk) {
+      if (resolveRealPathResult.success === false) {
         return resolveRealPathResult;
       }
 
       return {
-        isOk: false,
+        success: false,
         error: new UnexpectedError({
           message: `Something went wrong while spawning git-receive-pack for repo at ${repoPath}.`,
           cause: new Error(error),
@@ -44,7 +44,7 @@ export async function spawnReceivePack({
     }
 
     return {
-      isOk: true,
+      success: true,
       data: new Response(gitProcess.stdout, {
         status: 200,
         headers: {
@@ -55,7 +55,7 @@ export async function spawnReceivePack({
     };
   } catch (error) {
     return {
-      isOk: false,
+      success: false,
       error: new UnexpectedError({
         message: `Something went wrong while spawning git-receive-pack for repo at ${repoPath}.`,
         cause: error,

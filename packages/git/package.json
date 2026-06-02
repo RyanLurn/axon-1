@@ -24,6 +24,7 @@
     "@repo/db": "workspace:*",
     "@repo/errors": "workspace:*",
     "@repo/fs": "workspace:*",
+    "@repo/types": "workspace:*",
     "@t3-oss/env-core": "catalog:",
     "hono": "catalog:",
     "zod": "catalog:"
@@ -31,7 +32,6 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/tsdown-config": "workspace:*",
-    "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/bun": "catalog:",
     "@types/node": "catalog:",

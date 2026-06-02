@@ -30,12 +30,12 @@ export async function spawnInfoRefsAd({
       const error = await gitProcess.stderr.text();
 
       const resolveRealPathResult = await resolveRealPath(repoPath);
-      if (!resolveRealPathResult.isOk) {
+      if (resolveRealPathResult.success === false) {
         return resolveRealPathResult;
       }
 
       return {
-        isOk: false,
+        success: false,
         error: new UnexpectedError({
           message: `Something went wrong while spawning ${service} ad for repo at ${repoPath}.`,
           cause: new Error(error),
@@ -54,12 +54,12 @@ export async function spawnInfoRefsAd({
     merged.set(outputBytes, prefix.length);
 
     return {
-      isOk: true,
+      success: true,
       data: merged,
     };
   } catch (error) {
     return {
-      isOk: false,
+      success: false,
       error: new UnexpectedError({
         message: `Something went wrong while spawning ${service} ad for repo at ${repoPath}.`,
         cause: error,
