@@ -5,8 +5,7 @@ import { resolveRealPath } from "@repo/fs/resolve-real-path";
 import { UnexpectedError } from "@repo/errors/unexpected";
 import { join } from "node:path";
 
-import type { GitService } from "@/validators";
-import type { ValidRepoName } from "@/types";
+import type { GitService, RepoName } from "@/validators";
 
 import { gitEnvVars } from "@/env-vars";
 
@@ -14,7 +13,7 @@ export async function spawnInfoRefsAd({
   repoName,
   service,
 }: {
-  repoName: ValidRepoName;
+  repoName: RepoName;
   service: GitService;
 }): Promise<Result<Response, UnexpectedError | NoEntryError>> {
   const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoName);

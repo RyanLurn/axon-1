@@ -5,7 +5,7 @@ import { resolveRealPath } from "@repo/fs/resolve-real-path";
 import { UnexpectedError } from "@repo/errors/unexpected";
 import { join } from "node:path";
 
-import type { ValidRepoName } from "@/types";
+import type { RepoName } from "@/validators";
 
 import { gitEnvVars } from "@/env-vars";
 
@@ -13,7 +13,7 @@ export async function spawnReceivePack({
   repoName,
   requestBody,
 }: {
-  repoName: ValidRepoName;
+  repoName: RepoName;
   requestBody: ReadableStream;
 }): Promise<Result<Response, UnexpectedError | NoEntryError>> {
   const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoName);

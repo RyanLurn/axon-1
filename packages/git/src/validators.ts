@@ -1,6 +1,6 @@
-import { z } from "zod";
+import type { Branded } from "@repo/types/branded";
 
-import type { ValidRepoName } from "@/types";
+import { z } from "zod";
 
 import {
   REPO_NAME_ALLOWED_CHARACTERS_REGEX,
@@ -54,7 +54,8 @@ export const repoNameValidator = z
       }
     }
   })
-  .transform((value) => value as ValidRepoName);
+  .transform((value) => value as Branded<string, "RepoName">);
+export type RepoName = z.infer<typeof repoNameValidator>;
 
 export const gitServiceValidator = z.enum(GIT_SERVICES);
 export type GitService = z.infer<typeof gitServiceValidator>;
