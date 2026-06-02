@@ -1,11 +1,13 @@
-export interface Ok<TData> {
-  isOk: true;
+export interface Success<TData> {
+  success: true;
   data: TData;
 }
 
-export interface Err<TError extends Error> {
-  isOk: false;
+export interface Failure<TError extends Error> {
+  success: false;
   error: TError;
 }
 
-export type Result<TData, TError extends Error> = Err<TError> | Ok<TData>;
+export type Result<TData, TError extends Error> =
+  | Failure<TError>
+  | Success<TData>;
