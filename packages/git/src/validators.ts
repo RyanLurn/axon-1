@@ -14,36 +14,44 @@ export const repoNameValidator = z
   .max(REPO_NAME_MAX_LENGTH)
   .regex(REPO_NAME_ALLOWED_CHARACTERS_REGEX)
   .superRefine((value, ctx) => {
-    if (value.startsWith(".")) {
+    function addIssue(message: string) {
       ctx.addIssue({
         code: "invalid_format",
         format: REPO_NAME_FORMAT,
-        message: "Repo name cannot start with a period",
+        message,
       });
     }
 
-    if (value.endsWith(".")) {
-      ctx.addIssue({
-        code: "invalid_format",
-        format: REPO_NAME_FORMAT,
-        message: "Repo name cannot end with a period",
-      });
-    }
+    switch (value) {
+      case "..": {
+        addIssue("Repo name cannot be 2 periods.");
+        break;
+      }
+      case "--": {
+        addIssue("Repo name cannot be 2 hyphens.");
+        break;
+      }
+      case ".": {
+        addIssue("Repo name cannot be a period.");
+        break;
+      }
+      case "-": {
+        addIssue("Repo name cannot be a hyphen.");
+        break;
+      }
+      default: {
+        if (value.startsWith(".")) {
+          addIssue("Repo name cannot start with a period");
+        } else if (value.startsWith("-")) {
+          addIssue("Repo name cannot start with a hyphen");
+        }
 
-    if (value.startsWith("-")) {
-      ctx.addIssue({
-        code: "invalid_format",
-        format: REPO_NAME_FORMAT,
-        message: "Repo name cannot start with a hyphen",
-      });
-    }
-
-    if (value.endsWith("-")) {
-      ctx.addIssue({
-        code: "invalid_format",
-        format: REPO_NAME_FORMAT,
-        message: "Repo name cannot end with a hyphen",
-      });
+        if (value.endsWith(".")) {
+          addIssue("Repo name cannot end with a period");
+        } else if (value.endsWith("-")) {
+          addIssue("Repo name cannot end with a hyphen");
+        }
+      }
     }
   })
   .transform((value) => value as ValidRepoName);
