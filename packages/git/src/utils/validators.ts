@@ -4,14 +4,18 @@ import { z } from "zod";
 
 import {
   REPO_NAME_ALLOWED_CHARACTERS_REGEX,
+  RESERVED_WINDOWS_NAMES,
   REPO_NAME_MAX_LENGTH,
+  RESERVED_GIT_NAMES,
   REPO_NAME_FORMAT,
   GIT_SERVICES,
 } from "@/utils/constants";
 
 export const repoNameValidator = z
   .string()
+  .min(1)
   .max(REPO_NAME_MAX_LENGTH)
+  .normalize()
   .regex(REPO_NAME_ALLOWED_CHARACTERS_REGEX)
   .superRefine((value, ctx) => {
     function addIssue(message: string) {
@@ -22,36 +26,27 @@ export const repoNameValidator = z
       });
     }
 
-    switch (value) {
-      case "..": {
-        addIssue("Repo name cannot be 2 periods.");
-        break;
-      }
-      case "--": {
-        addIssue("Repo name cannot be 2 hyphens.");
-        break;
-      }
-      case ".": {
-        addIssue("Repo name cannot be a period.");
-        break;
-      }
-      case "-": {
-        addIssue("Repo name cannot be a hyphen.");
-        break;
-      }
-      default: {
-        if (value.startsWith(".")) {
-          addIssue("Repo name cannot start with a period");
-        } else if (value.startsWith("-")) {
-          addIssue("Repo name cannot start with a hyphen");
-        }
+    // This is for Windows case-insensitivity.
+    const lowercaseValue = value.toLowerCase();
 
-        if (value.endsWith(".")) {
-          addIssue("Repo name cannot end with a period");
-        } else if (value.endsWith("-")) {
-          addIssue("Repo name cannot end with a hyphen");
-        }
-      }
+    if (
+      RESERVED_GIT_NAMES.has(lowercaseValue) ||
+      RESERVED_WINDOWS_NAMES.has(lowercaseValue)
+    ) {
+      addIssue(`The name "${value}" is reserved.`);
+      return;
+    }
+
+    if (value.startsWith(".")) {
+      addIssue("Repo name cannot start with a period.");
+    } else if (value.startsWith("-")) {
+      addIssue("Repo name cannot start with a hyphen.");
+    }
+
+    if (value.endsWith(".")) {
+      addIssue("Repo name cannot end with a period.");
+    } else if (value.endsWith("-")) {
+      addIssue("Repo name cannot end with a hyphen.");
     }
   })
   .transform((value) => value as Branded<string, "RepoName">);

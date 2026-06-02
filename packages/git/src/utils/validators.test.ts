@@ -49,6 +49,21 @@ const unicodeInputs = [
   "repo\r\nname", // CRLF injection
 ];
 
+const reservedNameInputs = [
+  ".",
+  "..",
+  "CON",
+  "PRN",
+  "AUX",
+  "NUL", // Windows reserved
+  "COM1",
+  "COM9",
+  "LPT1", // Windows device names
+  "-repo", // Leading hyphen (git conflict)
+  "repo-", // Trailing hyphen
+  "--repo", // Double leading hyphen
+];
+
 const typeConfusionInputs = [null, undefined, 0, false, {}, NaN, Infinity];
 
 const allInputs = [
@@ -56,6 +71,7 @@ const allInputs = [
   ...lengthInputs,
   ...specialCharInputs,
   ...unicodeInputs,
+  ...reservedNameInputs,
   ...typeConfusionInputs,
 ];
 
