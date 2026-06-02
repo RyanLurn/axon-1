@@ -2,9 +2,11 @@ import type { Result } from "@repo/types/result";
 
 import { UnexpectedError } from "@repo/errors/unexpected";
 import { realpath } from "node:fs/promises";
+import { stat } from "node:fs/promises";
 
-import type { RealPath } from "@/types";
+import type { RealDirectoryPath, RealPath } from "@/types";
 
+import { NotDirectoryPathError } from "@/errors/not-directory-path";
 import { NoEntryError } from "@/errors/no-entry";
 
 export async function resolveRealPath(
@@ -24,6 +26,43 @@ export async function resolveRealPath(
       };
     }
 
+    return {
+      isOk: false,
+      error: new UnexpectedError({
+        message: "An unexpected error occurred while executing realpath.",
+        cause: error,
+      }),
+    };
+  }
+}
+
+export async function resolveRealDirectoryPath(
+  path: string
+): Promise<
+  Result<
+    RealDirectoryPath,
+    NotDirectoryPathError | UnexpectedError | NoEntryError
+  >
+> {
+  const resolveRealPathResult = await resolveRealPath(path);
+  if (resolveRealPathResult.isOk === false) {
+    return resolveRealPathResult;
+  }
+  const realPath = resolveRealPathResult.data;
+
+  try {
+    const stats = await stat(realPath);
+    if (stats.isDirectory()) {
+      return {
+        isOk: true,
+        data: realPath as unknown as RealDirectoryPath,
+      };
+    }
+    return {
+      isOk: false,
+      error: new NotDirectoryPathError({ path: realPath }),
+    };
+  } catch (error) {
     return {
       isOk: false,
       error: new UnexpectedError({
