@@ -1,4 +1,4 @@
-import type { Result } from "@repo/path/types/src/result";
+import type { Result } from "@repo/types/result";
 
 import { UnexpectedError } from "@repo/errors/unexpected";
 import { realpath } from "node:fs/promises";
