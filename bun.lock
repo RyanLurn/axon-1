@@ -127,6 +127,9 @@
     "packages/errors": {
       "name": "@repo/errors",
       "version": "1.0.0",
+      "dependencies": {
+        "zod": "catalog:",
+      },
       "devDependencies": {
         "@repo/eslint-config": "workspace:*",
         "@repo/tsdown-config": "workspace:*",

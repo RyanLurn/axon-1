@@ -20,6 +20,9 @@
       "default": "./dist/*.mjs"
     }
   },
+  "dependencies": {
+    "zod": "catalog:"
+  },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/tsdown-config": "workspace:*",
