@@ -29,7 +29,7 @@ export async function resolveRealPath(
     return {
       isOk: false,
       error: new UnexpectedError({
-        message: "An unexpected error occurred while executing realpath.",
+        message: `An unexpected error occurred while resolving ${path}.`,
         cause: error,
       }),
     };
