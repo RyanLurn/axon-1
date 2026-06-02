@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "@repo/errors": "workspace:*",
-    "@repo/path": "workspace:*"
+    "@repo/path": "workspace:*",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
