@@ -185,6 +185,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@repo/errors": "workspace:*",
+        "zod": "catalog:",
       },
       "devDependencies": {
         "@repo/eslint-config": "workspace:*",
