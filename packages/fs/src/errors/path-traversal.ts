@@ -1,8 +1,6 @@
-import type { AbsolutePath } from "@repo/path/types";
-
 import { BaseError } from "@repo/errors/base";
 
-import type { RealPath } from "@/types";
+import type { RealDirectoryPath, RealPath } from "@/types";
 
 export class PathTraversalError extends BaseError<
   "PATH_TRAVERSAL_ERROR",
@@ -10,7 +8,7 @@ export class PathTraversalError extends BaseError<
 > {
   path: string;
   realPath: RealPath;
-  requiredPrefix: AbsolutePath;
+  requiredPrefix: RealDirectoryPath;
 
   constructor({
     message,
@@ -21,7 +19,7 @@ export class PathTraversalError extends BaseError<
     message?: string;
     path: string;
     realPath: RealPath;
-    requiredPrefix: AbsolutePath;
+    requiredPrefix: RealDirectoryPath;
   }) {
     super({
       name: "PathTraversalError",
