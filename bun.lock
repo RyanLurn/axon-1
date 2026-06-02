@@ -146,7 +146,6 @@
       "version": "1.0.0",
       "dependencies": {
         "@repo/errors": "workspace:*",
-        "@repo/path": "workspace:*",
         "zod": "catalog:",
       },
       "devDependencies": {

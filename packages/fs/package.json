@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@repo/errors": "workspace:*",
-    "@repo/path": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {
