@@ -9,6 +9,7 @@ import { RepoAlreadyInitializedError } from "@/errors/repo-already-initialized";
 export async function spawnInitBare(
   repoPath: RepoPath
 ): Promise<Result<string, RepoAlreadyInitializedError | UnexpectedError>> {
+  // First, we check if a repo has been initialized in the repoPath.
   try {
     const revParseProcess = Bun.spawn(["git-rev-parse", "--git-dir"], {
       cwd: repoPath,
@@ -47,6 +48,7 @@ export async function spawnInitBare(
     };
   }
 
+  // If repoPath is not a git repo, we initialized a bare one.
   try {
     const gitProcess = Bun.spawn(["git-init", "--bare"], {
       cwd: repoPath,
@@ -60,7 +62,7 @@ export async function spawnInitBare(
       return {
         success: false,
         error: new UnexpectedError({
-          message: `git-init --bare exited with code "${exitCode}" after being spawned in "${repoPath}".`,
+          message: `Failed to initialize a bare repository in "${repoPath}".`,
           cause: new Error(error),
         }),
       };
@@ -75,7 +77,7 @@ export async function spawnInitBare(
     return {
       success: false,
       error: new UnexpectedError({
-        message: `Something went wrong while spawning git-init --bare in "${repoPath}".`,
+        message: `Something went wrong while initializing a bare repository in "${repoPath}".`,
         cause: error,
       }),
     };
