@@ -4,7 +4,7 @@ import { UnexpectedError } from "@repo/errors/unexpected";
 
 import type { RepoPath } from "@/utils/get-repo-path";
 
-export async function isBareRepo(
+export async function checkIfBareRepo(
   repoPath: RepoPath
 ): Promise<Result<boolean, UnexpectedError>> {
   try {
