@@ -11,7 +11,7 @@ import { rm } from "node:fs/promises";
  */
 export async function remove(
   path: string,
-  options: RmOptions
+  options: RmOptions = {}
 ): Promise<Result<null, UnexpectedError>> {
   try {
     await rm(path, options);
