@@ -1,3 +1,4 @@
+import { UnexpectedError } from "@repo/errors/unexpected";
 import { describe, expect, test } from "bun:test";
 import { join } from "node:path";
 
@@ -20,6 +21,27 @@ describe("resolveRealPath function should", () => {
 
     if (!resolveFakeFileResult.success) {
       expect(resolveFakeFileResult.error).toBeInstanceOf(NoEntryError);
+    }
+  });
+
+  test("fail to resolve a path that is too long", async () => {
+    expect.assertions(3);
+
+    const resolveLongPathResult = await resolveRealPath(
+      `${"yo".repeat(10_000)}.wtf`
+    );
+    expect(resolveLongPathResult.success).toBeFalse();
+
+    if (!resolveLongPathResult.success) {
+      const error = resolveLongPathResult.error;
+      expect(error).toBeInstanceOf(UnexpectedError);
+
+      if (error.cause instanceof Error) {
+        const cause = error.cause;
+        if ("code" in cause) {
+          expect(cause.code).toBe("ENAMETOOLONG");
+        }
+      }
     }
   });
 });
