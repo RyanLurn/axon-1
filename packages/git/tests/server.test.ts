@@ -4,11 +4,12 @@ import { gitServer } from "@/index";
 
 let testServer: Bun.Server<undefined>;
 
-beforeAll(async () => {
+beforeAll(() => {
   testServer = Bun.serve({
     port: 3000,
     fetch: gitServer.fetch,
   });
+  console.log(`Test Git server running at ${testServer.url.href}`);
 });
 
 afterAll(async () => {
