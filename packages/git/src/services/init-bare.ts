@@ -1,17 +1,12 @@
 import type { Result } from "@repo/types/result";
 
 import { UnexpectedError } from "@repo/errors/unexpected";
-import { join } from "node:path";
 
-import type { RepoDir } from "@/utils/get-repo-dir";
-
-import { gitEnvVars } from "@/utils/env-vars";
+import type { RepoPath } from "@/utils/get-repo-path";
 
 export async function spawnInitBare(
-  repoDir: RepoDir
+  repoPath: RepoPath
 ): Promise<Result<string, UnexpectedError>> {
-  const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoDir);
-
   try {
     const gitProcess = Bun.spawn(["git-init", "--bare"], {
       cwd: repoPath,

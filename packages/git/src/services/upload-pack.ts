@@ -3,21 +3,16 @@ import type { Result } from "@repo/types/result";
 
 import { resolveRealPath } from "@repo/fs/resolve-real-path";
 import { UnexpectedError } from "@repo/errors/unexpected";
-import { join } from "node:path";
 
-import type { RepoDir } from "@/utils/get-repo-dir";
-
-import { gitEnvVars } from "@/utils/env-vars";
+import type { RepoPath } from "@/utils/get-repo-path";
 
 export async function spawnUploadPack({
-  repoDir,
+  repoPath,
   requestBody,
 }: {
-  repoDir: RepoDir;
+  repoPath: RepoPath;
   requestBody: ReadableStream;
 }): Promise<Result<Response, UnexpectedError | NoEntryError>> {
-  const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoDir);
-
   try {
     const gitProcess = Bun.spawn(
       ["git-upload-pack", "--stateless-rpc", repoPath],
