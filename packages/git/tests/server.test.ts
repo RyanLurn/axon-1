@@ -1,4 +1,5 @@
 import { beforeAll, afterAll } from "bun:test";
+import { remove } from "@repo/fs/remove";
 
 import type { RepoName } from "@/utils/validators";
 
@@ -6,7 +7,7 @@ import { spawnInitBare } from "@/services/init-bare";
 import { getRepoPath } from "@/utils/get-repo-path";
 import { gitServer } from "@/index";
 
-let testServer: Bun.Server<undefined>;
+let testServer: Bun.Server<undefined> | undefined = undefined;
 const testRepoName = "server-test-repo" as RepoName;
 const testRepoPath = getRepoPath(testRepoName);
 
@@ -15,6 +16,7 @@ beforeAll(async () => {
 
   const initTestRepoResult = await spawnInitBare(testRepoPath);
   if (!initTestRepoResult.success) {
+    console.error(`[SETUP] Failed to init ${testRepoName} at ${testRepoPath}.`);
     throw initTestRepoResult.error;
   }
   console.log(
@@ -29,5 +31,21 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await testServer.stop();
+  if (testServer) {
+    await testServer.stop();
+    console.log("[TEARDOWN] Git CGI server stopped.");
+  }
+
+  const removeTestRepoResult = await remove(testRepoPath, {
+    force: true,
+    recursive: true,
+  });
+  if (!removeTestRepoResult.success) {
+    console.warn(
+      `[TEARDOWN] Failed to remove ${testRepoName} at ${testRepoPath}.`
+    );
+    console.warn(removeTestRepoResult.error);
+  } else {
+    console.log(`[TEARDOWN] Removed ${testRepoName} at ${testRepoPath}.`);
+  }
 });
