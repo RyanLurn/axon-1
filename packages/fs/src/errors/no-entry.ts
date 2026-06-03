@@ -1,6 +1,6 @@
 import { BaseError } from "@repo/errors/base";
 
-export class NoEntryError extends BaseError<"NO_ENTRY_ERROR"> {
+export class NoEntryError extends BaseError<"NO_ENTRY_ERROR", ErrnoException> {
   path: string;
 
   constructor({
