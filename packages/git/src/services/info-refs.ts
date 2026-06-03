@@ -5,18 +5,19 @@ import { resolveRealPath } from "@repo/fs/resolve-real-path";
 import { UnexpectedError } from "@repo/errors/unexpected";
 import { join } from "node:path";
 
-import type { GitService, RepoName } from "@/utils/validators";
+import type { GitService } from "@/utils/validators";
+import type { RepoDir } from "@/utils/get-repo-dir";
 
 import { gitEnvVars } from "@/utils/env-vars";
 
 export async function spawnInfoRefsAd({
-  repoName,
+  repoDir,
   service,
 }: {
-  repoName: RepoName;
+  repoDir: RepoDir;
   service: GitService;
 }): Promise<Result<Response, UnexpectedError | NoEntryError>> {
-  const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoName);
+  const repoPath = join(gitEnvVars.GIT_DIR_PATH, repoDir);
 
   try {
     const gitProcess = Bun.spawn([service, "--advertise-refs", repoPath], {

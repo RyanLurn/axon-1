@@ -1,4 +1,4 @@
-export const REMOTE_REPO_SUFFIX = ".git";
+export const REPO_DIR_SUFFIX = ".git";
 
 export const REPO_NAME_FORMAT = "repo_name";
 export const REPO_NAME_MAX_LENGTH = 100;

@@ -7,6 +7,7 @@ import { gitServiceValidator, repoNameValidator } from "@/utils/validators";
 import { spawnReceivePack } from "@/services/receive-pack";
 import { spawnUploadPack } from "@/services/upload-pack";
 import { spawnInfoRefsAd } from "@/services/info-refs";
+import { getRepoDir } from "@/utils/get-repo-dir";
 
 const repoPathParamValidator = validator("param", (value, c) => {
   const validationResult = repoNameValidator.safeParse(value["repo"]);
@@ -16,7 +17,7 @@ const repoPathParamValidator = validator("param", (value, c) => {
     return c.text("Invalid request", 400);
   }
 
-  return validationResult.data;
+  return getRepoDir(validationResult.data);
 });
 
 export const gitServer = new Hono()
@@ -35,10 +36,10 @@ export const gitServer = new Hono()
       return validationResult.data;
     }),
     async (c) => {
-      const repoName = c.req.valid("param");
+      const repoDir = c.req.valid("param");
       const service = c.req.valid("query");
 
-      const spawnResult = await spawnInfoRefsAd({ repoName, service });
+      const spawnResult = await spawnInfoRefsAd({ repoDir, service });
 
       if (spawnResult.success === false) {
         const error = spawnResult.error;
@@ -55,14 +56,14 @@ export const gitServer = new Hono()
     }
   )
   .post("/:repo/git-receive-pack", repoPathParamValidator, async (c) => {
-    const repoName = c.req.valid("param");
+    const repoDir = c.req.valid("param");
     const requestBody = c.req.raw.body;
 
     if (requestBody === null) {
       return c.text("Invalid request", 400);
     }
 
-    const spawnResult = await spawnReceivePack({ repoName, requestBody });
+    const spawnResult = await spawnReceivePack({ repoDir, requestBody });
 
     if (spawnResult.success === false) {
       const error = spawnResult.error;
@@ -78,14 +79,14 @@ export const gitServer = new Hono()
     return spawnResult.data;
   })
   .post("/:repo/git-upload-pack", repoPathParamValidator, async (c) => {
-    const repoName = c.req.valid("param");
+    const repoDir = c.req.valid("param");
     const requestBody = c.req.raw.body;
 
     if (requestBody === null) {
       return c.text("Invalid request", 400);
     }
 
-    const spawnResult = await spawnUploadPack({ repoName, requestBody });
+    const spawnResult = await spawnUploadPack({ repoDir, requestBody });
 
     if (spawnResult.success === false) {
       const error = spawnResult.error;

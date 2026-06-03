@@ -7,8 +7,8 @@ import {
   RESERVED_WINDOWS_NAMES,
   REPO_NAME_MAX_LENGTH,
   RESERVED_GIT_NAMES,
-  REMOTE_REPO_SUFFIX,
   REPO_NAME_FORMAT,
+  REPO_DIR_SUFFIX,
   GIT_SERVICES,
 } from "@/utils/constants";
 
@@ -51,11 +51,8 @@ export const repoNameValidator = z
     }
   })
   .transform((value) =>
-    value.toLowerCase().endsWith(REMOTE_REPO_SUFFIX)
-      ? (value.slice(0, -REMOTE_REPO_SUFFIX.length) as Branded<
-          string,
-          "RepoName"
-        >)
+    value.toLowerCase().endsWith(REPO_DIR_SUFFIX)
+      ? (value.slice(0, -REPO_DIR_SUFFIX.length) as Branded<string, "RepoName">)
       : (value as Branded<string, "RepoName">)
   );
 export type RepoName = z.infer<typeof repoNameValidator>;
