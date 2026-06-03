@@ -1,3 +1,5 @@
+export const REMOTE_REPO_SUFFIX = ".git";
+
 export const REPO_NAME_FORMAT = "repo_name";
 export const REPO_NAME_MAX_LENGTH = 100;
 export const REPO_NAME_ALLOWED_CHARACTERS_REGEX = /^[a-zA-Z0-9_.-]+$/;

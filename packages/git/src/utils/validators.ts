@@ -7,6 +7,7 @@ import {
   RESERVED_WINDOWS_NAMES,
   REPO_NAME_MAX_LENGTH,
   RESERVED_GIT_NAMES,
+  REMOTE_REPO_SUFFIX,
   REPO_NAME_FORMAT,
   GIT_SERVICES,
 } from "@/utils/constants";
@@ -49,7 +50,14 @@ export const repoNameValidator = z
       addIssue("Repo name cannot end with a hyphen.");
     }
   })
-  .transform((value) => value as Branded<string, "RepoName">);
+  .transform((value) =>
+    value.toLowerCase().endsWith(REMOTE_REPO_SUFFIX)
+      ? (value.slice(0, -REMOTE_REPO_SUFFIX.length) as Branded<
+          string,
+          "RepoName"
+        >)
+      : (value as Branded<string, "RepoName">)
+  );
 export type RepoName = z.infer<typeof repoNameValidator>;
 
 export const gitServiceValidator = z.enum(GIT_SERVICES);
