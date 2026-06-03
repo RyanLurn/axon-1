@@ -24,15 +24,17 @@ export async function makeDirectory({
     if (error instanceof Error && "errno" in error) {
       const exception = error as ErrnoException;
 
-      if (exception.code === "EEXIST") {
-        return {
-          success: false,
-          error: new PathAlreadyExistsError({
-            message: `Failed to make a new directory at "${path}" because it already exists.`,
-            path,
-            cause: exception,
-          }),
-        };
+      switch (exception.code) {
+        case "EEXIST": {
+          return {
+            success: false,
+            error: new PathAlreadyExistsError({
+              message: `Failed to make a new directory at "${path}" because it already exists.`,
+              path,
+              cause: exception,
+            }),
+          };
+        }
       }
     }
     return {
