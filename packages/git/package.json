@@ -6,8 +6,7 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "lint": "eslint --cache",
-    "try": "bun run --bun src/try.ts",
-    "test:server": "bun test ./tests/server.test.ts"
+    "try": "bun run --bun src/try.ts"
   },
   "exports": {
     ".": {
