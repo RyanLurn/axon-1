@@ -15,15 +15,15 @@ export async function makeDirectory({
   recursive?: boolean;
 }): Promise<
   Result<
-    undefined | string,
+    null,
     PathAlreadyExistsError | UnexpectedError | NoAccessError | NoEntryError
   >
 > {
   try {
-    const mkdirResult = await mkdir(path, { recursive });
+    await mkdir(path, { recursive });
     return {
       success: true,
-      data: mkdirResult,
+      data: null,
     };
   } catch (error) {
     if (error instanceof Error && "errno" in error) {
