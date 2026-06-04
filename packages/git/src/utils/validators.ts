@@ -12,6 +12,7 @@ import {
   GIT_SERVICES,
 } from "@/utils/constants";
 
+export type RepoName = Branded<string, "RepoName">;
 export const repoNameValidator = z
   .string()
   .min(1)
@@ -52,10 +53,9 @@ export const repoNameValidator = z
   })
   .transform((value) =>
     value.toLowerCase().endsWith(REPO_DIR_SUFFIX)
-      ? (value.slice(0, -REPO_DIR_SUFFIX.length) as Branded<string, "RepoName">)
-      : (value as Branded<string, "RepoName">)
+      ? (value.slice(0, -REPO_DIR_SUFFIX.length) as RepoName)
+      : (value as RepoName)
   );
-export type RepoName = z.infer<typeof repoNameValidator>;
 
 export const gitServiceValidator = z.enum(GIT_SERVICES);
 export type GitService = z.infer<typeof gitServiceValidator>;
