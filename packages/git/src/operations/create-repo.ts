@@ -22,9 +22,7 @@ export async function createRepo({
 > {
   const makeDirectoryResult = await makeDirectory({
     path: repoPath,
-    // The repoPath is created with `join(gitEnvVars.GIT_DIR_PATH, repoDir)`.
-    // Its parent (GIT_DIR_PATH) should exist so there's no need to be recursive.
-    recursive: false,
+    recursive: true,
   });
   if (!makeDirectoryResult.success) {
     return makeDirectoryResult;
