@@ -33,12 +33,24 @@ export async function spawnInfoRefsAd({
       repoPath,
     ]);
 
-    const outputBytes = await Bun.readableStreamToBytes(gitProcess.stdout);
+    const [outputBytes, exitCode] = await Promise.all([
+      Bun.readableStreamToBytes(gitProcess.stdout),
+      gitProcess.exited,
+    ]);
+
+    if (exitCode !== 0) {
+      return {
+        success: false,
+        error: new UnexpectedError({
+          message: `Failed to spawn ${service} ad for repo at ${repoPath}.`,
+          cause: new Error(`${service} exited with code ${exitCode}.`),
+        }),
+      };
+    }
 
     const prefix = new TextEncoder().encode(
       `00${service === "git-receive-pack" ? "1f" : "1e"}# service=${service}\n0000`
     );
-
     const merged = new Uint8Array(prefix.length + outputBytes.length);
     merged.set(prefix, 0);
     merged.set(outputBytes, prefix.length);
