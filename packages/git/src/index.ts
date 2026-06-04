@@ -4,9 +4,9 @@ import { prettifyError } from "zod";
 import { Hono } from "hono";
 
 import { gitServiceValidator, repoNameValidator } from "@/utils/validators";
-import { spawnReceivePack } from "@/services/receive-pack";
-import { spawnUploadPack } from "@/services/upload-pack";
-import { spawnInfoRefsAd } from "@/services/info-refs";
+import { spawnReceivePack } from "@/operations/receive-pack";
+import { spawnUploadPack } from "@/operations/upload-pack";
+import { spawnInfoRefsAd } from "@/operations/info-refs";
 import { getRepoPath } from "@/utils/get-repo-path";
 
 const repoPathParamValidator = validator("param", (value, c) => {

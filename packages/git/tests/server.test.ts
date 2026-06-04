@@ -3,7 +3,7 @@ import { remove } from "@repo/fs/remove";
 
 import type { RepoName } from "@/utils/validators";
 
-import { spawnInitBare } from "@/services/init-bare";
+import { spawnInitBare } from "@/operations/init-bare";
 import { getRepoPath } from "@/utils/get-repo-path";
 import { gitServer } from "@/index";
 
