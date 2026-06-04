@@ -13,7 +13,12 @@ export async function spawnReceivePack({
 }: {
   repoPath: RepoPath;
   requestBody: ReadableStream;
-}): Promise<Result<Response, UnexpectedError | NoAccessError | NoEntryError>> {
+}): Promise<
+  Result<
+    ReadableStream<Uint8Array<ArrayBuffer>>,
+    UnexpectedError | NoAccessError | NoEntryError
+  >
+> {
   try {
     const gitProcess = Bun.spawn(
       ["git-receive-pack", "--stateless-rpc", repoPath],
@@ -41,13 +46,7 @@ export async function spawnReceivePack({
 
     return {
       success: true,
-      data: new Response(gitProcess.stdout, {
-        status: 200,
-        headers: {
-          "Content-Type": "application/x-git-receive-pack-result",
-          "Cache-Control": "no-cache",
-        },
-      }),
+      data: gitProcess.stdout,
     };
   } catch (error) {
     return {
