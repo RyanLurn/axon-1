@@ -4,7 +4,7 @@ import { UnexpectedError } from "@repo/errors/unexpected";
 import { mkdir } from "node:fs/promises";
 
 import { PathAlreadyExistsError } from "@/errors/path-already-exists";
-import { PermissionDeniedError } from "@/errors/permission-denied";
+import { NoAccessError } from "@/errors/no-access";
 import { NoEntryError } from "@/errors/no-entry";
 
 export async function makeDirectory({
@@ -16,10 +16,7 @@ export async function makeDirectory({
 }): Promise<
   Result<
     undefined | string,
-    | PathAlreadyExistsError
-    | PermissionDeniedError
-    | UnexpectedError
-    | NoEntryError
+    PathAlreadyExistsError | UnexpectedError | NoAccessError | NoEntryError
   >
 > {
   try {
@@ -56,7 +53,7 @@ export async function makeDirectory({
         case "EACCES": {
           return {
             success: false,
-            error: new PermissionDeniedError({
+            error: new NoAccessError({
               message: `Failed to make a new directory at "${path}" because the current process doesn't have permission to access it.`,
               path,
               cause: exception,

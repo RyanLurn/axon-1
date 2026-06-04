@@ -1,7 +1,7 @@
 import { BaseError } from "@repo/errors/base";
 
-export class PermissionDeniedError extends BaseError<
-  "PERMISSION_DENIED_ERROR",
+export class NoAccessError extends BaseError<
+  "NO_ACCESS_ERROR",
   ErrnoException
 > {
   path: string;
@@ -16,9 +16,9 @@ export class PermissionDeniedError extends BaseError<
     cause: ErrnoException;
   }) {
     super({
-      name: "PermissionDeniedError",
+      name: "NoAccessError",
       message: message ?? cause.message,
-      code: "PERMISSION_DENIED_ERROR",
+      code: "NO_ACCESS_ERROR",
       cause,
     });
     this.path = path;

@@ -3,14 +3,12 @@ import type { Result } from "@repo/types/result";
 import { UnexpectedError } from "@repo/errors/unexpected";
 import { realpath } from "node:fs/promises";
 
-import { PermissionDeniedError } from "@/errors/permission-denied";
+import { NoAccessError } from "@/errors/no-access";
 import { NoEntryError } from "@/errors/no-entry";
 
 export async function resolveRealPath(
   path: string
-): Promise<
-  Result<string, PermissionDeniedError | UnexpectedError | NoEntryError>
-> {
+): Promise<Result<string, UnexpectedError | NoAccessError | NoEntryError>> {
   try {
     const resolvedPath = await realpath(path);
     return {
@@ -31,7 +29,7 @@ export async function resolveRealPath(
         case "EACCES": {
           return {
             success: false,
-            error: new PermissionDeniedError({ path, cause }),
+            error: new NoAccessError({ path, cause }),
           };
         }
       }
