@@ -1,11 +1,6 @@
-import { BaseError } from "@repo/errors/base";
+import { BaseFsError } from "@/errors/base-fs";
 
-export class NoAccessError extends BaseError<
-  "NO_ACCESS_ERROR",
-  ErrnoException
-> {
-  path: string;
-
+export class NoAccessError extends BaseFsError<"NO_ACCESS_ERROR"> {
   constructor({
     message,
     path,
@@ -17,10 +12,10 @@ export class NoAccessError extends BaseError<
   }) {
     super({
       name: "NoAccessError",
-      message: message ?? cause.message,
+      message,
       code: "NO_ACCESS_ERROR",
       cause,
+      path,
     });
-    this.path = path;
   }
 }

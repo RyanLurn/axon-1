@@ -1,11 +1,6 @@
-import { BaseError } from "@repo/errors/base";
+import { BaseFsError } from "@/errors/base-fs";
 
-export class PathAlreadyExistsError extends BaseError<
-  "PATH_ALREADY_EXISTS_ERROR",
-  ErrnoException
-> {
-  path: string;
-
+export class PathAlreadyExistsError extends BaseFsError<"PATH_ALREADY_EXISTS_ERROR"> {
   constructor({
     message,
     path,
@@ -17,10 +12,10 @@ export class PathAlreadyExistsError extends BaseError<
   }) {
     super({
       name: "PathAlreadyExistsError",
-      message: message ?? cause.message,
+      message,
       code: "PATH_ALREADY_EXISTS_ERROR",
       cause,
+      path,
     });
-    this.path = path;
   }
 }
