@@ -35,10 +35,12 @@ export const repoNameValidator = z
 
     // This is for Windows case-insensitivity.
     const lowercaseValue = value.toLowerCase();
+    const [firstPart] = lowercaseValue.split(".");
 
     if (
       RESERVED_GIT_NAMES.has(lowercaseValue) ||
-      RESERVED_WINDOWS_NAMES.has(lowercaseValue)
+      RESERVED_WINDOWS_NAMES.has(lowercaseValue) ||
+      (firstPart && RESERVED_WINDOWS_NAMES.has(firstPart))
     ) {
       addIssue(`The name "${value}" is reserved.`);
       return;
