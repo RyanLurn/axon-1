@@ -8,9 +8,13 @@ import { makeDirectory } from "@repo/fs/make-directory";
 
 import type { RepoPath } from "@/utils/get-repo-path";
 
-export async function createBareRepo(
-  repoPath: RepoPath
-): Promise<
+export async function createRepo({
+  repoPath,
+  isBare,
+}: {
+  repoPath: RepoPath;
+  isBare: boolean;
+}): Promise<
   Result<
     string,
     PathAlreadyExistsError | UnexpectedError | NoAccessError | NoEntryError
@@ -27,7 +31,7 @@ export async function createBareRepo(
   }
 
   try {
-    const gitProcess = Bun.spawn(["git-init", "--bare"], {
+    const gitProcess = Bun.spawn(["git", "init", isBare ? "--bare" : ""], {
       cwd: repoPath,
       stderr: "pipe",
     });
