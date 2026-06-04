@@ -14,7 +14,12 @@ export async function spawnInfoRefsAd({
 }: {
   repoPath: RepoPath;
   service: GitService;
-}): Promise<Result<Response, UnexpectedError | NoAccessError | NoEntryError>> {
+}): Promise<
+  Result<
+    Uint8Array<ArrayBuffer>,
+    UnexpectedError | NoAccessError | NoEntryError
+  >
+> {
   try {
     const gitProcess = Bun.spawn(
       [service, "--http-backend-info-refs", repoPath],
@@ -54,13 +59,7 @@ export async function spawnInfoRefsAd({
 
     return {
       success: true,
-      data: new Response(merged, {
-        status: 200,
-        headers: {
-          "Content-Type": `application/x-${service}-advertisement`,
-          "Cache-Control": "no-cache",
-        },
-      }),
+      data: merged,
     };
   } catch (error) {
     return {
