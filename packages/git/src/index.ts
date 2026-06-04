@@ -102,10 +102,13 @@ export const gitServer = new Hono()
       return c.text("Invalid request", 400);
     }
 
-    const spawnResult = await spawnUploadPack({ repoPath, requestBody });
+    const spawnUploadPackResult = await spawnUploadPack({
+      repoPath,
+      requestBody,
+    });
 
-    if (spawnResult.success === false) {
-      const error = spawnResult.error;
+    if (!spawnUploadPackResult.success) {
+      const error = spawnUploadPackResult.error;
       console.error(error);
 
       if (error.code === "NO_ENTRY_ERROR") {
@@ -115,5 +118,11 @@ export const gitServer = new Hono()
       return c.text("Internal server error", 500);
     }
 
-    return spawnResult.data;
+    return new Response(spawnUploadPackResult.data, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/x-git-upload-pack-result",
+        "Cache-Control": "no-cache",
+      },
+    });
   });
