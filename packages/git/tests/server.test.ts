@@ -1,3 +1,4 @@
+import { makeTemporaryDirectory } from "@repo/fs/make-temporary-directory";
 import { beforeAll, afterAll } from "bun:test";
 import { remove } from "@repo/fs/remove";
 
@@ -13,8 +14,30 @@ const testRepoName = "test-repo" as RepoName;
 
 const remoteRepoPath = getRepoPath(testRepoName);
 
+let tempDirPath: undefined | string = undefined;
+
 beforeAll(async () => {
   console.log("[SETUP] Setting up Git CGI server test...");
+
+  // Create the temporary directory for "local" repos
+  const timestamp = new Date()
+    .toISOString()
+    .replace(/:/g, "-")
+    .replace("T", "_")
+    .replace(/\..+/, "");
+  const makeTemporaryDirectoryResult = await makeTemporaryDirectory(
+    `test-${timestamp}-`
+  );
+  if (!makeTemporaryDirectoryResult.success) {
+    console.error(
+      `[SETUP] Failed to create the temporary directory for "local" repos.`
+    );
+    throw makeTemporaryDirectoryResult.error;
+  }
+  tempDirPath = makeTemporaryDirectoryResult.data;
+  console.log(
+    `[SETUP] Created the temporary directory for "local" repos at "${tempDirPath}".`
+  );
 
   // Create the test repo
   const createTestRepoResult = await createRepo({
@@ -62,5 +85,27 @@ afterAll(async () => {
     console.warn(removeTestRepoResult.error);
   } else {
     console.log(`[TEARDOWN] Removed ${testRepoName} at "${remoteRepoPath}".`);
+  }
+
+  // Remove the temporary directory
+  if (tempDirPath) {
+    const removeTempDirResult = await remove(tempDirPath, {
+      force: true,
+      recursive: true,
+    });
+    if (!removeTempDirResult.success) {
+      console.warn(
+        `[TEARDOWN] Failed to remove the temporary directory at "${tempDirPath}".`
+      );
+      console.warn(removeTempDirResult.error);
+    } else {
+      console.log(
+        `[TEARDOWN] Removed the temporary directory at "${tempDirPath}".`
+      );
+    }
+  } else {
+    console.warn(
+      "[TEARDOWN] The temporary directory was never created. Skip its removing step."
+    );
   }
 });
