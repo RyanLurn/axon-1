@@ -1,7 +1,8 @@
 {
-  "name": "@repo/types",
+  "name": "@repo/errors",
+  "version": "1.0.0",
   "type": "module",
-  "private": "true",
+  "private": true,
   "scripts": {
     "build": "tsdown",
     "check-types": "tsc --noEmit",
@@ -13,6 +14,9 @@
       "types": "./dist/*.d.mts",
       "default": "./dist/*.mjs"
     }
+  },
+  "dependencies": {
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

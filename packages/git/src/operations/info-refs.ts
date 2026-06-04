@@ -1,0 +1,71 @@
+import type { NoAccessError } from "@repo/fs/errors/no-access";
+import type { NoEntryError } from "@repo/fs/errors/no-entry";
+import type { Result } from "@repo/types/result";
+
+import { resolveRealPath } from "@repo/fs/resolve-real-path";
+import { UnexpectedError } from "@repo/errors/unexpected";
+
+import type { RepoPath } from "@/utils/get-repo-path";
+import type { GitService } from "@/utils/validators";
+
+export async function spawnInfoRefsAd({
+  repoPath,
+  service,
+}: {
+  repoPath: RepoPath;
+  service: GitService;
+}): Promise<
+  Result<
+    Uint8Array<ArrayBuffer>,
+    UnexpectedError | NoAccessError | NoEntryError
+  >
+> {
+  const resolveRealPathResult = await resolveRealPath(repoPath);
+  if (resolveRealPathResult.success === false) {
+    return resolveRealPathResult;
+  }
+
+  try {
+    const gitProcess = Bun.spawn([
+      service,
+      "--http-backend-info-refs",
+      "--end-of-options",
+      resolveRealPathResult.data,
+    ]);
+
+    const [outputBytes, exitCode] = await Promise.all([
+      Bun.readableStreamToBytes(gitProcess.stdout),
+      gitProcess.exited,
+    ]);
+
+    if (exitCode !== 0) {
+      return {
+        success: false,
+        error: new UnexpectedError({
+          message: `Failed to spawn ${service} ad for repo at ${repoPath}.`,
+          cause: new Error(`${service} exited with code ${exitCode}.`),
+        }),
+      };
+    }
+
+    const prefix = new TextEncoder().encode(
+      `00${service === "git-receive-pack" ? "1f" : "1e"}# service=${service}\n0000`
+    );
+    const merged = new Uint8Array(prefix.length + outputBytes.length);
+    merged.set(prefix, 0);
+    merged.set(outputBytes, prefix.length);
+
+    return {
+      success: true,
+      data: merged,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: new UnexpectedError({
+        message: `Something went wrong while spawning ${service} ad for repo at ${repoPath}.`,
+        cause: error,
+      }),
+    };
+  }
+}

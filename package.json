@@ -26,6 +26,7 @@
       "@types/node": "25.9.1",
       "better-auth": "1.6.11",
       "eslint": "10.4.0",
+      "hono": "4.12.23",
       "tsdown": "0.22.0",
       "typescript": "6.0.3",
       "zod": "4.4.3"
