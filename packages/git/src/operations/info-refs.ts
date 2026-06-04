@@ -20,32 +20,18 @@ export async function spawnInfoRefsAd({
     UnexpectedError | NoAccessError | NoEntryError
   >
 > {
+  const resolveRealPathResult = await resolveRealPath(repoPath);
+  if (resolveRealPathResult.success === false) {
+    return resolveRealPathResult;
+  }
+
   try {
-    const gitProcess = Bun.spawn(
-      [service, "--http-backend-info-refs", "--end-of-options", repoPath],
-      {
-        stderr: "pipe",
-      }
-    );
-
-    const exitCode = await gitProcess.exited;
-
-    if (exitCode !== 0) {
-      const error = await gitProcess.stderr.text();
-
-      const resolveRealPathResult = await resolveRealPath(repoPath);
-      if (resolveRealPathResult.success === false) {
-        return resolveRealPathResult;
-      }
-
-      return {
-        success: false,
-        error: new UnexpectedError({
-          message: `Something went wrong while spawning ${service} ad for repo at ${repoPath}.`,
-          cause: new Error(error),
-        }),
-      };
-    }
+    const gitProcess = Bun.spawn([
+      service,
+      "--http-backend-info-refs",
+      "--end-of-options",
+      repoPath,
+    ]);
 
     const outputBytes = await Bun.readableStreamToBytes(gitProcess.stdout);
 
