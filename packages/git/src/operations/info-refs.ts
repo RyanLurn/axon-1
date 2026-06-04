@@ -16,9 +16,12 @@ export async function spawnInfoRefsAd({
   service: GitService;
 }): Promise<Result<Response, UnexpectedError | NoAccessError | NoEntryError>> {
   try {
-    const gitProcess = Bun.spawn([service, "--advertise-refs", repoPath], {
-      stderr: "pipe",
-    });
+    const gitProcess = Bun.spawn(
+      [service, "--http-backend-info-refs", repoPath],
+      {
+        stderr: "pipe",
+      }
+    );
 
     const exitCode = await gitProcess.exited;
 
