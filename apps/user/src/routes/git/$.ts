@@ -5,7 +5,7 @@ export const Route = createFileRoute("/git/$")({
   server: {
     handlers: {
       ANY: async ({ request }) => {
-        return gitServer.basePath("/git").fetch(request);
+        return gitServer.fetch(request);
       },
     },
   },
