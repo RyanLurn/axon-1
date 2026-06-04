@@ -22,7 +22,7 @@ export async function spawnInfoRefsAd({
 > {
   try {
     const gitProcess = Bun.spawn(
-      [service, "--http-backend-info-refs", repoPath],
+      [service, "--http-backend-info-refs", "--end-of-options", repoPath],
       {
         stderr: "pipe",
       }
