@@ -19,6 +19,11 @@ export const repoNameValidator = z
   .max(REPO_NAME_MAX_LENGTH)
   .normalize()
   .regex(REPO_NAME_ALLOWED_CHARACTERS_REGEX)
+  .transform((value) =>
+    value.toLowerCase().endsWith(REPO_DIR_SUFFIX)
+      ? value.slice(0, -REPO_DIR_SUFFIX.length)
+      : value
+  )
   .superRefine((value, ctx) => {
     function addIssue(message: string) {
       ctx.addIssue({
@@ -51,11 +56,7 @@ export const repoNameValidator = z
       addIssue("Repo name cannot end with a hyphen.");
     }
   })
-  .transform((value) =>
-    value.toLowerCase().endsWith(REPO_DIR_SUFFIX)
-      ? (value.slice(0, -REPO_DIR_SUFFIX.length) as RepoName)
-      : (value as RepoName)
-  );
+  .transform((value) => value as RepoName);
 
 export const gitServiceValidator = z.enum(GIT_SERVICES);
 export type GitService = z.infer<typeof gitServiceValidator>;
