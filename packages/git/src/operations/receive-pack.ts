@@ -19,30 +19,16 @@ export async function spawnReceivePack({
     UnexpectedError | NoAccessError | NoEntryError
   >
 > {
+  const resolveRealPathResult = await resolveRealPath(repoPath);
+  if (resolveRealPathResult.success === false) {
+    return resolveRealPathResult;
+  }
+
   try {
     const gitProcess = Bun.spawn(
       ["git-receive-pack", "--stateless-rpc", "--end-of-options", repoPath],
       { stdin: requestBody, stderr: "pipe" }
     );
-
-    const exitCode = await gitProcess.exited;
-
-    if (exitCode !== 0) {
-      const error = await gitProcess.stderr.text();
-
-      const resolveRealPathResult = await resolveRealPath(repoPath);
-      if (resolveRealPathResult.success === false) {
-        return resolveRealPathResult;
-      }
-
-      return {
-        success: false,
-        error: new UnexpectedError({
-          message: `Something went wrong while spawning git-receive-pack for repo at ${repoPath}.`,
-          cause: new Error(error),
-        }),
-      };
-    }
 
     return {
       success: true,

@@ -19,30 +19,16 @@ export async function spawnUploadPack({
     UnexpectedError | NoAccessError | NoEntryError
   >
 > {
+  const resolveRealPathResult = await resolveRealPath(repoPath);
+  if (resolveRealPathResult.success === false) {
+    return resolveRealPathResult;
+  }
+
   try {
     const gitProcess = Bun.spawn(
       ["git-upload-pack", "--stateless-rpc", "--end-of-options", repoPath],
       { stdin: requestBody, stderr: "pipe" }
     );
-
-    const exitCode = await gitProcess.exited;
-
-    if (exitCode !== 0) {
-      const error = await gitProcess.stderr.text();
-
-      const resolveRealPathResult = await resolveRealPath(repoPath);
-      if (resolveRealPathResult.success === false) {
-        return resolveRealPathResult;
-      }
-
-      return {
-        success: false,
-        error: new UnexpectedError({
-          message: `Something went wrong while spawning git-upload-pack for repo at ${repoPath}.`,
-          cause: new Error(error),
-        }),
-      };
-    }
 
     return {
       success: true,
