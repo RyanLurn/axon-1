@@ -30,7 +30,7 @@ export async function spawnInfoRefsAd({
       service,
       "--http-backend-info-refs",
       "--end-of-options",
-      repoPath,
+      resolveRealPathResult.data,
     ]);
 
     const [outputBytes, exitCode] = await Promise.all([

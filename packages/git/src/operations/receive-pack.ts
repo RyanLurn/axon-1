@@ -26,7 +26,12 @@ export async function spawnReceivePack({
 
   try {
     const gitProcess = Bun.spawn(
-      ["git-receive-pack", "--stateless-rpc", "--end-of-options", repoPath],
+      [
+        "git-receive-pack",
+        "--stateless-rpc",
+        "--end-of-options",
+        resolveRealPathResult.data,
+      ],
       { stdin: requestBody }
     );
 

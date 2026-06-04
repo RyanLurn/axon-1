@@ -26,7 +26,12 @@ export async function spawnUploadPack({
 
   try {
     const gitProcess = Bun.spawn(
-      ["git-upload-pack", "--stateless-rpc", "--end-of-options", repoPath],
+      [
+        "git-upload-pack",
+        "--stateless-rpc",
+        "--end-of-options",
+        resolveRealPathResult.data,
+      ],
       { stdin: requestBody }
     );
 
