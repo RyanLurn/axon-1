@@ -53,8 +53,7 @@ export const gitServer = new Hono()
         return c.text("Internal server error", 500);
       }
 
-      const ad = spawnAdResult.data;
-      return new Response(ad, {
+      return new Response(spawnAdResult.data, {
         status: 200,
         headers: {
           "Content-Type": `application/x-${service}-advertisement`,
