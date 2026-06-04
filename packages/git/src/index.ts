@@ -40,10 +40,10 @@ export const gitServer = new Hono()
       const repoPath = c.req.valid("param");
       const service = c.req.valid("query");
 
-      const spawnResult = await spawnInfoRefsAd({ repoPath, service });
+      const spawnAdResult = await spawnInfoRefsAd({ repoPath, service });
 
-      if (spawnResult.success === false) {
-        const error = spawnResult.error;
+      if (!spawnAdResult.success) {
+        const error = spawnAdResult.error;
         console.error(error);
 
         if (error.code === "NO_ENTRY_ERROR") {
@@ -53,9 +53,7 @@ export const gitServer = new Hono()
         return c.text("Internal server error", 500);
       }
 
-      const ad = spawnResult.data;
-      console.log("Advertisement:", new TextDecoder().decode(ad));
-
+      const ad = spawnAdResult.data;
       return new Response(ad, {
         status: 200,
         headers: {
