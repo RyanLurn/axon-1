@@ -8,24 +8,28 @@ import { getRepoPath } from "@/utils/get-repo-path";
 import { gitServer } from "@/index";
 
 let testServer: Bun.Server<undefined> | undefined = undefined;
-const testRepoName = "server-test-repo" as RepoName;
-const testRepoPath = getRepoPath(testRepoName);
+
+const testRepoName = "test-repo" as RepoName;
+
+const remoteRepoPath = getRepoPath(testRepoName);
 
 beforeAll(async () => {
   console.log("[SETUP] Setting up Git CGI server test...");
 
   // Create the test repo
   const createTestRepoResult = await createRepo({
-    repoPath: testRepoPath,
+    repoPath: remoteRepoPath,
     isBare: true,
   });
   if (!createTestRepoResult.success) {
     console.error(
-      `[SETUP] Failed to create a bare repo for testing at "${testRepoPath}".`
+      `[SETUP] Failed to create a bare repo for testing at "${remoteRepoPath}".`
     );
     throw createTestRepoResult.error;
   }
-  console.log(`[SETUP] Created a bare repo for testing at "${testRepoPath}".`);
+  console.log(
+    `[SETUP] Created a bare repo for testing at "${remoteRepoPath}".`
+  );
 
   // Start the test server
   testServer = Bun.serve({
@@ -47,16 +51,16 @@ afterAll(async () => {
   }
 
   // Remove the test repo
-  const removeTestRepoResult = await remove(testRepoPath, {
+  const removeTestRepoResult = await remove(remoteRepoPath, {
     force: true,
     recursive: true,
   });
   if (!removeTestRepoResult.success) {
     console.warn(
-      `[TEARDOWN] Failed to remove ${testRepoName} at "${testRepoPath}".`
+      `[TEARDOWN] Failed to remove ${testRepoName} at "${remoteRepoPath}".`
     );
     console.warn(removeTestRepoResult.error);
   } else {
-    console.log(`[TEARDOWN] Removed ${testRepoName} at "${testRepoPath}".`);
+    console.log(`[TEARDOWN] Removed ${testRepoName} at "${remoteRepoPath}".`);
   }
 });
