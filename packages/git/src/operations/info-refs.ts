@@ -1,3 +1,4 @@
+import type { NoAccessError } from "@repo/fs/errors/no-access";
 import type { NoEntryError } from "@repo/fs/errors/no-entry";
 import type { Result } from "@repo/types/result";
 
@@ -13,7 +14,7 @@ export async function spawnInfoRefsAd({
 }: {
   repoPath: RepoPath;
   service: GitService;
-}): Promise<Result<Response, UnexpectedError | NoEntryError>> {
+}): Promise<Result<Response, UnexpectedError | NoAccessError | NoEntryError>> {
   try {
     const gitProcess = Bun.spawn([service, "--advertise-refs", repoPath], {
       stderr: "pipe",

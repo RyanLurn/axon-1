@@ -10,6 +10,7 @@ import { spawnInfoRefsAd } from "@/operations/info-refs";
 import { getRepoPath } from "@/utils/get-repo-path";
 
 const repoPathParamValidator = validator("param", (value, c) => {
+  // console.log(c.req.header());
   const validationResult = repoNameValidator.safeParse(value["repo"]);
 
   if (!validationResult.success) {

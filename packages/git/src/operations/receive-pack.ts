@@ -1,3 +1,4 @@
+import type { NoAccessError } from "@repo/fs/errors/no-access";
 import type { NoEntryError } from "@repo/fs/errors/no-entry";
 import type { Result } from "@repo/types/result";
 
@@ -12,7 +13,7 @@ export async function spawnReceivePack({
 }: {
   repoPath: RepoPath;
   requestBody: ReadableStream;
-}): Promise<Result<Response, UnexpectedError | NoEntryError>> {
+}): Promise<Result<Response, UnexpectedError | NoAccessError | NoEntryError>> {
   try {
     const gitProcess = Bun.spawn(
       ["git-receive-pack", "--stateless-rpc", repoPath],
