@@ -17,9 +17,7 @@ export class PermissionDeniedError extends BaseError<
   }) {
     super({
       name: "PermissionDeniedError",
-      message:
-        message ??
-        `The current process doesn't have permission to access ${path}.`,
+      message: message ?? cause.message,
       code: "PERMISSION_DENIED_ERROR",
       cause,
     });

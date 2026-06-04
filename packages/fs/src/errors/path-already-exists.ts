@@ -17,7 +17,7 @@ export class PathAlreadyExistsError extends BaseError<
   }) {
     super({
       name: "PathAlreadyExistsError",
-      message: message ?? `"${path}" already exists.`,
+      message: message ?? cause.message,
       code: "PATH_ALREADY_EXISTS_ERROR",
       cause,
     });

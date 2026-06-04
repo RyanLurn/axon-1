@@ -14,7 +14,7 @@ export class NoEntryError extends BaseError<"NO_ENTRY_ERROR", ErrnoException> {
   }) {
     super({
       name: "NoEntryError",
-      message: message ?? `No file or directory exists at ${path}.`,
+      message: message ?? cause.message,
       code: "NO_ENTRY_ERROR",
       cause,
     });
