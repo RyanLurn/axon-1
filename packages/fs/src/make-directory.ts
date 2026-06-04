@@ -27,37 +27,25 @@ export async function makeDirectory({
     };
   } catch (error) {
     if (error instanceof Error && "errno" in error) {
-      const exception = error as ErrnoException;
+      const cause = error as ErrnoException;
 
-      switch (exception.code) {
+      switch (cause.code) {
         case "EEXIST": {
           return {
             success: false,
-            error: new PathAlreadyExistsError({
-              message: `Failed to make a new directory at "${path}" because it already exists.`,
-              path,
-              cause: exception,
-            }),
+            error: new PathAlreadyExistsError({ path, cause }),
           };
         }
         case "ENOENT": {
           return {
             success: false,
-            error: new NoEntryError({
-              message: `Failed to make a new directory at "${path}" because a directory component in path does not exist.`,
-              path,
-              cause: exception,
-            }),
+            error: new NoEntryError({ path, cause }),
           };
         }
         case "EACCES": {
           return {
             success: false,
-            error: new NoAccessError({
-              message: `Failed to make a new directory at "${path}" because the current process doesn't have permission to access it.`,
-              path,
-              cause: exception,
-            }),
+            error: new NoAccessError({ path, cause }),
           };
         }
       }
@@ -66,7 +54,7 @@ export async function makeDirectory({
     return {
       success: false,
       error: new UnexpectedError({
-        message: `Something went wrong while creating a directory at "${path}".`,
+        message: `An unexpected error occurred while creating a new directory at "${path}".`,
         cause: error,
       }),
     };
