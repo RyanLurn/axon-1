@@ -9,6 +9,7 @@ import { spawnInfoRefsAd } from "@/operations/info-refs";
 import { getRepoPath } from "@/utils/get-repo-path";
 
 export const gitServer = new Hono()
+  .basePath("/git")
   .use(logger())
   .get("/:repo/info/refs", async (c) => {
     // Validate the :repo path param
