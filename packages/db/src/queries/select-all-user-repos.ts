@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 
+import type { SelectedUserRepo } from "@/types/inferred";
 import type { UserId } from "@/types/branded";
 
 import { repoTable } from "@/schema/tables/git";
@@ -11,5 +12,5 @@ export async function selectAllUserRepos(userId: UserId) {
     .from(repoTable)
     .where(eq(repoTable.userId, userId));
 
-  return repos;
+  return repos as SelectedUserRepo[];
 }
