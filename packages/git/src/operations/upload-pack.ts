@@ -1,6 +1,6 @@
 import type { NoAccessError } from "@repo/fs/errors/no-access";
 import type { NoEntryError } from "@repo/fs/errors/no-entry";
-import type { RepoPath } from "@repo/db/types/git";
+import type { RepoPath } from "@repo/db/types/branded";
 import type { Result } from "@repo/types/result";
 
 import { resolveRealPath } from "@repo/fs/resolve-real-path";

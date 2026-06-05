@@ -1,4 +1,4 @@
-import type { RepoName, RepoPath } from "@repo/db/types/git";
+import type { RepoName, RepoPath } from "@repo/db/types/branded";
 
 import { join } from "node:path";
 

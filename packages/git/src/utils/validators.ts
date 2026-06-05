@@ -1,4 +1,4 @@
-import type { RepoName } from "@repo/db/types/git";
+import type { RepoName } from "@repo/db/types/branded";
 
 import { z } from "zod";
 
