@@ -1,6 +1,6 @@
 import { text } from "drizzle-orm/sqlite-core";
 
-import type { UserId } from "@/types/user-id";
+import type { UserId } from "@/types/branded";
 
 import { userTable } from "@/schema/tables/user";
 

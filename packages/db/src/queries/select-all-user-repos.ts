@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 
-import type { UserId } from "@/types/user-id";
+import type { UserId } from "@/types/branded";
 
 import { repoTable } from "@/schema/tables/git";
 import { db } from "@/index";

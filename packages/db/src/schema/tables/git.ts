@@ -1,9 +1,13 @@
 import { sqliteTable, check, index, text } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
-import type { RepoPath, RepoName, RepoId } from "@/types/git";
-import type { UserId } from "@/types/user-id";
-import type { AgentId } from "@/types/agent";
+import type {
+  RepoPath,
+  RepoName,
+  AgentId,
+  UserId,
+  RepoId,
+} from "@/types/branded";
 
 import { timestamps } from "@/schema/helpers/timestamps";
 import { agentTable } from "@/schema/tables/agent";

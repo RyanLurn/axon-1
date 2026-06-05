@@ -1,7 +1,7 @@
 import type { StrictOmit } from "@repo/types/strict-omit";
 
 import type { repoTable } from "@/schema/tables/git";
-import type { UserId } from "@/types/user-id";
+import type { UserId } from "@/types/branded";
 
 export type SelectedRepo = typeof repoTable.$inferSelect;
 export type InsertedRepo = typeof repoTable.$inferInsert;
