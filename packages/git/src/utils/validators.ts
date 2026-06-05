@@ -1,4 +1,4 @@
-import type { Branded } from "@repo/types/branded";
+import type { RepoName } from "@repo/db/types/git";
 
 import { z } from "zod";
 
@@ -12,7 +12,6 @@ import {
   GIT_SERVICES,
 } from "@/utils/constants";
 
-export type RepoName = Branded<string, "RepoName">;
 export const repoNameValidator = z
   .string()
   .min(1)
