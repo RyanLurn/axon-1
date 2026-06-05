@@ -109,6 +109,7 @@
       "name": "@repo/db",
       "version": "1.0.0",
       "dependencies": {
+        "@repo/errors": "workspace:*",
         "@repo/types": "workspace:*",
         "@t3-oss/env-core": "catalog:",
         "drizzle-orm": "1.0.0-rc.3",
