@@ -20,6 +20,7 @@ export const repoTable = sqliteTable(
     id: id.$type<RepoId>(),
     name: text("name").notNull().$type<RepoName>(),
     path: text("path").notNull().$type<RepoPath>(),
+    description: text("description"),
     userId: text("user_id")
       .$type<UserId>()
       .references(() => userTable.id, {
