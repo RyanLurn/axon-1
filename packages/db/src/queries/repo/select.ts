@@ -1,7 +1,7 @@
 import type { Result } from "@repo/types/result";
 
 import { UnexpectedError } from "@repo/errors/unexpected";
-import { and, eq } from "drizzle-orm";
+import { isNull, and, eq } from "drizzle-orm";
 
 import type { RepoSelector } from "@/types/selectors";
 import type { SelectedRepo } from "@/types/inferred";
@@ -25,7 +25,8 @@ export async function selectRepo({
       .where(
         and(
           eq(repoTable[selector.column], selector.value),
-          eq(repoTable.userId, userId)
+          eq(repoTable.userId, userId),
+          isNull(repoTable.deletionStartedAt)
         )
       );
 
