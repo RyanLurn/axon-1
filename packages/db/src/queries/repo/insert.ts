@@ -3,7 +3,8 @@ import type { Result } from "@repo/types/result";
 import { UnexpectedError } from "@repo/errors/unexpected";
 import { SQLiteError } from "bun:sqlite";
 
-import type { RepoName, RepoId, UserId } from "@/types/branded";
+import type { InsertedRepo } from "@/types/inferred";
+import type { RepoId } from "@/types/branded";
 
 import { RepoNameTakenError } from "@/errors/repo-name-taken";
 import { repoTable } from "@/schema/tables/repo";
@@ -13,11 +14,9 @@ export async function insertRepo({
   userId,
   name,
   description,
-}: {
-  userId: UserId;
-  name: RepoName;
-  description?: string;
-}): Promise<Result<RepoId, RepoNameTakenError | UnexpectedError>> {
+}: Pick<InsertedRepo, "description" | "userId" | "name">): Promise<
+  Result<RepoId, RepoNameTakenError | UnexpectedError>
+> {
   try {
     const id = Bun.randomUUIDv7() as RepoId;
 
