@@ -17,7 +17,6 @@ export const repoTable = sqliteTable(
     ...timestamps,
   },
   (table) => [
-    index("repos_user_id_index").on(table.userId),
     index("repos_deletion_started_at_index").on(table.deletionStartedAt),
   ]
 );
