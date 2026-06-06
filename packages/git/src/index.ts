@@ -3,9 +3,9 @@ import { prettifyError } from "zod";
 import { Hono } from "hono";
 
 import { gitServiceValidator, repoNameValidator } from "@/utils/validators";
-import { spawnReceivePack } from "@/operations/receive-pack";
-import { spawnUploadPack } from "@/operations/upload-pack";
-import { spawnInfoRefsAd } from "@/operations/info-refs";
+import { spawnReceivePack } from "@/child-processes/receive-pack";
+import { spawnUploadPack } from "@/child-processes/upload-pack";
+import { spawnInfoRefsAd } from "@/child-processes/info-refs";
 import { getRepoPath } from "@/utils/get-repo-path";
 
 export const gitServer = new Hono()
