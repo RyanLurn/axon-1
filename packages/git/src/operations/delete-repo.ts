@@ -5,7 +5,7 @@ import type { RepoSelector } from "@repo/db/types/selectors";
 import type { UserId } from "@repo/db/types/branded";
 import type { Result } from "@repo/types/result";
 
-import { updateRepoDeletionStatus } from "@repo/db/queries/repo/update/deletion-status";
+import { updateRepoDeletionStatus } from "@repo/db/queries/repo/update-deletion-status";
 import { deleteRepo as deleteRepoRow } from "@repo/db/queries/repo/delete";
 import { remove } from "@repo/fs/remove";
 

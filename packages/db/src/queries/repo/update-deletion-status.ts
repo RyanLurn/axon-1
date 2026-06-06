@@ -17,7 +17,7 @@ export async function updateRepoDeletionStatus({
 }: {
   selector: RepoSelector;
   userId: UserId;
-  deletionStartedAt: Date | null;
+  deletionStartedAt: Date;
 }): Promise<Result<RepoName, RepoNotFoundError | UnexpectedError>> {
   try {
     const [updatedRepo] = await db
