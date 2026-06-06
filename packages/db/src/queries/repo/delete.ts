@@ -8,7 +8,7 @@ import type { RepoId, UserId } from "@/types/branded";
 import { repoTable } from "@/schema/tables/repo";
 import { db } from "@/index";
 
-export async function deleteRepoById({
+export async function deleteRepo({
   id,
   userId,
 }: {
