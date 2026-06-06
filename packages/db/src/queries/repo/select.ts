@@ -7,6 +7,7 @@ import type { RepoSelector } from "@/types/selectors";
 import type { SelectedRepo } from "@/types/inferred";
 import type { UserId } from "@/types/branded";
 
+import { RepoNotFoundError } from "@/errors/repo-not-found";
 import { repoTable } from "@/schema/tables/repo";
 import { db } from "@/index";
 
@@ -16,7 +17,7 @@ export async function selectRepo({
 }: {
   selector: RepoSelector;
   userId: UserId;
-}): Promise<Result<SelectedRepo, UnexpectedError>> {
+}): Promise<Result<SelectedRepo, RepoNotFoundError | UnexpectedError>> {
   try {
     const [selectedRepo] = await db
       .select()
@@ -31,10 +32,7 @@ export async function selectRepo({
     if (!selectedRepo) {
       return {
         success: false,
-        error: new UnexpectedError({
-          message: `Could not find repo with ${selector.column} "${selector.value}".`,
-          cause: null,
-        }),
+        error: new RepoNotFoundError(selector),
       };
     }
 
