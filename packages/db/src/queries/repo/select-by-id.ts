@@ -9,25 +9,35 @@ import type { SelectedRepo } from "@/types/inferred";
 import { repoTable } from "@/schema/tables/repo";
 import { db } from "@/index";
 
-export async function selectRepo({
+export async function selectRepoById({
   id,
   userId,
 }: {
   id: RepoId;
   userId: UserId;
-}): Promise<Result<SelectedRepo | null, UnexpectedError>> {
+}): Promise<Result<SelectedRepo, UnexpectedError>> {
   try {
     const [selectedRepo] = await db
       .select()
       .from(repoTable)
       .where(and(eq(repoTable.id, id), eq(repoTable.userId, userId)));
 
-    return { success: true, data: selectedRepo ?? null };
+    if (!selectedRepo) {
+      return {
+        success: false,
+        error: new UnexpectedError({
+          message: `Could not find repo with id "${id}".`,
+          cause: null,
+        }),
+      };
+    }
+
+    return { success: true, data: selectedRepo };
   } catch (error) {
     return {
       success: false,
       error: new UnexpectedError({
-        message: `Something went wrong while selecting repo "${id}".`,
+        message: `Something went wrong while selecting repo with id "${id}".`,
         cause: error,
       }),
     };
