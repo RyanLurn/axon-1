@@ -3,7 +3,7 @@ import type { RepoName, RepoId, UserId } from "@/types/branded";
 import { repoTable } from "@/schema/tables/repo";
 import { db } from "@/index";
 
-export async function insertOneRepo({
+export async function insertRepo({
   userId,
   name,
   description,
