@@ -8,7 +8,7 @@ import type { RepoId, UserId } from "@/types/branded";
 import { repoTable } from "@/schema/tables/repo";
 import { db } from "@/index";
 
-export async function deleteRepo({
+export async function deleteRepoById({
   id,
   userId,
 }: {
@@ -25,7 +25,7 @@ export async function deleteRepo({
     return {
       success: false,
       error: new UnexpectedError({
-        message: `Something went wrong while deleting repo "${id}".`,
+        message: `Something went wrong while deleting repo with id "${id}".`,
         cause: error,
       }),
     };
