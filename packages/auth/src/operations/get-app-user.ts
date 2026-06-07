@@ -10,9 +10,15 @@ import { InternalAuthAPIError } from "@/errors/internal-auth-api";
 import { UnauthenticatedError } from "@/errors/unauthenticated";
 import { userAuth } from "@/index";
 
-export async function getAppUser(
-  request: Request
-): Promise<
+export async function getAppUser({
+  headers,
+  method,
+  url,
+}: {
+  headers: Headers;
+  method: string;
+  url: string;
+}): Promise<
   Result<
     AppUser,
     | FailedSessionUpdateError
@@ -23,13 +29,13 @@ export async function getAppUser(
 > {
   try {
     const session = await userAuth.api.getSession({
-      headers: request.headers,
+      headers,
     });
 
     if (!session) {
       return {
         success: false,
-        error: new UnauthenticatedError(request),
+        error: new UnauthenticatedError({ method, url }),
       };
     }
 
