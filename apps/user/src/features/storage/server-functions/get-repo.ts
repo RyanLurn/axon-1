@@ -4,7 +4,7 @@ import { selectRepo } from "@repo/db/queries/repo/select";
 import { createServerFn } from "@tanstack/react-start";
 import { notFound } from "@tanstack/react-router";
 
-import { authMiddleware } from "@/lib/auth/auth-middleware";
+import { authMiddleware } from "@/lib/auth/middleware";
 
 export const getRepo = createServerFn()
   .middleware([authMiddleware])
