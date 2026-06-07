@@ -14,7 +14,6 @@ import { Route as IndexRouteImport } from "./routes/index";
 import { Route as GitSplatRouteImport } from "./routes/git/$";
 import { Route as AuthenticatedChatRouteImport } from "./routes/_authenticated/chat";
 import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
-import { Route as AuthenticatedStorageIndexRouteImport } from "./routes/_authenticated/storage/index";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -41,12 +40,6 @@ const authSignInRoute = authSignInRouteImport.update({
   path: "/sign-in",
   getParentRoute: () => rootRouteImport,
 } as any);
-const AuthenticatedStorageIndexRoute =
-  AuthenticatedStorageIndexRouteImport.update({
-    id: "/storage/",
-    path: "/storage/",
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any);
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: "/api/auth/$",
   path: "/api/auth/$",
@@ -59,7 +52,6 @@ export interface FileRoutesByFullPath {
   "/chat": typeof AuthenticatedChatRoute;
   "/git/$": typeof GitSplatRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
-  "/storage/": typeof AuthenticatedStorageIndexRoute;
 }
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
@@ -67,7 +59,6 @@ export interface FileRoutesByTo {
   "/chat": typeof AuthenticatedChatRoute;
   "/git/$": typeof GitSplatRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
-  "/storage": typeof AuthenticatedStorageIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
@@ -77,19 +68,12 @@ export interface FileRoutesById {
   "/_authenticated/chat": typeof AuthenticatedChatRoute;
   "/git/$": typeof GitSplatRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
-  "/_authenticated/storage/": typeof AuthenticatedStorageIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths:
-    | "/"
-    | "/sign-in"
-    | "/chat"
-    | "/git/$"
-    | "/api/auth/$"
-    | "/storage/";
+  fullPaths: "/" | "/sign-in" | "/chat" | "/git/$" | "/api/auth/$";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/sign-in" | "/chat" | "/git/$" | "/api/auth/$" | "/storage";
+  to: "/" | "/sign-in" | "/chat" | "/git/$" | "/api/auth/$";
   id:
     | "__root__"
     | "/"
@@ -97,8 +81,7 @@ export interface FileRouteTypes {
     | "/(auth)/sign-in"
     | "/_authenticated/chat"
     | "/git/$"
-    | "/api/auth/$"
-    | "/_authenticated/storage/";
+    | "/api/auth/$";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
@@ -146,13 +129,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof authSignInRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/_authenticated/storage/": {
-      id: "/_authenticated/storage/";
-      path: "/storage";
-      fullPath: "/storage/";
-      preLoaderRoute: typeof AuthenticatedStorageIndexRouteImport;
-      parentRoute: typeof AuthenticatedRouteRoute;
-    };
     "/api/auth/$": {
       id: "/api/auth/$";
       path: "/api/auth/$";
@@ -165,12 +141,10 @@ declare module "@tanstack/react-router" {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedChatRoute: typeof AuthenticatedChatRoute;
-  AuthenticatedStorageIndexRoute: typeof AuthenticatedStorageIndexRoute;
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedChatRoute: AuthenticatedChatRoute,
-  AuthenticatedStorageIndexRoute: AuthenticatedStorageIndexRoute,
 };
 
 const AuthenticatedRouteRouteWithChildren =
