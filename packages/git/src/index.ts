@@ -1,11 +1,12 @@
+import { repoNameValidator } from "@repo/db/validators/repo/name";
 import { logger } from "hono/logger";
 import { prettifyError } from "zod";
 import { Hono } from "hono";
 
-import { gitServiceValidator, repoNameValidator } from "@/utils/validators";
 import { spawnReceivePack } from "@/child-processes/receive-pack";
 import { spawnUploadPack } from "@/child-processes/upload-pack";
 import { spawnInfoRefsAd } from "@/child-processes/info-refs";
+import { gitServiceValidator } from "@/utils/validators";
 import { getRepoPath } from "@/utils/get-repo-path";
 
 export const gitServer = new Hono()

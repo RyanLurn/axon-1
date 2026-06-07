@@ -1,8 +1,8 @@
 import type { RepoName, RepoPath } from "@repo/db/types/branded";
 
+import { REPO_DIR_SUFFIX } from "@repo/db/validators/repo/name";
 import { join } from "node:path";
 
-import { REPO_DIR_SUFFIX } from "@/utils/constants";
 import { gitEnvVars } from "@/utils/env-vars";
 
 export function getRepoPath(repoName: RepoName): RepoPath {

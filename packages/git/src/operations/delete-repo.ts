@@ -1,7 +1,7 @@
 import type { RepoNotFoundError } from "@repo/db/errors/repo-not-found";
+import type { RepoSelector } from "@repo/db/validators/repo/selector";
 import type { UnexpectedError } from "@repo/errors/unexpected";
 import type { NoAccessError } from "@repo/fs/errors/no-access";
-import type { RepoSelector } from "@repo/db/types/selectors";
 import type { UserId } from "@repo/db/types/branded";
 import type { Result } from "@repo/types/result";
 
