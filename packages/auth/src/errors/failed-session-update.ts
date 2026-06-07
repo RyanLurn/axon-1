@@ -6,7 +6,7 @@ export class FailedSessionUpdateError extends AuthAPIError<"FAILED_SESSION_UPDAT
   constructor(cause: APIError) {
     super({
       name: "FailedSessionUpdateError",
-      message: cause.message,
+      message: "Failed to update session.",
       code: "FAILED_SESSION_UPDATE_ERROR",
       cause,
     });
