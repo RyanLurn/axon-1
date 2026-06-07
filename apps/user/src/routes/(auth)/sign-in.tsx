@@ -14,7 +14,7 @@ import {
   credentialsValidator,
   passwordValidator,
   emailValidator,
-} from "@/lib/auth/validators";
+} from "@/features/auth/validators";
 import {
   FieldGroup,
   FieldLabel,
@@ -22,8 +22,8 @@ import {
   Field,
 } from "@/components/ui/field";
 import { Route as ChatRoute } from "@/routes/_authenticated/chat";
+import { authClient } from "@/features/auth/client";
 import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth/client";
 import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/(auth)/sign-in")({
