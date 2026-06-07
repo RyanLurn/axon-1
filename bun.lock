@@ -17,6 +17,7 @@
         "@fontsource-variable/geist": "5.2.9",
         "@repo/auth": "workspace:*",
         "@repo/db": "workspace:*",
+        "@repo/errors": "workspace:*",
         "@repo/git": "workspace:*",
         "@repo/types": "workspace:*",
         "@t3-oss/env-core": "catalog:",
