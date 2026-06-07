@@ -1,10 +1,10 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { loadCurrentUser } from "@/features/auth/server-functions/load-current-user";
+import { loadUserFn } from "@/features/auth/server-functions/load-user";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ location }) => {
-    const user = await loadCurrentUser();
+    const user = await loadUserFn();
 
     if (!user) {
       throw redirect({

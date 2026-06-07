@@ -2,7 +2,7 @@ import { getAppUser } from "@repo/auth/operations/get-app-user";
 import { getRequest } from "@tanstack/react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 
-export const loadCurrentUser = createServerFn().handler(async () => {
+export const loadUserFn = createServerFn().handler(async () => {
   const request = getRequest();
   const getAppUserResult = await getAppUser(request);
 
