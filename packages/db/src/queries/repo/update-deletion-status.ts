@@ -3,8 +3,8 @@ import type { Result } from "@repo/types/result";
 import { UnexpectedError } from "@repo/errors/unexpected";
 import { isNull, and, eq } from "drizzle-orm";
 
+import type { RepoSelector } from "@/validators/repo/selector";
 import type { RepoName, UserId } from "@/types/branded";
-import type { RepoSelector } from "@/types/selectors";
 
 import { RepoNotFoundError } from "@/errors/repo-not-found";
 import { repoTable } from "@/schema/tables/repo";
