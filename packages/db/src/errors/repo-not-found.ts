@@ -1,6 +1,6 @@
 import { BaseError } from "@repo/errors/base";
 
-import type { RepoSelector } from "@/types/selectors";
+import type { RepoSelector } from "@/validators/repo/selector";
 
 export class RepoNotFoundError extends BaseError<"REPO_NOT_FOUND_ERROR", null> {
   constructor(selector: RepoSelector) {
