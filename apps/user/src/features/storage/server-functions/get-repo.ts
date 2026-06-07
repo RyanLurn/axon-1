@@ -6,7 +6,7 @@ import { notFound } from "@tanstack/react-router";
 
 import { authMiddleware } from "@/features/auth/middleware";
 
-export const getRepo = createServerFn()
+export const getRepoFn = createServerFn()
   .middleware([authMiddleware])
   .inputValidator(repoSelectorValidator)
   .handler(async ({ context, data }) => {
