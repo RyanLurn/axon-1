@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { RepoName } from "@/types/branded";
+import type { RepoName, RepoId } from "@/types/branded";
 
 export const REPO_DIR_SUFFIX = ".git";
 
@@ -95,3 +95,12 @@ export const repoNameValidator = z
     }
   })
   .transform((value) => value as RepoName);
+
+export const repoSelectorValidator = z.discriminatedUnion("column", [
+  z.object({ column: z.literal("name"), value: repoNameValidator }),
+  z.object({
+    column: z.literal("id"),
+    value: z.uuidv7().transform((value) => value as RepoId),
+  }),
+]);
+export type RepoSelector = z.infer<typeof repoSelectorValidator>;
