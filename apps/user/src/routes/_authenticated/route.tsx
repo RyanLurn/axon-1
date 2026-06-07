@@ -1,18 +1,18 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { getCurrentSession } from "@/features/auth/server-functions/get-current-session";
+import { loadCurrentUser } from "@/features/auth/server-functions/load-current-user";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ location }) => {
-    const session = await getCurrentSession();
+    const user = await loadCurrentUser();
 
-    if (!session) {
+    if (!user) {
       throw redirect({
         to: "/sign-in",
         search: { redirect: location.href },
       });
     }
 
-    return { user: session.user };
+    return { user };
   },
 });
