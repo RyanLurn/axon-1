@@ -22,7 +22,7 @@ export const authMiddleware = createMiddleware().server(
       return next({ context: { user: session.user } });
     } catch (error) {
       if (isAPIError(error)) {
-        // From Better Auth's source code (see "https://github.com/better-auth/better-auth/blob/main/packages/better-auth/src/api/routes/session.ts#L461"), we know that if the status is "UNAUTHORIZED", it's because of the library "Handle case where session update fails (e.g., concurrent deletion)"
+        // From Better Auth's source code (see "https://github.com/better-auth/better-auth/blob/main/packages/better-auth/src/api/routes/session.ts#L461"), we know that if the status is "UNAUTHORIZED", it's because the library "Handle case where session update fails (e.g., concurrent deletion)"
         const authError =
           error.status === "UNAUTHORIZED"
             ? new FailedSessionUpdateError(error)
