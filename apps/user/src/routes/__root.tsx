@@ -4,7 +4,6 @@ import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import { ThemeProvider } from "@/components/providers/theme";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ModeToggle } from "@/components/mode-toggle";
 import { Toaster } from "@/components/ui/sonner";
 import styles from "@/globals.css?url";
 
@@ -41,7 +40,6 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           <TooltipProvider>
             <Toaster position="top-center" closeButton richColors />
             <div className="h-screen">{children}</div>
-            <ModeToggle className="fixed top-3 right-3 z-50" />
           </TooltipProvider>
         </ThemeProvider>
         <Scripts />
