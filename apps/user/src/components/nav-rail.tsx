@@ -1,5 +1,5 @@
 import { MessageCircle, Database, Shield, Moon, Sun } from "lucide-react";
-import { useMatchRoute, Link } from "@tanstack/react-router";
+import { MatchRoute, Link } from "@tanstack/react-router";
 
 import {
   TooltipContent,
@@ -21,7 +21,6 @@ const NAV_ITEMS = [
 ] as const;
 
 export function NavRail() {
-  const matchRoute = useMatchRoute();
   const { theme, setTheme } = useTheme();
 
   function cycleTheme() {
@@ -44,34 +43,35 @@ export function NavRail() {
       {/* Mode icons */}
       <div className="flex flex-col items-center gap-1">
         {NAV_ITEMS.map(({ to, label, icon: Icon }) => {
-          const isActive = !!matchRoute({ to, fuzzy: true });
-          console.log(`${label} is ${isActive ? "active" : "inactive"}.`);
-
           return (
-            <Tooltip key={to}>
-              <TooltipTrigger
-                render={
-                  <Button
+            <MatchRoute fuzzy={true} key={to} to={to}>
+              {(match) => (
+                <Tooltip>
+                  <TooltipTrigger
                     render={
-                      <Link to={to}>
-                        {isActive && (
-                          <span className="absolute top-1/2 -left-2.25 h-4 w-0.5 -translate-y-1/2 rounded-r-full bg-foreground" />
+                      <Button
+                        render={
+                          <Link to={to}>
+                            {match && (
+                              <span className="absolute top-1/2 -left-2.25 h-4 w-0.5 -translate-y-1/2 rounded-r-full bg-foreground" />
+                            )}
+                            <Icon />
+                          </Link>
+                        }
+                        className={cn(
+                          "relative",
+                          match && "bg-muted text-foreground"
                         )}
-                        <Icon />
-                      </Link>
+                        nativeButton={false}
+                        variant="ghost"
+                        size="icon-sm"
+                      />
                     }
-                    className={cn(
-                      "relative",
-                      isActive && "bg-muted text-foreground"
-                    )}
-                    nativeButton={false}
-                    variant="ghost"
-                    size="icon-sm"
                   />
-                }
-              />
-              <TooltipContent side="right">{label}</TooltipContent>
-            </Tooltip>
+                  <TooltipContent side="right">{label}</TooltipContent>
+                </Tooltip>
+              )}
+            </MatchRoute>
           );
         })}
       </div>
