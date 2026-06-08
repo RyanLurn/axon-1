@@ -5,7 +5,9 @@ export const Route = createFileRoute("/_authenticated/chat")({
 });
 
 function ChatPage() {
-  <div className="flex h-full w-full items-center justify-center text-sm text-muted-foreground">
-    Chat — coming soon
-  </div>;
+  return (
+    <div className="flex h-full w-full items-center justify-center text-sm text-muted-foreground">
+      Chat — coming soon
+    </div>
+  );
 }
