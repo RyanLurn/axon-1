@@ -29,4 +29,6 @@ export const createRepoFn = createServerFn()
       setResponseStatus(500);
       throw new Error("Internal server error");
     }
+
+    return createRepoResult.data;
   });
