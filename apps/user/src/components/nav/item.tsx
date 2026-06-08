@@ -7,7 +7,7 @@ import {
   TooltipContent,
   Tooltip,
 } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function NavItem({
@@ -25,20 +25,23 @@ export function NavItem({
         <Tooltip>
           <TooltipTrigger
             render={
-              <Button
-                render={
-                  <Link aria-label={label} to={to}>
-                    {match && (
-                      <span className="absolute top-1/2 -left-2.25 h-4 w-0.5 -translate-y-1/2 rounded-r-full bg-foreground" />
-                    )}
-                    <Icon />
-                  </Link>
-                }
-                className={cn("relative", match && "bg-muted text-foreground")}
-                nativeButton={false}
-                variant="ghost"
-                size="icon-sm"
-              />
+              <Link
+                className={cn(
+                  buttonVariants({
+                    variant: "ghost",
+                    size: "icon-sm",
+                    className: "relative",
+                  }),
+                  match && "bg-muted text-foreground"
+                )}
+                aria-label={label}
+                to={to}
+              >
+                {match && (
+                  <span className="absolute top-1/2 -left-2.25 h-4 w-0.5 -translate-y-1/2 rounded-r-full bg-foreground" />
+                )}
+                <Icon />
+              </Link>
             }
           />
           <TooltipContent side="right">{label}</TooltipContent>
