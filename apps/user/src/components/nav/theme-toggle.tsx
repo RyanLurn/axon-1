@@ -24,7 +24,12 @@ export function ThemeToggle() {
     <Tooltip>
       <TooltipTrigger
         render={
-          <Button onClick={cycleTheme} variant="ghost" size="icon-sm">
+          <Button
+            aria-label={`Theme: ${theme}. Activate to cycle theme`}
+            onClick={cycleTheme}
+            variant="ghost"
+            size="icon-sm"
+          >
             <ThemeIcon />
           </Button>
         }
