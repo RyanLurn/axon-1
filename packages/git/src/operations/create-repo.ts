@@ -1,5 +1,5 @@
 import type { RepoNameTakenError } from "@repo/db/errors/repo-name-taken";
-import type { RepoName, UserId } from "@repo/db/types/branded";
+import type { RepoName, RepoId, UserId } from "@repo/db/types/branded";
 import type { UnexpectedError } from "@repo/errors/unexpected";
 import type { Result } from "@repo/types/result";
 
@@ -17,7 +17,7 @@ export async function createRepo({
   userId: UserId;
   name: RepoName;
   description?: string;
-}): Promise<Result<null, RepoNameTakenError | UnexpectedError>> {
+}): Promise<Result<RepoId, RepoNameTakenError | UnexpectedError>> {
   const repoPath = getRepoPath(name);
 
   // Spawn first — if this fails, nothing was written to the DB.
@@ -41,5 +41,5 @@ export async function createRepo({
     return insertResult;
   }
 
-  return { success: true, data: null };
+  return insertResult;
 }
