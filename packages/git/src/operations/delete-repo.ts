@@ -57,11 +57,20 @@ export async function deleteRepo({
   // If this fails, the directory is gone but the row stays tombstoned — reconciliation job handles it later.
   const deleteResult = await deleteRepoRow({ selector, userId });
   if (!deleteResult.success) {
-    console.error(
-      `[deleteRepo] Failed to delete repo row after successful filesystem removal. Row is tombstoned. Manual reconciliation required.`,
-      deleteResult.error
-    );
-    return deleteResult;
+    const deleteError = deleteResult.error;
+    if (deleteError.code === "REPO_NOT_FOUND_ERROR") {
+      console.warn(
+        // TODO: Build a better edge case reporting system.
+        `[deleteRepo] No repo with the name ${repoName} was found in the database. Proceed to pass this as a success.`,
+        deleteError
+      );
+    } else {
+      console.error(
+        `[deleteRepo] Failed to delete repo row after successful filesystem removal. Row is tombstoned. Manual reconciliation required.`,
+        deleteError
+      );
+      return deleteResult;
+    }
   }
 
   return { success: true, data: null };
