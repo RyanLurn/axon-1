@@ -45,6 +45,7 @@ export function NavRail() {
       <div className="flex flex-col items-center gap-1">
         {NAV_ITEMS.map(({ to, label, icon: Icon }) => {
           const isActive = !!matchRoute({ to, fuzzy: true });
+          console.log(`${label} is ${isActive ? "active" : "inactive"}.`);
 
           return (
             <Tooltip key={to}>
@@ -63,6 +64,7 @@ export function NavRail() {
                       "relative",
                       isActive && "bg-muted text-foreground"
                     )}
+                    nativeButton={false}
                     variant="ghost"
                     size="icon-sm"
                   />
