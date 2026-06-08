@@ -27,7 +27,7 @@ export function NavItem({
             render={
               <Button
                 render={
-                  <Link to={to}>
+                  <Link aria-label={label} to={to}>
                     {match && (
                       <span className="absolute top-1/2 -left-2.25 h-4 w-0.5 -translate-y-1/2 rounded-r-full bg-foreground" />
                     )}
