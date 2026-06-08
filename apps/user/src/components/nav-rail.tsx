@@ -1,4 +1,11 @@
-import { MessageCircle, Database, Shield, Moon, Sun } from "lucide-react";
+import {
+  MessageCircle,
+  MonitorCog,
+  Database,
+  Shield,
+  Moon,
+  Sun,
+} from "lucide-react";
 import { MatchRoute, Link } from "@tanstack/react-router";
 
 import {
@@ -29,7 +36,8 @@ export function NavRail() {
     else setTheme("light");
   }
 
-  const ThemeIcon = theme === "dark" ? Moon : Sun;
+  const ThemeIcon =
+    theme === "dark" ? Moon : theme === "light" ? Sun : MonitorCog;
 
   return (
     <nav className="flex h-full w-13 flex-col items-center gap-1 border-r border-border bg-muted/40 py-3">
