@@ -1,20 +1,23 @@
 import { MessageCircle, Database, Shield, Moon, Sun } from "lucide-react";
-import { useMatchRoute } from "@tanstack/react-router";
+import { useMatchRoute, Link } from "@tanstack/react-router";
 
 import {
   TooltipContent,
   TooltipTrigger,
   Tooltip,
 } from "@/components/ui/tooltip";
+import { Route as StorageRoute } from "@/routes/_authenticated/storage";
+import { Route as AccessRoute } from "@/routes/_authenticated/access";
+import { Route as ChatRoute } from "@/routes/_authenticated/chat";
 import { useTheme } from "@/components/providers/theme";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { to: "/chat", label: "Chat", icon: MessageCircle },
-  { to: "/storage", label: "Storage", icon: Database },
-  { to: "/access", label: "Access", icon: Shield },
+  { to: ChatRoute.to, label: "Chat", icon: MessageCircle },
+  { to: StorageRoute.to, label: "Storage", icon: Database },
+  { to: AccessRoute.to, label: "Access", icon: Shield },
 ] as const;
 
 export function NavRail() {
@@ -48,21 +51,21 @@ export function NavRail() {
               <TooltipTrigger
                 render={
                   <Button
+                    render={
+                      <Link to={to}>
+                        {isActive && (
+                          <span className="absolute top-1/2 -left-2.25 h-4 w-0.5 -translate-y-1/2 rounded-r-full bg-foreground" />
+                        )}
+                        <Icon />
+                      </Link>
+                    }
                     className={cn(
                       "relative",
                       isActive && "bg-muted text-foreground"
                     )}
-                    // onClick={() => {
-                    //   void Route.router?.navigate({ to });
-                    // }}
                     variant="ghost"
                     size="icon-sm"
-                  >
-                    {isActive && (
-                      <span className="absolute top-1/2 -left-2.25 h-4 w-0.5 -translate-y-1/2 rounded-r-full bg-foreground" />
-                    )}
-                    <Icon />
-                  </Button>
+                  />
                 }
               />
               <TooltipContent side="right">{label}</TooltipContent>
