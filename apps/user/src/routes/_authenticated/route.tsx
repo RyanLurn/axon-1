@@ -1,6 +1,7 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect, Outlet } from "@tanstack/react-router";
 
 import { loadUserFn } from "@/features/auth/server-functions/load-user";
+import { NavRail } from "@/components/nav/rail";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ location }) => {
@@ -15,4 +16,16 @@ export const Route = createFileRoute("/_authenticated")({
 
     return { user };
   },
+  component: AuthenticatedLayout,
 });
+
+function AuthenticatedLayout() {
+  return (
+    <div className="flex h-screen">
+      <NavRail />
+      <main className="flex flex-1 overflow-hidden">
+        <Outlet />
+      </main>
+    </div>
+  );
+}

@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated/chat")({
-  component: ChatPage,
+export const Route = createFileRoute("/_authenticated/storage")({
+  component: StoragePage,
 });
 
-function ChatPage() {
+function StoragePage() {
   return (
     <div className="flex h-full w-full items-center justify-center text-sm text-muted-foreground">
-      Chat — coming soon
+      Storage — coming soon
     </div>
   );
 }
