@@ -1,11 +1,11 @@
 import type { NoAccessError } from "@repo/fs/errors/no-access";
 import type { NoEntryError } from "@repo/fs/errors/no-entry";
+import type { RepoPath } from "@repo/db/types/branded";
 import type { Result } from "@repo/types/result";
 
 import { resolveRealPath } from "@repo/fs/resolve-real-path";
 import { UnexpectedError } from "@repo/errors/unexpected";
 
-import type { RepoPath } from "@/utils/get-repo-path";
 import type { GitService } from "@/utils/validators";
 
 export async function spawnInfoRefsAd({

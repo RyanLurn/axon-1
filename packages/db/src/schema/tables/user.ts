@@ -1,6 +1,6 @@
 import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 
-import type { UserId } from "@/types/user-id";
+import type { UserId } from "@/types/branded";
 
 import { timestamps } from "@/schema/helpers/timestamps";
 import { id } from "@/schema/helpers/id";

@@ -17,6 +17,7 @@
         "@fontsource-variable/geist": "5.2.9",
         "@repo/auth": "workspace:*",
         "@repo/db": "workspace:*",
+        "@repo/errors": "workspace:*",
         "@repo/git": "workspace:*",
         "@repo/types": "workspace:*",
         "@t3-oss/env-core": "catalog:",
@@ -89,6 +90,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@repo/db": "workspace:*",
+        "@repo/errors": "workspace:*",
         "@repo/types": "workspace:*",
         "@t3-oss/env-core": "catalog:",
         "better-auth": "catalog:",
@@ -109,6 +111,7 @@
       "name": "@repo/db",
       "version": "1.0.0",
       "dependencies": {
+        "@repo/errors": "workspace:*",
         "@repo/types": "workspace:*",
         "@t3-oss/env-core": "catalog:",
         "drizzle-orm": "1.0.0-rc.3",

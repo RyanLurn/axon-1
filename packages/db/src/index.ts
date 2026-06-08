@@ -8,6 +8,7 @@ import {
   sessionTable,
 } from "@/schema/tables/auth";
 import { userTable } from "@/schema/tables/user";
+import { repoTable } from "@/schema/tables/repo";
 
 export const dbEnvVars = createEnv({
   server: {
@@ -17,5 +18,11 @@ export const dbEnvVars = createEnv({
 });
 
 export const db = drizzle(dbEnvVars.SQLITE_FILE_PATH, {
-  schema: { userTable, sessionTable, accountTable, verificationTable },
+  schema: {
+    userTable,
+    sessionTable,
+    accountTable,
+    verificationTable,
+    repoTable,
+  },
 });
