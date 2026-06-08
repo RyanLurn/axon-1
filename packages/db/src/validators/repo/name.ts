@@ -69,6 +69,11 @@ export const repoNameValidator = z
       });
     }
 
+    if (value.length === 0) {
+      addIssue("Repo name cannot be empty.");
+      return;
+    }
+
     // This is for Windows case-insensitivity.
     const lowercaseValue = value.toLowerCase();
     const [firstPart] = lowercaseValue.split(".");
