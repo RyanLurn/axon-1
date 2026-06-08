@@ -1,7 +1,7 @@
 import { createFileRoute, redirect, Outlet } from "@tanstack/react-router";
 
 import { loadUserFn } from "@/features/auth/server-functions/load-user";
-import { NavRail } from "@/components/nav-rail";
+import { NavRail } from "@/components/nav/rail";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ location }) => {

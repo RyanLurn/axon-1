@@ -20,7 +20,7 @@ export function NavItem({
   icon: LucideIcon;
 }) {
   return (
-    <MatchRoute fuzzy={true} key={to} to={to}>
+    <MatchRoute fuzzy={true} to={to}>
       {(match) => (
         <Tooltip>
           <TooltipTrigger
