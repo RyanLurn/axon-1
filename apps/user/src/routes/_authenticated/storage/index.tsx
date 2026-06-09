@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FolderGit2 } from "lucide-react";
 
+import { EmptyRepoList } from "@/features/storage/components/empty-repo-list";
 import { listReposFn } from "@/features/storage/server-functions/list-repos";
 import { RepoListItem } from "@/features/storage/components/repo-list-item";
 
@@ -20,7 +20,7 @@ function RepoListPage() {
 
       <div className="flex-1 overflow-y-auto">
         {repos.length === 0 ? (
-          <EmptyState />
+          <EmptyRepoList />
         ) : (
           <ul className="divide-y">
             {repos.map((repo) => (
@@ -31,18 +31,6 @@ function RepoListPage() {
           </ul>
         )}
       </div>
-    </div>
-  );
-}
-
-function EmptyState() {
-  return (
-    <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-      <FolderGit2 className="size-8 text-muted-foreground/50" />
-      <p className="text-sm font-medium">No repositories yet</p>
-      <p className="text-xs text-muted-foreground">
-        Repositories you create will appear here.
-      </p>
     </div>
   );
 }
