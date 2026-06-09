@@ -18,6 +18,7 @@ import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
 import { Route as AuthenticatedStorageIndexRouteImport } from "./routes/_authenticated/storage/index";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 import { Route as AuthenticatedStorageNewRouteImport } from "./routes/_authenticated/storage/new";
+import { Route as AuthenticatedStorageRepoNameRouteRouteImport } from "./routes/_authenticated/storage/$repoName/route";
 import { Route as AuthenticatedStorageRepoNameIndexRouteImport } from "./routes/_authenticated/storage/$repoName/index";
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -65,11 +66,17 @@ const AuthenticatedStorageNewRoute = AuthenticatedStorageNewRouteImport.update({
   path: "/storage/new",
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any);
+const AuthenticatedStorageRepoNameRouteRoute =
+  AuthenticatedStorageRepoNameRouteRouteImport.update({
+    id: "/storage/$repoName",
+    path: "/storage/$repoName",
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any);
 const AuthenticatedStorageRepoNameIndexRoute =
   AuthenticatedStorageRepoNameIndexRouteImport.update({
-    id: "/storage/$repoName/",
-    path: "/storage/$repoName/",
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: "/",
+    path: "/",
+    getParentRoute: () => AuthenticatedStorageRepoNameRouteRoute,
   } as any);
 
 export interface FileRoutesByFullPath {
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
   "/access": typeof AuthenticatedAccessRoute;
   "/chat": typeof AuthenticatedChatRoute;
   "/git/$": typeof GitSplatRoute;
+  "/storage/$repoName": typeof AuthenticatedStorageRepoNameRouteRouteWithChildren;
   "/storage/new": typeof AuthenticatedStorageNewRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/storage/": typeof AuthenticatedStorageIndexRoute;
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   "/_authenticated/access": typeof AuthenticatedAccessRoute;
   "/_authenticated/chat": typeof AuthenticatedChatRoute;
   "/git/$": typeof GitSplatRoute;
+  "/_authenticated/storage/$repoName": typeof AuthenticatedStorageRepoNameRouteRouteWithChildren;
   "/_authenticated/storage/new": typeof AuthenticatedStorageNewRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/_authenticated/storage/": typeof AuthenticatedStorageIndexRoute;
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | "/access"
     | "/chat"
     | "/git/$"
+    | "/storage/$repoName"
     | "/storage/new"
     | "/api/auth/$"
     | "/storage/"
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | "/_authenticated/access"
     | "/_authenticated/chat"
     | "/git/$"
+    | "/_authenticated/storage/$repoName"
     | "/_authenticated/storage/new"
     | "/api/auth/$"
     | "/_authenticated/storage/"
@@ -217,31 +228,53 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AuthenticatedStorageNewRouteImport;
       parentRoute: typeof AuthenticatedRouteRoute;
     };
+    "/_authenticated/storage/$repoName": {
+      id: "/_authenticated/storage/$repoName";
+      path: "/storage/$repoName";
+      fullPath: "/storage/$repoName";
+      preLoaderRoute: typeof AuthenticatedStorageRepoNameRouteRouteImport;
+      parentRoute: typeof AuthenticatedRouteRoute;
+    };
     "/_authenticated/storage/$repoName/": {
       id: "/_authenticated/storage/$repoName/";
-      path: "/storage/$repoName";
+      path: "/";
       fullPath: "/storage/$repoName/";
       preLoaderRoute: typeof AuthenticatedStorageRepoNameIndexRouteImport;
-      parentRoute: typeof AuthenticatedRouteRoute;
+      parentRoute: typeof AuthenticatedStorageRepoNameRouteRoute;
     };
   }
 }
 
+interface AuthenticatedStorageRepoNameRouteRouteChildren {
+  AuthenticatedStorageRepoNameIndexRoute: typeof AuthenticatedStorageRepoNameIndexRoute;
+}
+
+const AuthenticatedStorageRepoNameRouteRouteChildren: AuthenticatedStorageRepoNameRouteRouteChildren =
+  {
+    AuthenticatedStorageRepoNameIndexRoute:
+      AuthenticatedStorageRepoNameIndexRoute,
+  };
+
+const AuthenticatedStorageRepoNameRouteRouteWithChildren =
+  AuthenticatedStorageRepoNameRouteRoute._addFileChildren(
+    AuthenticatedStorageRepoNameRouteRouteChildren,
+  );
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccessRoute: typeof AuthenticatedAccessRoute;
   AuthenticatedChatRoute: typeof AuthenticatedChatRoute;
+  AuthenticatedStorageRepoNameRouteRoute: typeof AuthenticatedStorageRepoNameRouteRouteWithChildren;
   AuthenticatedStorageNewRoute: typeof AuthenticatedStorageNewRoute;
   AuthenticatedStorageIndexRoute: typeof AuthenticatedStorageIndexRoute;
-  AuthenticatedStorageRepoNameIndexRoute: typeof AuthenticatedStorageRepoNameIndexRoute;
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccessRoute: AuthenticatedAccessRoute,
   AuthenticatedChatRoute: AuthenticatedChatRoute,
+  AuthenticatedStorageRepoNameRouteRoute:
+    AuthenticatedStorageRepoNameRouteRouteWithChildren,
   AuthenticatedStorageNewRoute: AuthenticatedStorageNewRoute,
   AuthenticatedStorageIndexRoute: AuthenticatedStorageIndexRoute,
-  AuthenticatedStorageRepoNameIndexRoute:
-    AuthenticatedStorageRepoNameIndexRoute,
 };
 
 const AuthenticatedRouteRouteWithChildren =
