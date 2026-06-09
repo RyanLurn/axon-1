@@ -1,7 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { FolderGit2 } from "lucide-react";
 
 import { listReposFn } from "@/features/storage/server-functions/list-repos";
+import { RepoListItem } from "@/features/storage/components/repo-list-item";
 
 export const Route = createFileRoute("/_authenticated/storage/")({
   loader: () => listReposFn(),
@@ -24,21 +25,7 @@ function RepoListPage() {
           <ul className="divide-y">
             {repos.map((repo) => (
               <li key={repo.id}>
-                <Link
-                  className="flex items-center gap-3 px-6 py-4 transition-colors hover:bg-muted/50"
-                  params={{ repoName: repo.name }}
-                  to="/storage/$repoName"
-                >
-                  <FolderGit2 className="size-4 shrink-0 text-muted-foreground" />
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{repo.name}</p>
-                    {repo.description && (
-                      <p className="truncate text-xs text-muted-foreground">
-                        {repo.description}
-                      </p>
-                    )}
-                  </div>
-                </Link>
+                <RepoListItem description={repo.description} name={repo.name} />
               </li>
             ))}
           </ul>
