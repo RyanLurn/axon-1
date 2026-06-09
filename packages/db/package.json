@@ -28,6 +28,7 @@
     "@repo/errors": "workspace:*",
     "@t3-oss/env-core": "catalog:",
     "drizzle-orm": "1.0.0-rc.3",
+    "drizzle-seed": "1.0.0-rc.3",
     "zod": "catalog:"
   },
   "devDependencies": {
