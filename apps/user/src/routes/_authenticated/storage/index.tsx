@@ -12,7 +12,7 @@ function RepoListPage() {
   const repos = Route.useLoaderData();
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex size-full flex-col">
       <div className="border-b px-6 py-4">
         <h1 className="text-sm font-medium">Storage</h1>
       </div>

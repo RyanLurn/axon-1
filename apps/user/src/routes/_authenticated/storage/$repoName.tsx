@@ -16,7 +16,7 @@ function RepoDetailPage() {
   const repo = Route.useLoaderData();
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex size-full flex-col">
       <div className="flex items-center gap-3 border-b px-6 py-4">
         <Link
           className={cn(
@@ -56,7 +56,7 @@ function RepoNotFound() {
   const { repoName } = Route.useParams();
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex size-full flex-col">
       <div className="flex items-center gap-3 border-b px-6 py-4">
         <Link
           className={cn(
