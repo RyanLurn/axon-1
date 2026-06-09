@@ -17,6 +17,7 @@ import { Route as AuthenticatedAccessRouteImport } from "./routes/_authenticated
 import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
 import { Route as AuthenticatedStorageIndexRouteImport } from "./routes/_authenticated/storage/index";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
+import { Route as AuthenticatedStorageNewRouteImport } from "./routes/_authenticated/storage/new";
 import { Route as AuthenticatedStorageRepoNameRouteImport } from "./routes/_authenticated/storage/$repoName";
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -59,6 +60,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: "/api/auth/$",
   getParentRoute: () => rootRouteImport,
 } as any);
+const AuthenticatedStorageNewRoute = AuthenticatedStorageNewRouteImport.update({
+  id: "/storage/new",
+  path: "/storage/new",
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any);
 const AuthenticatedStorageRepoNameRoute =
   AuthenticatedStorageRepoNameRouteImport.update({
     id: "/storage/$repoName",
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   "/chat": typeof AuthenticatedChatRoute;
   "/git/$": typeof GitSplatRoute;
   "/storage/$repoName": typeof AuthenticatedStorageRepoNameRoute;
+  "/storage/new": typeof AuthenticatedStorageNewRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/storage/": typeof AuthenticatedStorageIndexRoute;
 }
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   "/chat": typeof AuthenticatedChatRoute;
   "/git/$": typeof GitSplatRoute;
   "/storage/$repoName": typeof AuthenticatedStorageRepoNameRoute;
+  "/storage/new": typeof AuthenticatedStorageNewRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/storage": typeof AuthenticatedStorageIndexRoute;
 }
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   "/_authenticated/chat": typeof AuthenticatedChatRoute;
   "/git/$": typeof GitSplatRoute;
   "/_authenticated/storage/$repoName": typeof AuthenticatedStorageRepoNameRoute;
+  "/_authenticated/storage/new": typeof AuthenticatedStorageNewRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/_authenticated/storage/": typeof AuthenticatedStorageIndexRoute;
 }
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | "/chat"
     | "/git/$"
     | "/storage/$repoName"
+    | "/storage/new"
     | "/api/auth/$"
     | "/storage/";
   fileRoutesByTo: FileRoutesByTo;
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | "/chat"
     | "/git/$"
     | "/storage/$repoName"
+    | "/storage/new"
     | "/api/auth/$"
     | "/storage";
   id:
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | "/_authenticated/chat"
     | "/git/$"
     | "/_authenticated/storage/$repoName"
+    | "/_authenticated/storage/new"
     | "/api/auth/$"
     | "/_authenticated/storage/";
   fileRoutesById: FileRoutesById;
@@ -198,6 +210,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof ApiAuthSplatRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/_authenticated/storage/new": {
+      id: "/_authenticated/storage/new";
+      path: "/storage/new";
+      fullPath: "/storage/new";
+      preLoaderRoute: typeof AuthenticatedStorageNewRouteImport;
+      parentRoute: typeof AuthenticatedRouteRoute;
+    };
     "/_authenticated/storage/$repoName": {
       id: "/_authenticated/storage/$repoName";
       path: "/storage/$repoName";
@@ -212,6 +231,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccessRoute: typeof AuthenticatedAccessRoute;
   AuthenticatedChatRoute: typeof AuthenticatedChatRoute;
   AuthenticatedStorageRepoNameRoute: typeof AuthenticatedStorageRepoNameRoute;
+  AuthenticatedStorageNewRoute: typeof AuthenticatedStorageNewRoute;
   AuthenticatedStorageIndexRoute: typeof AuthenticatedStorageIndexRoute;
 }
 
@@ -219,6 +239,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccessRoute: AuthenticatedAccessRoute,
   AuthenticatedChatRoute: AuthenticatedChatRoute,
   AuthenticatedStorageRepoNameRoute: AuthenticatedStorageRepoNameRoute,
+  AuthenticatedStorageNewRoute: AuthenticatedStorageNewRoute,
   AuthenticatedStorageIndexRoute: AuthenticatedStorageIndexRoute,
 };
 
