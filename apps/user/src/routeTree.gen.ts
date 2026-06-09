@@ -20,6 +20,8 @@ import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 import { Route as AuthenticatedStorageNewRouteImport } from "./routes/_authenticated/storage/new";
 import { Route as AuthenticatedStorageRepoNameRouteRouteImport } from "./routes/_authenticated/storage/$repoName/route";
 import { Route as AuthenticatedStorageRepoNameIndexRouteImport } from "./routes/_authenticated/storage/$repoName/index";
+import { Route as AuthenticatedStorageRepoNameSettingsRouteImport } from "./routes/_authenticated/storage/$repoName/settings";
+import { Route as AuthenticatedStorageRepoNameChangesRouteImport } from "./routes/_authenticated/storage/$repoName/changes";
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: "/_authenticated",
@@ -78,6 +80,18 @@ const AuthenticatedStorageRepoNameIndexRoute =
     path: "/",
     getParentRoute: () => AuthenticatedStorageRepoNameRouteRoute,
   } as any);
+const AuthenticatedStorageRepoNameSettingsRoute =
+  AuthenticatedStorageRepoNameSettingsRouteImport.update({
+    id: "/settings",
+    path: "/settings",
+    getParentRoute: () => AuthenticatedStorageRepoNameRouteRoute,
+  } as any);
+const AuthenticatedStorageRepoNameChangesRoute =
+  AuthenticatedStorageRepoNameChangesRouteImport.update({
+    id: "/changes",
+    path: "/changes",
+    getParentRoute: () => AuthenticatedStorageRepoNameRouteRoute,
+  } as any);
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
@@ -89,6 +103,8 @@ export interface FileRoutesByFullPath {
   "/storage/new": typeof AuthenticatedStorageNewRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/storage/": typeof AuthenticatedStorageIndexRoute;
+  "/storage/$repoName/changes": typeof AuthenticatedStorageRepoNameChangesRoute;
+  "/storage/$repoName/settings": typeof AuthenticatedStorageRepoNameSettingsRoute;
   "/storage/$repoName/": typeof AuthenticatedStorageRepoNameIndexRoute;
 }
 export interface FileRoutesByTo {
@@ -100,6 +116,8 @@ export interface FileRoutesByTo {
   "/storage/new": typeof AuthenticatedStorageNewRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/storage": typeof AuthenticatedStorageIndexRoute;
+  "/storage/$repoName/changes": typeof AuthenticatedStorageRepoNameChangesRoute;
+  "/storage/$repoName/settings": typeof AuthenticatedStorageRepoNameSettingsRoute;
   "/storage/$repoName": typeof AuthenticatedStorageRepoNameIndexRoute;
 }
 export interface FileRoutesById {
@@ -114,6 +132,8 @@ export interface FileRoutesById {
   "/_authenticated/storage/new": typeof AuthenticatedStorageNewRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/_authenticated/storage/": typeof AuthenticatedStorageIndexRoute;
+  "/_authenticated/storage/$repoName/changes": typeof AuthenticatedStorageRepoNameChangesRoute;
+  "/_authenticated/storage/$repoName/settings": typeof AuthenticatedStorageRepoNameSettingsRoute;
   "/_authenticated/storage/$repoName/": typeof AuthenticatedStorageRepoNameIndexRoute;
 }
 export interface FileRouteTypes {
@@ -128,6 +148,8 @@ export interface FileRouteTypes {
     | "/storage/new"
     | "/api/auth/$"
     | "/storage/"
+    | "/storage/$repoName/changes"
+    | "/storage/$repoName/settings"
     | "/storage/$repoName/";
   fileRoutesByTo: FileRoutesByTo;
   to:
@@ -139,6 +161,8 @@ export interface FileRouteTypes {
     | "/storage/new"
     | "/api/auth/$"
     | "/storage"
+    | "/storage/$repoName/changes"
+    | "/storage/$repoName/settings"
     | "/storage/$repoName";
   id:
     | "__root__"
@@ -152,6 +176,8 @@ export interface FileRouteTypes {
     | "/_authenticated/storage/new"
     | "/api/auth/$"
     | "/_authenticated/storage/"
+    | "/_authenticated/storage/$repoName/changes"
+    | "/_authenticated/storage/$repoName/settings"
     | "/_authenticated/storage/$repoName/";
   fileRoutesById: FileRoutesById;
 }
@@ -242,15 +268,35 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AuthenticatedStorageRepoNameIndexRouteImport;
       parentRoute: typeof AuthenticatedStorageRepoNameRouteRoute;
     };
+    "/_authenticated/storage/$repoName/settings": {
+      id: "/_authenticated/storage/$repoName/settings";
+      path: "/settings";
+      fullPath: "/storage/$repoName/settings";
+      preLoaderRoute: typeof AuthenticatedStorageRepoNameSettingsRouteImport;
+      parentRoute: typeof AuthenticatedStorageRepoNameRouteRoute;
+    };
+    "/_authenticated/storage/$repoName/changes": {
+      id: "/_authenticated/storage/$repoName/changes";
+      path: "/changes";
+      fullPath: "/storage/$repoName/changes";
+      preLoaderRoute: typeof AuthenticatedStorageRepoNameChangesRouteImport;
+      parentRoute: typeof AuthenticatedStorageRepoNameRouteRoute;
+    };
   }
 }
 
 interface AuthenticatedStorageRepoNameRouteRouteChildren {
+  AuthenticatedStorageRepoNameChangesRoute: typeof AuthenticatedStorageRepoNameChangesRoute;
+  AuthenticatedStorageRepoNameSettingsRoute: typeof AuthenticatedStorageRepoNameSettingsRoute;
   AuthenticatedStorageRepoNameIndexRoute: typeof AuthenticatedStorageRepoNameIndexRoute;
 }
 
 const AuthenticatedStorageRepoNameRouteRouteChildren: AuthenticatedStorageRepoNameRouteRouteChildren =
   {
+    AuthenticatedStorageRepoNameChangesRoute:
+      AuthenticatedStorageRepoNameChangesRoute,
+    AuthenticatedStorageRepoNameSettingsRoute:
+      AuthenticatedStorageRepoNameSettingsRoute,
     AuthenticatedStorageRepoNameIndexRoute:
       AuthenticatedStorageRepoNameIndexRoute,
   };
