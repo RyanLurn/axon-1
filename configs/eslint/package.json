@@ -28,6 +28,6 @@
     "eslint-plugin-react-hooks": "7.1.1",
     "globals": "17.6.0",
     "typescript": "catalog:",
-    "typescript-eslint": "8.59.4"
+    "typescript-eslint": "8.60.1"
   }
 }
