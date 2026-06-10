@@ -27,7 +27,7 @@ export function CreateRepoForm() {
     validators: {
       onSubmit: createRepoInputValidator,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       try {
         await createRepoFn({
           data: value,
@@ -40,10 +40,10 @@ export function CreateRepoForm() {
       } catch (error: unknown) {
         if (
           error instanceof Error &&
-          "status" in error &&
-          (error as { status: number }).status === 409
+          "code" in error &&
+          error.code === "REPO_NAME_TAKEN_ERROR"
         ) {
-          form.setFieldMeta("name", (prev) => ({
+          formApi.setFieldMeta("name", (prev) => ({
             ...prev,
             errors: [{ message: `"${value.name}" is already taken.` }],
           }));
