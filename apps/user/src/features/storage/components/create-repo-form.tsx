@@ -37,7 +37,7 @@ export function CreateRepoForm() {
           to: "/storage/$repoName",
           params: { repoName: value.name },
         });
-      } catch (error: unknown) {
+      } catch (error) {
         if (
           error instanceof Error &&
           "code" in error &&
