@@ -1,30 +1,32 @@
-import { repoNameValidator } from "@repo/db/validators/repo/name";
 import { useRouter } from "@tanstack/react-router";
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
-import { z } from "zod";
 
+import {
+  createRepoInputValidator,
+  createRepoFn,
+} from "@/features/storage/server-functions/create-repo";
 import {
   FieldGroup,
   FieldLabel,
   FieldError,
   Field,
 } from "@/components/ui/field";
-import { createRepoFn } from "@/features/storage/server-functions/create-repo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-const descriptionValidator = z.string().min(1).max(255);
 
 export function CreateRepoForm() {
   const router = useRouter();
 
   const form = useForm({
+    formId: "create-repo-form",
     defaultValues: {
       name: "",
       description: "",
     },
-    formId: "create-repo-form",
+    validators: {
+      onSubmit: createRepoInputValidator,
+    },
     onSubmit: async ({ value }) => {
       try {
         await createRepoFn({
@@ -64,7 +66,7 @@ export function CreateRepoForm() {
       <FieldGroup>
         <form.Field
           validators={{
-            onChange: repoNameValidator,
+            onChange: createRepoInputValidator.shape.name,
           }}
           name="name"
         >
@@ -92,7 +94,7 @@ export function CreateRepoForm() {
 
         <form.Field
           validators={{
-            onChange: descriptionValidator,
+            onChange: createRepoInputValidator.shape.description,
           }}
           name="description"
         >

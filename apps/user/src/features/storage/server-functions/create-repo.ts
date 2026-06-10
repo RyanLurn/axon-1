@@ -6,9 +6,9 @@ import { z } from "zod";
 
 import { authMiddleware } from "@/features/auth/middleware";
 
-const createRepoInputValidator = z.object({
+export const createRepoInputValidator = z.object({
   name: repoNameValidator,
-  description: z.string().min(1).max(255).optional(),
+  description: z.string().max(255),
 });
 
 export const createRepoFn = createServerFn()
