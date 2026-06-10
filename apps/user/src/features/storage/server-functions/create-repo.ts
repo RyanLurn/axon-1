@@ -15,9 +15,14 @@ export const createRepoFn = createServerFn()
   .middleware([authMiddleware])
   .inputValidator(createRepoInputValidator)
   .handler(async ({ context, data }) => {
+    // Transform description here because TanStack Form doesn't work well when undefined/null is in defaultValues
+    const description =
+      data.description.trim().length === 0 ? undefined : data.description;
+
     const createRepoResult = await createRepo({
       userId: context.user.id,
-      ...data,
+      name: data.name,
+      description,
     });
 
     if (!createRepoResult.success) {
