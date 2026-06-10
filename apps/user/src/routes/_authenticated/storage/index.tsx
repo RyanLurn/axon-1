@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { EmptyRepoList } from "@/features/storage/components/empty-repo-list";
 import { listReposFn } from "@/features/storage/server-functions/list-repos";
 import { RepoListItem } from "@/features/storage/components/repo-list-item";
+import { buttonVariants } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/storage/")({
   loader: () => listReposFn(),
@@ -14,8 +15,15 @@ function RepoListPage() {
 
   return (
     <div className="flex size-full flex-col">
-      <div className="border-b px-6 py-4">
+      <div className="flex justify-between border-b px-6 py-4">
         <h1 className="text-sm font-medium">Storage</h1>
+        <Link
+          className={buttonVariants()}
+          aria-label="New repository"
+          to="/storage/new"
+        >
+          New repository
+        </Link>
       </div>
 
       <div className="flex-1 overflow-y-auto">
