@@ -6,17 +6,17 @@ import { Route as FilesRoute } from "@/routes/_authenticated/storage/$repoName";
 import { cn } from "@/lib/utils";
 
 const TABS = [
-  { label: "Files", to: FilesRoute.to, fuzzy: true },
-  { label: "Changes", to: ChangesRoute.to, fuzzy: true },
-  { label: "Settings", to: SettingsRoute.to, fuzzy: false },
+  { label: "Files", to: FilesRoute.to },
+  { label: "Changes", to: ChangesRoute.to },
+  { label: "Settings", to: SettingsRoute.to },
 ];
 
 export function RepoTabs({ repoName }: { repoName: string }) {
   return (
     <div className="flex gap-1 border-b px-6">
-      {TABS.map(({ label, to, fuzzy }) => {
+      {TABS.map(({ label, to }) => {
         return (
-          <MatchRoute fuzzy={fuzzy} key={label} to={to}>
+          <MatchRoute key={label} to={to}>
             {(match) => (
               <Link
                 className={cn(
