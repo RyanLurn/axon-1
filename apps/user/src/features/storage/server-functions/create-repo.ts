@@ -4,6 +4,7 @@ import { createRepo } from "@repo/git/operations/create-repo";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
+import { createInternalServerError, UIError } from "@/lib/error";
 import { authMiddleware } from "@/features/auth/middleware";
 
 export const createRepoInputValidator = z.object({
@@ -29,10 +30,13 @@ export const createRepoFn = createServerFn()
       const error = createRepoResult.error;
       if (error.code === "REPO_NAME_TAKEN_ERROR") {
         setResponseStatus(409);
-        throw new Error("A repo with that name already exists");
+        throw new UIError({
+          message: "A repo with that name already exists",
+          code: error.code,
+        });
       }
       setResponseStatus(500);
-      throw new Error("Internal server error");
+      throw createInternalServerError();
     }
 
     return createRepoResult.data;
