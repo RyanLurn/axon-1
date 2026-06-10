@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 export function CreateRepoForm() {
   const router = useRouter();
 
-  const form = useForm({
+  const createRepoForm = useForm({
     formId: "create-repo-form",
     defaultValues: {
       name: "",
@@ -58,13 +58,13 @@ export function CreateRepoForm() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        void form.handleSubmit();
+        void createRepoForm.handleSubmit();
       }}
       className="flex flex-col gap-8"
-      id={form.formId}
+      id={createRepoForm.formId}
     >
       <FieldGroup>
-        <form.Field
+        <createRepoForm.Field
           validators={{
             onChange: createRepoInputValidator.shape.name,
           }}
@@ -90,9 +90,9 @@ export function CreateRepoForm() {
               </Field>
             );
           }}
-        </form.Field>
+        </createRepoForm.Field>
 
-        <form.Field
+        <createRepoForm.Field
           validators={{
             onChange: createRepoInputValidator.shape.description,
           }}
@@ -122,10 +122,10 @@ export function CreateRepoForm() {
               </Field>
             );
           }}
-        </form.Field>
+        </createRepoForm.Field>
       </FieldGroup>
 
-      <form.Subscribe
+      <createRepoForm.Subscribe
         selector={(state) => ({
           isPristine: state.isPristine,
           canSubmit: state.canSubmit,
@@ -135,14 +135,14 @@ export function CreateRepoForm() {
         {({ isPristine, canSubmit, isSubmitting }) => (
           <Button
             disabled={isPristine || !canSubmit || isSubmitting}
+            form={createRepoForm.formId}
             className="self-start"
-            form={form.formId}
             type="submit"
           >
             {isSubmitting ? "Creating..." : "Create repository"}
           </Button>
         )}
-      </form.Subscribe>
+      </createRepoForm.Subscribe>
     </form>
   );
 }
