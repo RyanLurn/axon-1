@@ -13,14 +13,14 @@ const TABS = [
 
 export function RepoTabs({ repoName }: { repoName: string }) {
   return (
-    <div className="flex gap-1 border-b px-6">
+    <div className="flex gap-6 border-b px-6">
       {TABS.map(({ label, to }) => {
         return (
           <MatchRoute key={label} to={to}>
             {(match) => (
               <Link
                 className={cn(
-                  "relative -mb-px border-b-2 px-1 py-3 text-sm transition-colors",
+                  "relative -mb-px border-b-2 px-1 py-3 transition-colors",
                   match
                     ? "border-foreground font-medium text-foreground"
                     : "border-transparent text-muted-foreground hover:text-foreground"

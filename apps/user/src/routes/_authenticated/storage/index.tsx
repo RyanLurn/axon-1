@@ -15,8 +15,8 @@ function RepoListPage() {
 
   return (
     <div className="flex size-full flex-col">
-      <div className="flex justify-between border-b px-6 py-4">
-        <h1 className="text-sm font-medium">Storage</h1>
+      <div className="flex items-center justify-between border-b px-6 py-4">
+        <h1 className="font-medium">Storage</h1>
         <Link
           className={buttonVariants()}
           aria-label="New repository"
